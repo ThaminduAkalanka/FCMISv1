@@ -1,15 +1,28 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
 
 const login = () => {
     const [values, setvalues] = useState({
             username:'',
             password:''
         })
+
+    const [error, setError] = useState(null)    
+    const navigate = useNavigate()
+    axios.defaults.withCredentials = true;
     const handleSubmit = (event) =>{
         event.preventDefault()
         axios.post('http://localhost:3000/auth/adminlogin',values)
-        .then(result=> console.log(result))
+        .then(result=> {
+            if(result.data.loginStatus) {
+                navigate('/dashboard')
+            } else {
+                setError(result.data.Error)
+            }
+            
+        })
         .catch(err => console.log(err))
     }
 
@@ -21,6 +34,9 @@ const login = () => {
             <h2 class='flex justify-left font-bold text-lg pb-6' >
                 Admin Login
             </h2>
+            <div class="text-red-700 text-xs">
+                {error && error}
+            </div>
             <form onSubmit={handleSubmit} class='p-1'>
                 <div class='space-y-4'>
                 <div class='space-y-3'>
@@ -51,7 +67,8 @@ const login = () => {
                 <div>
                     <a class="decoration-2 hover:underline text-xs" href="#">
                     Register Now!
-                    </a></div>
+                    </a>
+                </div>
                 </div>
             </form>
         </div>
