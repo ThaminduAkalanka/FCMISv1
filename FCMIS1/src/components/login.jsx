@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const login = () => {
+    const [values, setvalues] = useState(
+        {
+            username:'',
+            password:'',
+        }
+    )
   return (
     <div class='flex justify-left items-center h-screen p-10'>
         <div>
