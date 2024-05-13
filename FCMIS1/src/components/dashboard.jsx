@@ -4,7 +4,7 @@ import {Link, Outlet} from 'react-router-dom';
 const dashboard = () => {
   return (
 
-    <div class="">
+    <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased">
         
     <div class="fixed flex flex-col top-0 left-0 w-64 bg-black h-full shadow-lg">
         <div class="flex items-center pl-6 h-20 border-b border-gray-800">
@@ -137,8 +137,18 @@ const dashboard = () => {
         </div>
     </div>
         <div>
-            <div>
-                <h4>muscle max</h4>
+            <div class=''>
+            
+                <nav class="flex flex-col text-center sm:flex-row sm:text-left sm:justify-between py-4 px-6 bg-black shadow sm:items-baseline w-full">
+                <div class="mb-2 sm:mb-0">
+                    <a href="#" class="text-2xl no-underline text-grey-darkest hover:text-blue-dark">Home</a>
+                </div>
+                <div>
+                    <a href="#" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">One</a>
+                    <a href="#" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">Two</a>
+                    <a href="#" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">Three</a>
+                </div>
+                </nav>
             </div> 
             <Outlet/>
         </div>
