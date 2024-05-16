@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Logo from '../assets/logo1.png'
 
 
 const login = () => {
@@ -29,8 +30,8 @@ const login = () => {
 
 
   return (
-    <div class='flex justify-left items-center h-screen p-10'>
-        <div>
+    <div class='flex flex-col md:flex-row justify-evenly items-center h-screen p-20 sd:p-0'>
+        <div class=''>
             <h2 class='flex justify-left font-bold text-lg pb-6' >
                 Admin Login
             </h2>
@@ -71,6 +72,10 @@ const login = () => {
                 </div>
                 </div>
             </form>
+
+        </div>
+        <div>
+            <img src={Logo} alt='image1' class=''/>
         </div>
     </div>
   )
