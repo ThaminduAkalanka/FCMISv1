@@ -6,8 +6,8 @@ import Profile from '../assets/profile.jpg'
 const Dashboard = () => {
   return (
     <div className="min-h-screen flex flex-row bg-#1E1E1E">
-      <div className="fixed top-0 left-0 w-64 bg-black h-full shadow-lg">
-        <div className="flex items-center pl-6 h-20 border-b border-gray-800">
+      <div className="fixed top-0 left-0 w-64 bg-black h-full shadow-lg overflow-y-auto">
+        <div className="flex items-center pl-6 h-20 border-b border-gray-800 ">
           <img
             src={Profile}
             alt="profilde"
@@ -21,6 +21,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="overflow-y-auto overflow-x-hidden flex-grow">
+          
           <ul className="flex flex-col py-6 space-y-1">
 
             <li>
