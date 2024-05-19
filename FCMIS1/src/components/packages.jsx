@@ -2,7 +2,12 @@ import React from 'react'
 
 const packages = () => {
   return (
-    <div>packages</div>
+    <div>
+      <div>
+        <h3>Packages</h3>
+        
+      </div>
+    </div>
   )
 }
 
