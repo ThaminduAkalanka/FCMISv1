@@ -22,14 +22,14 @@ const packages = () => {
       <div>
         <h3>Packages</h3>
       </div>
-      <Link to="/dashboard/add_package" class='flex-1 w-40 focus:outline-none text-black bg-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>Add Package</Link> 
+      <Link to="/dashboard/add_package" class='flex-1 w-40 focus:outline-none text-black bg-white hover:bg-neutral-400 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>Add Package</Link> 
 
-      <div class="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-      <table class="w-full text-sm text-left rtl:text-right text-white dark:text-gray-400">
+      <div class="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+      <table class="w-full text-sm text-left rtl:text-right text-white dark:text-gray-400 ">
         <thead class="">
           <tr>
-            <th>Package Name</th>
-            <th>Rate</th>
+            <th class="py-3">Package Name</th>
+            <th class="py-3">Rate</th>
           </tr>
         </thead>
         <tbody>

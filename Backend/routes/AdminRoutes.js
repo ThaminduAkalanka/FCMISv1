@@ -24,7 +24,7 @@ router.post("/adminlogin", (req, res) => {
 });
 
 router.post('/add_package', (req, res) =>{
-  const sql = " INSERT INTO package (`packageName`, `rate`) VALUES (?,?);"
+  const sql = " INSERT INTO package (`packageName`, `rate`) VALUES (?,?)";
   con.query(sql, [req.body.packageName, req.body.rate], (err, result)=>{
     if (err) return res.json({ Status: false, Error: "Query error" })
     return res.json({Status: true})
