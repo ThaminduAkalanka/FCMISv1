@@ -13,7 +13,7 @@ router.post("/adminlogin", (req, res) => {
       const token = jwt.sign(
         { role: "admin", username: username },
         "jwt_secret_key",
-        { expiresIn: "1d" }//secret key must be ver secure one
+        { expiresIn: "1d" }//secret key must be very secure one
       ); 
       res.cookie('token', token)
       return res.json({ loginStatus: true });
@@ -22,5 +22,21 @@ router.post("/adminlogin", (req, res) => {
     }
   });
 });
+
+router.post('/add_package', (req, res) =>{
+  const sql = " INSERT INTO package (`packageName`, `rate`) VALUES (?,?);"
+  con.query(sql, [req.body.packageName, req.body.rate], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true})
+  })
+})
+
+router.get('/package',(req, res)=>{
+  const sql = "SELECT * FROM package";
+  con.query(sql, [req.body.packageName, req.body.rate], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
 
 export { router as adminRouter };

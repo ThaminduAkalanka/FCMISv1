@@ -16,6 +16,8 @@ import Schedule from './components/schedule'
 import Announcment from './components/announcement'
 import Report from './components/report'
 import Feedback from './components/feedback'
+import AddPackage from './components/addPackage'
+
 
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
@@ -39,7 +41,9 @@ function App() {
           <Route path='/dashboard/schedule' element={<Schedule/>}></Route> 
           <Route path='/dashboard/announcement' element={<Announcment/>}></Route>
           <Route path='/dashboard/report' element={<Report/>}></Route>  
-          <Route path='/dashboard/feedback' element={<Feedback/>}></Route>                   
+          <Route path='/dashboard/feedback' element={<Feedback/>}></Route>
+          <Route path='/dashboard/add_package' element={<AddPackage/>}></Route>
+
         </Route>
       </Routes>
     </BrowserRouter>
