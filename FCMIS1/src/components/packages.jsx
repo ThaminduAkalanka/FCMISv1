@@ -44,10 +44,9 @@ const packages = () => {
         </tbody>
       </table>
       </div>
-    
-    
     </div>
   )
 }
+
 
 export default packages

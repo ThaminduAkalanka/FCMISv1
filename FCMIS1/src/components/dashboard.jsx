@@ -4,6 +4,7 @@ import LogoSmall from '../assets/logo1s.png'
 import Profile from '../assets/profile.jpg'
 import Noti from '../assets/noti.png'
 
+
 const Dashboard = () => {
   return (
     <div className="min-h-screen flex flex-row bg-#1E1E1E">
@@ -63,7 +64,8 @@ const Dashboard = () => {
                 <span className="inline-flex justify-center items-center ml-4">
                   <svg className="w-6 h-5" fill="" stroke="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path fill="currentColor" d="M7 11c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2s2 .9 2 2v1c0 1.1-.9 2-2 2zm-2 6.993L9 18c.55 0 1-.45 1-1v-2c0-1.65-1.35-3-3-3s-3 1.35-3 3v2c0 .552.448.993 1 .993zM19 18h-6c-.553 0-1-.447-1-1s.447-1 1-1h6c.553 0 1 .447 1 1s-.447 1-1 1zm0-4h-6c-.553 0-1-.448-1-1s.447-1 1-1h6c.553 0 1 .448 1 1s-.447 1-1 1zm0-4h-6c-.553 0-1-.448-1-1s.447-1 1-1h6c.553 0 1 .448 1 1s-.447 1-1 1z"/>
-                  <path fill="currentColor" d="M22 2H2C.9 2 0 2.9 0 4v16c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 17.5c0 .28-.22.5-.5.5h-19c-.28 0-.5-.22-.5-.5v-15c0-.28.22-.5.5-.5h19c.28 0 .5.22.5.5v15z"/>                  </svg>
+                  <path fill="currentColor" d="M22 2H2C.9 2 0 2.9 0 4v16c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 17.5c0 .28-.22.5-.5.5h-19c-.28 0-.5-.22-.5-.5v-15c0-.28.22-.5.5-.5h19c.28 0 .5.22.5.5v15z"/>                  
+                  </svg>
                 </span>
                 <span className="ml-2 font-semibold text-sm tracking-wide truncate font-sans">Attendance</span>
               </Link>
@@ -84,6 +86,7 @@ const Dashboard = () => {
 
             <li>
             <Link to="/dashboard/equipment" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-red-500 pr-6">
+
                 <span class="inline-flex justify-center items-center ml-4">
                 <svg class="w-5 h-5" fill="none" stroke="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M23.2192 16.0796L25.0072 14.2916L23.2192 12.5036L18.7554 16.9674L8.03981 6.2518L12.5036 1.78801L10.7156 0L8.92757 1.78801L7.13955 0L4.46378 2.67577L2.67577 0.887755L0.887755 2.67577L2.67577 4.46378L0 7.13955L1.78801 8.92757L0 10.7156L1.78801 12.5036L6.2518 8.03981L16.9674 18.7554L12.5036 23.2192L14.2916 25.0072L16.0796 23.2192L17.8676 25.0072L20.5434 22.3314L22.3314 24.1194L24.1194 22.3314L22.3314 20.5434L25.0072 17.8676L23.2192 16.0796Z" fill="currentColor"/>
@@ -95,6 +98,7 @@ const Dashboard = () => {
 
             <li>
             <Link to="/dashboard/package" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-red-500 pr-6">
+
                 <span class="inline-flex justify-center items-center ml-4">
                 <svg class="w-5 h-6" fill="none" stroke="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_1035_1078)">
@@ -124,6 +128,7 @@ const Dashboard = () => {
 
             <li>
             <Link to="/dashboard/schedule" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-red-500 pr-6">
+
                 <span class="inline-flex justify-center items-center ml-4">
                 <svg class="w-6 h-5" fill="none" stroke="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21.3333 4C22.0697 4 22.6667 4.59696 22.6667 5.33333V6.66667H25.3333C26.8061 6.66667 28 7.86057 28 9.33333V25.3333C28 26.8061 26.8061 28 25.3333 28H6.66667C5.19391 28 4 26.8061 4 25.3333V9.33333C4 7.86057 5.19391 6.66667 6.66667 6.66667H9.33333V5.33333C9.33333 4.59696 9.93028 4 10.6667 4C11.4031 4 12 4.59696 12 5.33333V6.66667H20V5.33333C20 4.59696 20.5969 4 21.3333 4ZM25.3333 9.33333H6.66667V25.3333H25.3333V9.33333ZM19.7655 12.505C20.2861 11.9843 21.1304 11.9843 21.6511 12.505C22.1719 13.0257 22.1719 13.8699 21.6511 14.3905L15.0609 20.9808C14.5349 21.5067 13.6823 21.5067 13.1564 20.9808L10.3374 18.1619C9.81671 17.6411 9.81671 16.7969 10.3374 16.2761C10.8581 15.7555 11.7023 15.7555 12.223 16.2761L14.1087 18.1619L19.7655 12.505Z" fill="currentColor"/>
@@ -163,6 +168,7 @@ const Dashboard = () => {
           </ul>
         </div>
       </div>
+
   <div className="flex-grow flex flex-col ml-64 pt-9 px-12">
   <div className="h-16 bg-#1E1E1E flex items-center px-6"> {/*shadow-md*/}
     <img src={LogoSmall} alt='image1' className='w-10' />
@@ -176,7 +182,6 @@ const Dashboard = () => {
     <Outlet />
   </div>
 </div>
-
     </div>
   );
 };

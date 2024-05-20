@@ -13,6 +13,7 @@ router.post("/adminlogin", (req, res) => {
       const token = jwt.sign(
         { role: "admin", username: username },
         "jwt_secret_key",
+
         { expiresIn: "1d" }//secret key must be very secure one
       ); 
       res.cookie('token', token)
@@ -30,13 +31,4 @@ router.post('/add_package', (req, res) =>{
     return res.json({Status: true})
   })
 })
-
-router.get('/package',(req, res)=>{
-  const sql = "SELECT * FROM package";
-  con.query(sql, [req.body.packageName, req.body.rate], (err, result)=>{
-    if (err) return res.json({ Status: false, Error: "Query error" })
-    return res.json({Status: true, Result: result})
-  })
-})
-
 export { router as adminRouter };

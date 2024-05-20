@@ -20,6 +20,7 @@ import AddPackage from './components/addPackage'
 
 
 
+
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 function App() {
@@ -43,7 +44,6 @@ function App() {
           <Route path='/dashboard/report' element={<Report/>}></Route>  
           <Route path='/dashboard/feedback' element={<Feedback/>}></Route>
           <Route path='/dashboard/add_package' element={<AddPackage/>}></Route>
-
         </Route>
       </Routes>
     </BrowserRouter>
