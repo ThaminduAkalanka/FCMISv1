@@ -3,6 +3,21 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const addMember = () => {
+
+const [values, setvalues] = useState({
+    name: '',
+    username: '',
+    password:'',
+    email:'',
+    contact: '',
+    image: '',
+    medical: '',
+    dob:'',
+    gender:'',
+    packageID: '',
+    personal:'',
+    registerDate:''
+}) 
   const navigate = useNavigate();
   const [Package, setPackage] = useState([])
 
@@ -15,7 +30,14 @@ const addMember = () => {
           alert(result.data.Error)
         }
       }).catch(err => console.log(err))
-    },[]) /*there are 3 types of use effect*/
+    },[]) ;/*there are 3 types of use effect*/
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        axios.post('http://localhost:3000/auth/add_member', values)
+            .then(result => console.log(result.data))
+            .catch(err => console.log(err))
+    }
 
   return (
     <div className="grid grid-flow-row auto-rows-max space-y-4">
@@ -24,10 +46,10 @@ const addMember = () => {
       </h2>
       <div className="w-full max-w-">
         <form
-          /*onSubmit={handleSubmit}*/ className="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={handleSubmit} className="relative overflow-x-auto" //bg-neutral-600 shadow-md rounded px-8 pt-3 pb-5 mb-4
         >
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-1 space-y-3">
+          <div className="grid grid-cols-2 gap-10">
+            <div className="col-span-1 space-y-2">
               <label className="flex justify-left" htmlFor="Name">
                 Name
               </label>
@@ -36,7 +58,7 @@ const addMember = () => {
                 name="Name"
                 autoComplete="off"
                 placeholder="Enter Name"
-                //onChange={(e) => setvalues({ ...values, Name: e.target.value })}
+                onChange={(e) => setvalues({ ...values, name: e.target.value })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
 
@@ -48,7 +70,7 @@ const addMember = () => {
                 name="username"
                 autoComplete="off"
                 placeholder="Enter Username"
-                //onChange={(e) => setvalues({ ...values, Username: e.target.value })}
+                onChange={(e) => setvalues({ ...values, username: e.target.value })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
 
@@ -60,7 +82,7 @@ const addMember = () => {
                 name="password"
                 autoComplete="off"
                 placeholder="Enter Password"
-                //onChange={(e) => setvalues({ ...values, Password: e.target.value })}
+                onChange={(e) => setvalues({ ...values, password: e.target.value })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
 
@@ -72,7 +94,7 @@ const addMember = () => {
                 name="email"
                 autoComplete="off"
                 placeholder="Enter Email"
-                //onChange={(e) => setvalues({ ...values, Email: e.target.value })}
+                onChange={(e) => setvalues({ ...values, email: e.target.value })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
               <label className="flex justify-left" htmlFor="contact">
@@ -83,11 +105,25 @@ const addMember = () => {
                 name="contact"
                 autoComplete="off"
                 placeholder="Enter Contact Number"
-                //onChange={(e) => setvalues({ ...values, Contact: e.target.value })}
+                onChange={(e) => setvalues({ ...values, contact: e.target.value })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
+
+              <label className="flex justify-left" htmlFor="contact">
+                Image
+              </label>
+              <input
+                type="file"
+                name="image"
+                placeholder="Upload Image"
+                onChange={(e) => setvalues({ ...values, image: e.target.files[0] })}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+              
             </div>
-            <div className="col-span-1 space-y-3">
+
+
+            <div className="col-span-1 space-y-2">
               <label className="flex justify-left" htmlFor="medical">
                 Medical conditions
               </label>
@@ -96,8 +132,8 @@ const addMember = () => {
                 name="medical"
                 autoComplete="off"
                 placeholder="Enter if there any medical condtions"
-                //onChange={(e) => setvalues({ ...values, Medical: e.target.value })}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                onChange={(e) => setvalues({ ...values, medical: e.target.value })}
+                className="shadow appearance-none border rounded w-full h-28 py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
 
               <label className="flex justify-left" htmlFor="username1">
@@ -108,7 +144,7 @@ const addMember = () => {
                 name="dob"
                 autoComplete="off"
                 placeholder="Enter Date of Birth"
-                //onChange={(e) => setvalues({ ...values, Username: e.target.value })}
+                onChange={(e) => setvalues({ ...values, dob: e.target.value })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
 
@@ -116,7 +152,8 @@ const addMember = () => {
                 Gender
               </label>
               <select
-                name="gender"
+                name="gender" id='gender'
+                onChange={(e) => setvalues({ ...values, gender: e.target.value })}
                 class="block w-full px-3 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none"
               >
                 <option>Male</option>
@@ -128,18 +165,20 @@ const addMember = () => {
               </label>
               <select
                 name="package" id ='package'
+                onChange={(e) => setvalues({ ...values, packageID: e.target.value })}
                 class="block w-full px-3 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none"
               >
                 {Package.map(p =>{
-                    return <option value={p.packageName}>{p.packageName}</option>
+                    return <option value={p.packageID}>{p.packageName}</option>
                 })}
               </select>
 
-              <label className="flex justify-left" htmlFor="gender">
+              <label className="flex justify-left" htmlFor="personal">
                 Personal Training
               </label>
               <select
-                name="gender"
+                name="personal" id='personal'
+                onChange={(e) => setvalues({ ...values, personal: e.target.value })}
                 class="block w-full px-3 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none"
               >
                 <option>Yes</option>
@@ -155,6 +194,7 @@ const addMember = () => {
                 >
                   Register
                 </button>
+                
                 <button
                   type="button"
                   onClick={() => navigate("/dashboard/member")}

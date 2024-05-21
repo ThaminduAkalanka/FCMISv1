@@ -1,6 +1,7 @@
 import express from "express";
 import con from "../utils/db.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
@@ -36,6 +37,32 @@ router.get('/package',(req, res)=>{
   con.query(sql, [req.body.packageName, req.body.rate], (err, result)=>{
     if (err) return res.json({ Status: false, Error: "Query error" })
     return res.json({Status: true, Result: result})
+  })
+})
+
+router.post('/add_member', (req, res) =>{
+  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `personal`, `packageID`) VALUES (?)";
+  bcrypt.hash(req.body.password, 10, (err, hash)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+      const values =[
+        req.body.name,
+        req.body.username,
+        hash,
+        req.body.email,
+        req.body.contact,
+        req.body.image,
+        req.body.medical,
+        req.body.dob,
+        req.body.gender,
+        req.body.personal,
+        req.body.packageID, 
+      ]
+
+      con.query(sql, [values], (err, result)=>{
+        if (err) return res.json({ Status: false, Error: "Query error1" })
+        return res.json({Status: true})
+      })
+
   })
 })
 
