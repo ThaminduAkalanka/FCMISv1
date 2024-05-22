@@ -18,6 +18,7 @@ import Report from './components/report'
 import Feedback from './components/feedback'
 import AddPackage from './components/addPackage'
 import AddMember from './components/addMember'
+import AddTrainer from './components/addTrainer'
 
 
 
@@ -45,6 +46,7 @@ function App() {
           <Route path='/dashboard/feedback' element={<Feedback/>}></Route>
           <Route path='/dashboard/add_package' element={<AddPackage/>}></Route>
           <Route path='/dashboard/add_member' element={<AddMember/>}></Route>
+          <Route path='/dashboard/add_trainer' element={<AddTrainer/>}></Route>
 
         </Route>
       </Routes>

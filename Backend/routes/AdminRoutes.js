@@ -96,7 +96,35 @@ router.get('/member',(req, res)=>{
   })
 })
 
+router.post('/add_trainer', upload.single('image'), (req, res) =>{
+  const registerDate = new Date();
+  const sql = "INSERT INTO `trainer` (`name`, `username`, `password`, `contact`, `registerDate`, `image`) VALUES (?)";
+  bcrypt.hash(req.body.password, 10, (err, hash)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+      const values =[
+        req.body.name,
+        req.body.username,
+        hash,
+        req.body.contact,
+        registerDate, 
+        req.file.filename
+      ]
 
+      con.query(sql, [values], (err, result)=>{
+        if (err) return res.json({ Status: false, Error: "Query error" })
+        return res.json({Status: true})
+      })
+
+  })
+})
+
+router.get('/trainer',(req, res)=>{
+  const sql = "SELECT * FROM trainer";
+  con.query(sql, (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
 
 
 export { router as adminRouter };
