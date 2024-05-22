@@ -156,6 +156,7 @@ const [values, setvalues] = useState({
                 onChange={(e) => setvalues({ ...values, gender: e.target.value })}
                 class="block w-full px-3 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none"
               >
+                <option>Select Gender</option>
                 <option>Male</option>
                 <option>Female</option>
               </select>
@@ -168,6 +169,7 @@ const [values, setvalues] = useState({
                 onChange={(e) => setvalues({ ...values, packageID: e.target.value })}
                 class="block w-full px-3 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none"
               >
+                    <option>Select Package</option>
                 {Package.map(p =>{
                     return <option value={p.packageID}>{p.packageName}</option>
                 })}
@@ -181,6 +183,7 @@ const [values, setvalues] = useState({
                 onChange={(e) => setvalues({ ...values, personal: e.target.value })}
                 class="block w-full px-3 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none"
               >
+                <option>Select if personal training is needed</option>
                 <option>Yes</option>
                 <option>No</option>
               </select>

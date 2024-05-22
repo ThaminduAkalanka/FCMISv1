@@ -41,7 +41,8 @@ router.get('/package',(req, res)=>{
 })
 
 router.post('/add_member', (req, res) =>{
-  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `personal`, `packageID`) VALUES (?)";
+  const registerDate = new Date();
+  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `personal`, `registerDate`, `packageID`) VALUES (?)";
   bcrypt.hash(req.body.password, 10, (err, hash)=>{
     if (err) return res.json({ Status: false, Error: "Query error" })
       const values =[
@@ -55,6 +56,7 @@ router.post('/add_member', (req, res) =>{
         req.body.dob,
         req.body.gender,
         req.body.personal,
+        registerDate,
         req.body.packageID, 
       ]
 
