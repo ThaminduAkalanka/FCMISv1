@@ -34,8 +34,27 @@ const [values, setvalues] = useState({
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        axios.post('http://localhost:3000/auth/add_member', values)
-            .then(result => console.log(result.data))
+        const formData = new FormData();
+        formData.append('name', values.name);
+        formData.append('username', values.username);
+        formData.append('password', values.password);
+        formData.append('email', values.email);
+        formData.append('contact', values.contact);
+        formData.append('image', values.image);
+        formData.append('medical', values.medical);
+        formData.append('dob', values.dob);
+        formData.append('gender', values.gender);
+        formData.append('packageID', values.packageID);
+        formData.append('personal', values.personal);
+        
+        axios.post('http://localhost:3000/auth/add_member', formData)
+            .then(result => {
+                if (result.data.Status) {
+                    navigate('/dashboard/member')
+                } else {
+                    alert(result.data.Error)
+                }
+            })
             .catch(err => console.log(err))
     }
 
