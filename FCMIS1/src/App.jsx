@@ -19,6 +19,7 @@ import Feedback from './components/feedback'
 import AddPackage from './components/addPackage'
 import AddMember from './components/addMember'
 import AddTrainer from './components/addTrainer'
+import EditMember from './components/editMember'
 
 
 
@@ -47,6 +48,7 @@ function App() {
           <Route path='/dashboard/add_package' element={<AddPackage/>}></Route>
           <Route path='/dashboard/add_member' element={<AddMember/>}></Route>
           <Route path='/dashboard/add_trainer' element={<AddTrainer/>}></Route>
+          <Route path='/dashboard/edit_member/:memberID' element={<EditMember/>}></Route>
 
         </Route>
       </Routes>

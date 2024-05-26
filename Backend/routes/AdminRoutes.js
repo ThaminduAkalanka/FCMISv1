@@ -127,4 +127,32 @@ router.get('/trainer',(req, res)=>{
 })
 
 
+router.get('/member/:memberID', (req,res) => {
+  const memberID = req.params.memberID;
+  const sql = `SELECT * FROM member WHERE memberID = ?`;
+  con.query(sql, [memberID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.put('/edit_member/:memberID', (req,res) => {
+  const memberID = req.params.memberID;
+  const sql = `UPDATE member SET name = ?, email = ?, contact = ?, medical = ?, packageID= ?, personal = ? WHERE memberID = ?`;
+  const values=[
+    req.body.name, 
+    req.body.email, 
+    req.body.contact, 
+    req.body.medical, 
+    req.body.packageID, 
+    req.body.personal
+  ]
+  con.query(sql, [...values, memberID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error"+err })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+
+
 export { router as adminRouter };
