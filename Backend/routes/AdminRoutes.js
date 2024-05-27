@@ -153,6 +153,15 @@ router.put('/edit_member/:memberID', (req,res) => {
   })
 })
 
+router.delete('/delete_member/:memberID', (req,res) => {
+  const memberID = req.params.memberID;
+  const sql = `DELETE FROM member WHERE memberID = ?`;
+  con.query(sql, [memberID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
 
 
 export { router as adminRouter };

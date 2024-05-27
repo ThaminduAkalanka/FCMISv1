@@ -1,11 +1,12 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const member = () => {
 
   const [member, setMember] = useState([])
   const [Package, setPackages] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() =>{
     axios.get('http://localhost:3000/auth/member')
@@ -35,6 +36,17 @@ const member = () => {
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
     return new Date(dateString).toLocaleDateString(undefined, options)
+  }
+
+  const handleDelete = (memberID) =>{
+    axios.delete('http://localhost:3000/auth/delete_member/'+memberID)
+    .then(result =>{
+      if (result.data.Status){
+        window.location.reload()
+      }else{
+        alert(result.data.Error)
+      }
+    }).catch(err => console.log(err))
   }
 
   return (
@@ -81,8 +93,9 @@ const member = () => {
                 <td>
                   <Link to= {"/dashboard/edit_member/"+m.memberID} class="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
                     Edit</Link>
-                  <Link class="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
-                    Delete</Link>
+                  <button class="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 "
+                  onClick={() => handleDelete(m.memberID)}>
+                    Delete</button>
                 </td>
               </tr>
             ))
