@@ -26,6 +26,11 @@ router.post("/adminlogin", (req, res) => {
   });
 });
 
+router.get('/logout', (req, res)=>{
+  res.clearCookie('token')
+  return res.json({Status: true})
+})
+
 
 //image upload
 const storage = multer.diskStorage({

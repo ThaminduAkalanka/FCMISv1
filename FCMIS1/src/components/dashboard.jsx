@@ -1,10 +1,22 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import LogoSmall from '../assets/logo1s.png'
 import Profile from '../assets/profile.jpg'
 import Noti from '../assets/noti.png'
+import axios from 'axios';
 
 const Dashboard = () => {
+  const navigate = useNavigate()
+  axios.defaults.withCredentials = true
+  const handleLogout = () => {
+    axios.get('http://localhost:3000/auth/logout')
+    .then(result =>{
+      if (result.data.Status){
+        navigate('/adminlogin');
+      }
+    }).catch(err => console.log(err))
+  }
+
   return (
     <div className="min-h-screen flex flex-row bg-#1E1E1E">
       <div className="fixed top-0 left-0 w-64 bg-black h-full shadow-lg overflow-y-auto">
@@ -151,7 +163,7 @@ const Dashboard = () => {
                 </Link>
             </li>
 
-            <li>
+            <li onClick={handleLogout}>
             <Link class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-red-500 pr-6">
                 <span class="inline-flex justify-center items-center ml-4 text-red-400">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
