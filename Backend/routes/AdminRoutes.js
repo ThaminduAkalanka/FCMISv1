@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import multer from "multer";
 import path from "path";
 
+
 const router = express.Router();
 
 router.post("/adminlogin", (req, res) => {
@@ -166,6 +167,22 @@ router.delete('/delete_member/:memberID', (req,res) => {
     return res.json({Status: true, Result: result})
   })
 })
+
+// Record a payment and update membership status
+router.post('/payment', (req, res) => {
+  const { memberID, packageID, amount, date } = req.body;
+  const paymentSql = `INSERT INTO payment (memberID, packageID, amount, paymentDate) VALUES (?, ?, ?, NOW())`;
+  con.query(paymentSql, [memberID, packageID, amount], (err, result) => {
+      if (err) throw err;
+      const membershipSql = `INSERT INTO membership (memberID, packageID, status, startDate, endDate) VALUES (?, ?, 'active', NOW(), ?) ON DUPLICATE KEY UPDATE status = 'active', startDate = NOW(), endDate = ?`;
+      con.query(membershipSql, [memberID, packageID, date, date], (err, result) => {
+          if (err) throw err;
+          res.send('Payment recorded and membership activated.');
+      });
+  });
+});
+
+
 
 
 

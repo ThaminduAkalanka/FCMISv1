@@ -1,7 +1,7 @@
 import express from "express";
 import cors from 'cors'
 import { adminRouter } from "./routes/AdminRoutes.js";
-
+import bodyParser from "body-parser";
 
 const app = express()
 app.use(cors({
@@ -11,6 +11,7 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use('/auth', adminRouter)
+app.use(bodyParser.json());
 
 app.listen(3000, () => {
     console.log("Server is running")
