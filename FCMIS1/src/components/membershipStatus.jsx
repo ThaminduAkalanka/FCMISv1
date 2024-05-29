@@ -50,7 +50,7 @@ const membershipStatus = () => {
 
 
   const handleDelete = (memberID) =>{
-    axios.delete('http://localhost:3000/auth/delete_member/'+memberID)
+    axios.delete('http://localhost:3000/auth/delete_membership/'+memberID)
     .then(result =>{
       if (result.data.Status){
         window.location.reload()
@@ -59,6 +59,15 @@ const membershipStatus = () => {
       }
     }).catch(err => console.log(err))
   }
+
+
+  const formatDate = (dateString) => {
+    if (!dateString) {
+      return '-'; // Return an empty string if the date is null or undefined
+    }
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('en-CA', options);
+  };
 
   return (
     <div class="grid grid-flow-row auto-rows-max space-y-4">
@@ -75,6 +84,8 @@ const membershipStatus = () => {
 
             <th class="py-3">Package</th>
             {/*<th class="py-3">Personal<br></br> Training</th>*/}
+            <th class="py-3">Start Date</th>
+            <th class="py-3">Expire Date</th>
             <th class="py-3">Status</th>
             <th class="py-3">Actions</th>
           </tr>
@@ -88,6 +99,8 @@ const membershipStatus = () => {
 
                 <td>{getPackageName(m.packageID)}</td>
                 {/*<td>{m.personal}</td>*/}
+                <td>{formatDate(m.startDate)}</td>
+                <td>{formatDate(m.endDate)}</td>
                 <td>{m.status}</td>
                 <td>
                   <Link to= {"/dashboard/add_payment/"+m.memberID} class="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">

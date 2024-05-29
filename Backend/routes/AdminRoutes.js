@@ -223,6 +223,19 @@ router.get('/membershipstatus',(req, res)=>{
   })
 })
 
+router.delete('/delete_membership/:memberID', (req,res) => {
+  const memberID = req.params.memberID;
+  const sql = `DELETE FROM membership WHERE memberID = ?`;
+  con.query(sql, [memberID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+      const sql = `DELETE FROM member WHERE memberID = ?`;
+    con.query(sql, [memberID], (err, result)=>{
+      if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+})
+
 
 
 

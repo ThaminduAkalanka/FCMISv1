@@ -34,9 +34,12 @@ const member = () => {
   }
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
-    return new Date(dateString).toLocaleDateString(undefined, options)
-  }
+    if (!dateString) {
+      return '-'; // Return an empty string if the date is null or undefined
+    }
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('en-CA', options);
+  };
 
   const handleDelete = (memberID) =>{
     axios.delete('http://localhost:3000/auth/delete_member/'+memberID)
