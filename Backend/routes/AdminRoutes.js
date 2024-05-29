@@ -82,6 +82,7 @@ router.get('/package',(req, res)=>{
 
 router.post('/add_member', upload.single('image'), (req, res) =>{
   const registerDate = new Date();
+  const packageID = req.body.packageID;
   const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `personal`, `registerDate`, `packageID`) VALUES (?)";
   bcrypt.hash(req.body.password, 10, (err, hash)=>{
     if (err) return res.json({ Status: false, Error: "Query error" })
@@ -97,16 +98,22 @@ router.post('/add_member', upload.single('image'), (req, res) =>{
         req.body.gender,
         req.body.personal,
         registerDate,
-        req.body.packageID 
+        packageID
       ]
 
       con.query(sql, [values], (err, result)=>{
         if (err) return res.json({ Status: false, Error: "Query error" })
-        return res.json({Status: true})
+        
+        const memberId = result.insertId;
+        const membershipSql = `INSERT INTO membership (memberID, packageID, status, startDate) VALUES (?, ?, 'pending', NOW())`;
+        con.query(membershipSql, [memberId, packageID], (err, result) => {
+          if (err) return res.json({ Status: false, Error: "Query error" })
+            return res.json({Status: true, Result: result})
       })
+    })
 
   })
-})
+}) 
 
 router.get('/member',(req, res)=>{
   const sql = "SELECT * FROM member";
@@ -182,18 +189,26 @@ router.delete('/delete_member/:memberID', (req,res) => {
   })
 })
 
-// Record a payment and update membership status
+// Record a payment,update membership status and update packageID
 router.post('/payment', (req, res) => {
   const { memberID, packageID, amount, date } = req.body;
   const paymentSql = `INSERT INTO payment (memberID, packageID, amount, paymentDate) VALUES (?, ?, ?, NOW())`;
   con.query(paymentSql, [memberID, packageID, amount], (err, result) => {
       if (err) throw err;
-      const membershipSql = `INSERT INTO membership (memberID, packageID, status, startDate, endDate) VALUES (?, ?, 'active', NOW(), ?) ON DUPLICATE KEY UPDATE status = 'active', startDate = NOW(), endDate = ?`;
-      con.query(membershipSql, [memberID, packageID, date, date], (err, result) => {
+      const membershipUpdateSql = `UPDATE membership SET packageID = ?, status = 'active', startDate = NOW(), endDate = ? WHERE memberID = ?`;
+      con.query(membershipUpdateSql, [packageID, date, memberID], (err, result) => {
           if (err) throw err;
-          res.send('Payment recorded and membership activated.');
+          const updateMemberSql = `UPDATE member SET packageID = ? WHERE memberID = ?`;
+            con.query(updateMemberSql, [packageID, memberID], (err, result) => {
+                if (err) {
+                    console.error('Error updating member package:', err);
+                    res.status(500).send('Internal Server Error');
+                    return;
+                }
+          res.send('Payment recorded and membership activated package updated.');
       });
   });
+});
 });
 
 

@@ -65,7 +65,7 @@ const payments = () => {
         >
           {packages.map((pkg) => (
             <option key={pkg.packageID} value={pkg.packageID}>
-              {pkg.packageName} - ${pkg.Rate}
+              {pkg.packageName} - {pkg.Rate} LKR
             </option>
           ))} 
         </select>

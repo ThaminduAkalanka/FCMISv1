@@ -7,6 +7,7 @@ import Dashboard from './components/dashboard'
 import Home from './components/home'
 import Profile from './components/profile'
 import Member from './components/member'
+import Status from './components/membershipStatus'
 import Attendance from './components/attendance'
 import Payment from './components/payments'
 import Equipment from './components/equipment'
@@ -36,6 +37,7 @@ function App() {
           <Route path='/dashboard/' element={<Home/>}></Route>
           <Route path='/dashboard/profile' element={<Profile/>}></Route>
           <Route path='/dashboard/member' element={<Member/>}></Route>
+          <Route path='/dashboard/status' element={<Status/>}></Route>
           <Route path='/dashboard/attendance' element={<Attendance/>}></Route>
           <Route path='/dashboard/payment' element={<Payment/>}></Route>        
           <Route path='/dashboard/equipment' element={<Equipment/>}></Route>
