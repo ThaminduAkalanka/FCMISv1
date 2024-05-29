@@ -3,6 +3,7 @@ import cors from 'cors'
 import { adminRouter } from "./routes/AdminRoutes.js";
 import bodyParser from "body-parser";
 
+
 const app = express()
 app.use(cors({
     origin: ["http://localhost:5173"],
@@ -16,3 +17,4 @@ app.use(bodyParser.json());
 app.listen(3000, () => {
     console.log("Server is running")
 })
+

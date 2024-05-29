@@ -4,9 +4,23 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import multer from "multer";
 import path from "path";
-
+import cron from 'node-cron';
 
 const router = express.Router();
+
+// Cron job to check for expired memberships and update their status
+cron.schedule('0 0 * * *', () => {  // Runs every day at midnight
+  const checkSql = `UPDATE membership SET status = "expired" WHERE endDate < NOW() AND status = "active"`;
+  con.query(checkSql, (err, result) => {
+      if (err) {
+          console.error('Error updating membership status:', err);
+          return;
+      }
+      console.log('Membership statuses updated.');
+  });
+});
+
+
 
 router.post("/adminlogin", (req, res) => {
   const sql = "SELECT * FROM admin WHERE username = ? and password = ?";
