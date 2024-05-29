@@ -45,7 +45,7 @@ const [values, setvalues] = useState({
         formData.append('dob', values.dob);
         formData.append('gender', values.gender);
         formData.append('packageID', values.packageID);
-        formData.append('personal', values.personal);
+        {/*formData.append('personal', values.personal);*/}
         
         axios.post('http://localhost:3000/auth/add_member', formData)
             .then(result => {
@@ -194,7 +194,7 @@ const [values, setvalues] = useState({
                 })}
               </select>
 
-              <label className="flex justify-left" htmlFor="personal">
+             {/* <label className="flex justify-left" htmlFor="personal">
                 Personal Training
               </label>
               <select
@@ -205,7 +205,7 @@ const [values, setvalues] = useState({
                 <option>Select if personal training is needed</option>
                 <option>Yes</option>
                 <option>No</option>
-              </select>
+              </select>*/}
 
 
               <br></br>

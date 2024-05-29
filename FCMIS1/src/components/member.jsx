@@ -73,7 +73,7 @@ const member = () => {
             <th class="py-3">Gender</th>
             <th class="py-3">DOB</th>
             <th class="py-3">Package</th>
-            <th class="py-3">Personal<br></br> Training</th>
+            {/*<th class="py-3">Personal<br></br> Training</th>*/}
             <th class="py-3">Actions</th>
           </tr>
         </thead>
@@ -89,7 +89,7 @@ const member = () => {
                 <td>{m.gender}</td>
                 <td>{formatDate(m.dob)}</td>
                 <td>{getPackageName(m.packageID)}</td>
-                <td>{m.personal}</td>
+                {/*<td>{m.personal}</td>*/}
                 <td>
                   <Link to= {"/dashboard/edit_member/"+m.memberID} class="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
                     Edit</Link>

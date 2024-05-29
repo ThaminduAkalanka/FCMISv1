@@ -21,7 +21,7 @@ cron.schedule('0 0 * * *', () => {  // Runs every day at midnight
 });
 
 
-
+//login
 router.post("/adminlogin", (req, res) => {
   const sql = "SELECT * FROM admin WHERE username = ? and password = ?";
   con.query(sql, [req.body.username, req.body.password], (err, result) => {
@@ -60,8 +60,8 @@ const upload = multer ({
   storage: storage
 })
 
-//end image upload
 
+//package
 router.post('/add_package', (req, res) =>{
   const sql = " INSERT INTO package (`packageName`, `rate`) VALUES (?,?)";
   con.query(sql, [req.body.packageName, req.body.rate], (err, result)=>{
@@ -78,12 +78,12 @@ router.get('/package',(req, res)=>{
   })
 })
 
-
+//member
 
 router.post('/add_member', upload.single('image'), (req, res) =>{
   const registerDate = new Date();
   const packageID = req.body.packageID;
-  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `personal`, `registerDate`, `packageID`) VALUES (?)";
+  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `registerDate`, `packageID`) VALUES (?)"; //peronsal ain kra methana
   bcrypt.hash(req.body.password, 10, (err, hash)=>{
     if (err) return res.json({ Status: false, Error: "Query error" })
       const values =[
@@ -96,7 +96,7 @@ router.post('/add_member', upload.single('image'), (req, res) =>{
         req.body.medical,
         req.body.dob,
         req.body.gender,
-        req.body.personal,
+        //req.body.personal,
         registerDate,
         packageID
       ]
@@ -123,6 +123,44 @@ router.get('/member',(req, res)=>{
   })
 })
 
+
+router.get('/member/:memberID', (req,res) => {
+  const memberID = req.params.memberID;
+  const sql = `SELECT * FROM member WHERE memberID = ?`;
+  con.query(sql, [memberID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.put('/edit_member/:memberID', (req,res) => {
+  const memberID = req.params.memberID;
+  const sql = `UPDATE member SET name = ?, email = ?, contact = ?, medical = ?  WHERE memberID = ?`; //packageID= ?,personal = ?
+  const values=[
+    req.body.name, 
+    req.body.email, 
+    req.body.contact, 
+    req.body.medical, 
+    //req.body.packageID, 
+    //req.body.personal
+  ]
+  con.query(sql, [...values, memberID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error"+err })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.delete('/delete_member/:memberID', (req,res) => {
+  const memberID = req.params.memberID;
+  const sql = `DELETE FROM member WHERE memberID = ?`;
+  con.query(sql, [memberID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+
+//trainer
 router.post('/add_trainer', upload.single('image'), (req, res) =>{
   const registerDate = new Date();
   const sql = "INSERT INTO `trainer` (`name`, `username`, `password`, `contact`, `registerDate`, `image`) VALUES (?)";
@@ -154,41 +192,7 @@ router.get('/trainer',(req, res)=>{
 })
 
 
-router.get('/member/:memberID', (req,res) => {
-  const memberID = req.params.memberID;
-  const sql = `SELECT * FROM member WHERE memberID = ?`;
-  con.query(sql, [memberID], (err, result)=>{
-    if (err) return res.json({ Status: false, Error: "Query error" })
-    return res.json({Status: true, Result: result})
-  })
-})
-
-router.put('/edit_member/:memberID', (req,res) => {
-  const memberID = req.params.memberID;
-  const sql = `UPDATE member SET name = ?, email = ?, contact = ?, medical = ?, packageID= ?, personal = ? WHERE memberID = ?`;
-  const values=[
-    req.body.name, 
-    req.body.email, 
-    req.body.contact, 
-    req.body.medical, 
-    req.body.packageID, 
-    req.body.personal
-  ]
-  con.query(sql, [...values, memberID], (err, result)=>{
-    if (err) return res.json({ Status: false, Error: "Query error"+err })
-    return res.json({Status: true, Result: result})
-  })
-})
-
-router.delete('/delete_member/:memberID', (req,res) => {
-  const memberID = req.params.memberID;
-  const sql = `DELETE FROM member WHERE memberID = ?`;
-  con.query(sql, [memberID], (err, result)=>{
-    if (err) return res.json({ Status: false, Error: "Query error" })
-    return res.json({Status: true, Result: result})
-  })
-})
-
+//payment
 // Record a payment,update membership status and update packageID
 router.post('/payment', (req, res) => {
   const { memberID, packageID, amount, date } = req.body;
@@ -210,6 +214,14 @@ router.post('/payment', (req, res) => {
   });
 });
 });
+
+router.get('/membershipstatus',(req, res)=>{
+  const sql = "SELECT * FROM membership";
+  con.query(sql, (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
 
 
 

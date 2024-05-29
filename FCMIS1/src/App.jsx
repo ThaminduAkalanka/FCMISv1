@@ -21,7 +21,7 @@ import AddPackage from './components/addPackage'
 import AddMember from './components/addMember'
 import AddTrainer from './components/addTrainer'
 import EditMember from './components/editMember'
-
+import AddPayment from './components/addPayment'
 
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
@@ -51,6 +51,7 @@ function App() {
           <Route path='/dashboard/add_member' element={<AddMember/>}></Route>
           <Route path='/dashboard/add_trainer' element={<AddTrainer/>}></Route>
           <Route path='/dashboard/edit_member/:memberID' element={<EditMember/>}></Route>
+          <Route path='/dashboard/add_payment/:memberID' element={<AddPayment/>}></Route>
 
         </Route>
       </Routes>

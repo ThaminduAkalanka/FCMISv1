@@ -123,7 +123,7 @@ const editMember = () => {
                 className="shadow appearance-none border rounded w-full h-28 py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
 
-              <label className="flex justify-left" htmlFor="package">
+             {/* <label className="flex justify-left" htmlFor="package">
                 Package
               </label>
               <select
@@ -148,9 +148,10 @@ const editMember = () => {
                 <option>Select if personal training is needed</option>
                 <option>Yes</option>
                 <option>No</option>
-              </select>
+              </select>*/}
 
 
+              <br></br>
               <br></br>
               <div className="flex space-x-2">
                 <button
