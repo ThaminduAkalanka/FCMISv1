@@ -104,10 +104,10 @@ const membershipStatus = () => {
                 <td>{m.status}</td>
                 <td>
                   <Link to= {"/dashboard/add_payment/"+m.memberID} class="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
-                    Add</Link>
-                  <button class="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 "
+                    Add Payment</Link>
+                  {/*<button class="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 "
                   onClick={() => handleDelete(m.memberID)}>
-                    Delete</button>
+                    Delete</button>*/}
                 </td>
               </tr>
             ))

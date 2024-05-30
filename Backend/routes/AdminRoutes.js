@@ -357,6 +357,14 @@ router.delete('/delete_membership/:memberID', (req,res) => {
 })
 })
 
+router.delete('/delete_payment/:paymentID', (req,res) => {
+  const paymentID = req.params.paymentID;
+  const sql = `DELETE FROM payment WHERE paymentID = ?`;
+  con.query(sql, [paymentID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
 
 
 
