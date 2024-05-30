@@ -19,11 +19,24 @@ const trainer = () => {
 
   },[])
 
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
-    return new Date(dateString).toLocaleDateString(undefined, options)
+  const handleDelete = (trainerID) =>{
+    axios.delete('http://localhost:3000/auth/delete_trainer/'+trainerID)
+    .then(result =>{
+      if (result.data.Status){
+        window.location.reload()
+      }else{
+        alert(result.data.Error)
+      }
+    }).catch(err => console.log(err))
   }
 
+  const formatDate = (dateString) => {
+    if (!dateString) {
+      return '-'; // Return an empty string if the date is null or undefined
+    }
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('en-CA', options);
+  };
   return (
     <div class="grid grid-flow-row auto-rows-max space-y-4">
       <div>
@@ -58,9 +71,10 @@ const trainer = () => {
                 <td>{m.contact}</td>
                 <td>{formatDate(m.registerDate)}</td>
                 <td>
-                  <button class="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
-                    Edit</button>
-                  <button class="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
+                <Link to= {"/dashboard/edit_trainer/"+m.trainerID} class="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
+                    Edit</Link>
+                  <button class="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 "
+                  onClick={() => handleDelete(m.trainerID)}>
                     Delete</button>
                 </td>
               </tr>

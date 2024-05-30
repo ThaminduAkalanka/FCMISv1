@@ -78,6 +78,38 @@ router.get('/package',(req, res)=>{
   })
 })
 
+router.get('/package/:packageID', (req,res) => {
+  const packageID = req.params.packageID;
+  const sql = `SELECT * FROM package WHERE packageID = ?`;
+  con.query(sql, [packageID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.put('/edit_package/:packageID', (req,res) => {
+  const packageID = req.params.packageID;
+  const sql = `UPDATE package SET packageName = ?, Rate = ?  WHERE packageID = ?`;
+  const values=[
+    req.body.packageName, 
+    req.body.Rate, 
+  ]
+  con.query(sql, [...values, packageID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error"+err })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+
+router.delete('/delete_package/:packageID', (req,res) => {
+  const packageID = req.params.packageID;
+  const sql = `DELETE FROM package WHERE packageID = ?`;
+  con.query(sql, [packageID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
 //member
 
 router.post('/add_member', upload.single('image'), (req, res) =>{
@@ -191,6 +223,36 @@ router.get('/trainer',(req, res)=>{
   })
 })
 
+router.get('/trainer/:trainerID', (req,res) => {
+  const trainerID = req.params.trainerID;
+  const sql = `SELECT * FROM trainer WHERE trainerID = ?`;
+  con.query(sql, [trainerID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.put('/edit_trainer/:trainerID', (req,res) => {
+  const trainerID = req.params.trainerID;
+  const sql = `UPDATE trainer SET name = ?, contact = ?  WHERE trainerID = ?`;
+  const values=[
+    req.body.name, 
+    req.body.contact, 
+  ]
+  con.query(sql, [...values, trainerID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error"+err })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.delete('/delete_trainer/:trainerID', (req,res) => {
+  const packageID = req.params.trainerID;
+  const sql = `DELETE FROM trainer WHERE trainerID = ?`;
+  con.query(sql, [packageID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
 
 //payment
 // Record a payment,update membership status and update packageID
@@ -214,6 +276,15 @@ router.post('/payment', (req, res) => {
   });
 });
 });
+
+router.get('/paymentdisplay',(req, res)=>{
+  const sql = "SELECT * FROM payment";
+  con.query(sql, (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
 
 router.get('/membershipstatus',(req, res)=>{
   const sql = "SELECT * FROM membership";
