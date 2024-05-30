@@ -2,41 +2,41 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
-const editTrainer = () => {
+const editEquipment = () => {
   const navigate = useNavigate();
-  const { trainerID } = useParams();
+  const { equipmentID } = useParams();
 
   const [values, setValues] = useState({
-    name: "",
-    contact: "",
+    equipmentName: "",
+    quantity: "",
   });
 
 
   useEffect(() => {
 
     axios
-      .get(`http://localhost:3000/auth/trainer/${trainerID}`)
+      .get(`http://localhost:3000/auth/equipment/${equipmentID}`)
       .then((result) => {
         if (result.data.Result && result.data.Result.length > 0) {
           setValues({
-            name: result.data.Result[0].name, 
-            contact: result.data.Result[0].contact,
+            equipmentName: result.data.Result[0].equipmentName, 
+            quantity: result.data.Result[0].quantity,
           });
         } else {
-          alert("trainer not found");
-          navigate("/dashboard/trainer");
+          alert("equipment not found");
+          navigate("/dashboard/equipment");
         }
       })
       .catch((err) => console.log(err));
-  }, [trainerID]);
+  }, [equipmentID]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .put(`http://localhost:3000/auth/edit_trainer/${trainerID}`, values)
+      .put(`http://localhost:3000/auth/edit_equipment/${equipmentID}`, values)
       .then((result) => {
         if (result.data.Status) {
-          navigate("/dashboard/trainer");
+          navigate("/dashboard/equipment");
         } else {
           alert(result.data.Error);
         }
@@ -46,24 +46,24 @@ const editTrainer = () => {
 
   return (
     <div className="grid grid-flow-row auto-rows-max space-y-4">
-      <h2 className="flex justify-left font-bold text-lg pb-6">Edit Trainer</h2>
+      <h2 className="flex justify-left font-bold text-lg pb-6">Edit Equipment</h2>
       <div className="w-full max-w-xs">
         <form
           onSubmit={handleSubmit}
           className="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-8 pt-6 pb-8 mb-4"
         >
           <div className="space-y-3">
-            <label className="flex justify-left" htmlFor="name">
-              name
+            <label className="flex justify-left" htmlFor="equipmentName">
+            Equipment name
             </label>
             <input
               type="text"
-              name="name"
+              name="equipmentName"
               autoComplete="off"
               placeholder=""
-              value={values.name}
+              value={values.equipmentName}
               onChange={(e) =>
-                setValues({ ...values, name: e.target.value })
+                setValues({ ...values, equipmentName: e.target.value })
               }
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
@@ -73,15 +73,15 @@ const editTrainer = () => {
 
           <div className="space-y-3">
           <label className="flex justify-left" htmlFor="contact">
-                Contact
+                Quantity
               </label>
               <input
-                type="tel"
-                name="contact"
+                type="number"
+                name="quantity"
                 autoComplete="off"
-                placeholder="Enter Contact Number"
-                value={values.contact}
-                onChange={(e) => setValues({ ...values, contact: e.target.value })}
+                placeholder="Enter Quantity"
+                value={values.quantity}
+                onChange={(e) => setValues({ ...values, quantity: e.target.value })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
           </div>
@@ -95,7 +95,7 @@ const editTrainer = () => {
             </button>
             <button
               type="button"
-              onClick={() => navigate("/dashboard/package")}
+              onClick={() => navigate("/dashboard/equipment")}
               className="flex-1 focus:outline-none text-black bg-white hover:bg-neutral-400 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900"
             >
               Cancel
@@ -107,4 +107,4 @@ const editTrainer = () => {
   );
 };
 
-export default editTrainer;
+export default editEquipment

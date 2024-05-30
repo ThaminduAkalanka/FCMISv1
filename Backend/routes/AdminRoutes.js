@@ -246,13 +246,63 @@ router.put('/edit_trainer/:trainerID', (req,res) => {
 })
 
 router.delete('/delete_trainer/:trainerID', (req,res) => {
-  const packageID = req.params.trainerID;
+  const trainerID = req.params.trainerID;
   const sql = `DELETE FROM trainer WHERE trainerID = ?`;
-  con.query(sql, [packageID], (err, result)=>{
+  con.query(sql, [trainerID], (err, result)=>{
     if (err) return res.json({ Status: false, Error: "Query error" })
     return res.json({Status: true, Result: result})
   })
 })
+
+//equipment
+router.post('/add_equipment', (req, res) =>{
+  const sql = " INSERT INTO equipment (`equipmentName`, `quantity`) VALUES (?,?)";
+  con.query(sql, [req.body.equipmentName, req.body.quantity], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true})
+  })
+})
+
+router.get('/equipment',(req, res)=>{
+  const sql = "SELECT * FROM equipment";
+  con.query(sql, (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.get('/equipment/:equipmentID', (req,res) => {
+  const equipmentID = req.params.equipmentID;
+  const sql = `SELECT * FROM equipment WHERE equipmentID = ?`;
+  con.query(sql, [equipmentID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.put('/edit_equipment/:equipmentID', (req,res) => {
+  const equipmentID = req.params.equipmentID;
+  const sql = `UPDATE equipment SET equipmentName = ?, quantity = ?  WHERE equipmentID = ?`;
+  const values=[
+    req.body.equipmentName, 
+    req.body.quantity, 
+  ]
+  con.query(sql, [...values, equipmentID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error"+err })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.delete('/delete_equipment/:equipmentID', (req,res) => {
+  const equipmentID = req.params.equipmentID;
+  const sql = `DELETE FROM equipment WHERE equipmentID = ?`;
+  con.query(sql, [equipmentID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+
 
 //payment
 // Record a payment,update membership status and update packageID
