@@ -301,8 +301,7 @@ router.delete('/delete_equipment/:equipmentID', (req,res) => {
     return res.json({Status: true, Result: result})
   })
 })
-
-
+ 
 
 //payment
 // Record a payment,update membership status and update packageID
@@ -316,12 +315,8 @@ router.post('/payment', (req, res) => {
           if (err) throw err;
           const updateMemberSql = `UPDATE member SET packageID = ? WHERE memberID = ?`;
             con.query(updateMemberSql, [packageID, memberID], (err, result) => {
-                if (err) {
-                    console.error('Error updating member package:', err);
-                    res.status(500).send('Internal Server Error');
-                    return;
-                }
-          res.send('Payment recorded and membership activated package updated.');
+              if (err) return res.json({ Status: false, Error: "Query error" })
+                return res.json({Status: true, Result: result})
       });
   });
 });
