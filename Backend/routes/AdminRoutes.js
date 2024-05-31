@@ -361,7 +361,23 @@ router.delete('/delete_payment/:paymentID', (req,res) => {
   })
 })
 
+//announcement
 
+router.get('/announcement',(req, res)=>{
+  const sql = "SELECT * FROM announcement";
+  con.query(sql, (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
 
+router.delete('/delete_announce/:AnnounceID', (req,res) => {
+  const AnnounceID = req.params.AnnounceID;
+  const sql = `DELETE FROM announcement WHERE AnnounceID = ?`;
+  con.query(sql, [AnnounceID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
 
 export { router as adminRouter };

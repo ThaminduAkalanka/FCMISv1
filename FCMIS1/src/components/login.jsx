@@ -33,7 +33,7 @@ const login = () => {
     <div class='flex flex-col md:flex-row justify-evenly items-center h-screen p-20 sd:p-0'>
         <div class=''>
             <h2 class='flex justify-left font-bold text-lg pb-6' >
-                Admin Login
+                Login
             </h2>
             <div class="text-red-700 text-xs">
                 {error && error}
@@ -65,11 +65,11 @@ const login = () => {
                 </div>
                 <button class="flex-1 w-full focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                     Submit</button> {/*focus:ring-4 focus:ring-red-300*/}
-                <div>
+               {/*<div>
                     <a class="decoration-2 hover:underline text-xs" href="#">
                     Register Now!
                     </a>
-                </div>
+                    </div>*/}
                 </div>
             </form>
 
