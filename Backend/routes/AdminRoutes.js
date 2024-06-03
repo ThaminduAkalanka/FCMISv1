@@ -198,7 +198,7 @@ router.post('/mark_attendance', async (req, res) => {
           return res.json({ Status: true, message: "Check-in successful.", Result: result });
         });
       }
-    });
+    }); 
   } catch (error) {
     console.error('Error:', error);
     return res.json({ Status: false, Error: "Query error" });
