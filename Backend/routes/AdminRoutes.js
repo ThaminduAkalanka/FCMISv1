@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import multer from "multer";
 import path from "path";
 import cron from 'node-cron';
+import QRCode from 'qrcode';
 
 const router = express.Router();
 
@@ -112,40 +113,99 @@ router.delete('/delete_package/:packageID', (req,res) => {
 
 //member
 
-router.post('/add_member', upload.single('image'), (req, res) =>{
+// Add Member API
+router.post('/add_member', upload.single('image'), async (req, res) => {
   const registerDate = new Date();
   const packageID = req.body.packageID;
-  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `registerDate`, `packageID`) VALUES (?)"; //peronsal ain kra methana
-  bcrypt.hash(req.body.password, 10, (err, hash)=>{
-    if (err) return res.json({ Status: false, Error: "Query error" })
-      const values =[
-        req.body.name,
-        req.body.username,
-        hash,
-        req.body.email,
-        req.body.contact, 
-        req.file.filename,
-        req.body.medical,
-        req.body.dob,
-        req.body.gender,
-        //req.body.personal,
-        registerDate,
-        packageID
-      ]
+  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `registerDate`, `packageID`) VALUES (?)";
+  
+  try {
+    const hash = await bcrypt.hash(req.body.password, 10);
+    const values = [
+      req.body.name,
+      req.body.username,
+      hash,
+      req.body.email,
+      req.body.contact,
+      req.file.filename,
+      req.body.medical,
+      req.body.dob,
+      req.body.gender,
+      registerDate,
+      packageID
+    ];
 
-      con.query(sql, [values], (err, result)=>{
-        if (err) return res.json({ Status: false, Error: "Query error" })
-        
-        const memberId = result.insertId;
-        const membershipSql = `INSERT INTO membership (memberID, packageID, status, startDate) VALUES (?, ?, 'pending', NOW())`;
-        con.query(membershipSql, [memberId, packageID], (err, result) => {
-          if (err) return res.json({ Status: false, Error: "Query error" })
-            return res.json({Status: true, Result: result})
-      })
-    })
+    con.query(sql, [values], async (err, result) => {
+      if (err) return res.json({ Status: false, Error: "Query error" });
 
-  })
-}) 
+      const memberId = result.insertId;
+      const membershipSql = `INSERT INTO membership (memberID, packageID, status, startDate) VALUES (?, ?, 'pending', NOW())`;
+
+      con.query(membershipSql, [memberId, packageID], async (err, result) => {
+        if (err) return res.json({ Status: false, Error: "Query error" });
+
+        // Generate QR code
+        const qrCodeUrl = await QRCode.toDataURL(memberId.toString());
+
+        // Save QR code URL to the database if needed
+        const updateMemberSql = `UPDATE member SET qrCode = ? WHERE memberID = ?`;
+        con.query(updateMemberSql, [qrCodeUrl, memberId], (err, updateResult) => {
+          if (err) return res.json({ Status: false, Error: "Query error" });
+
+          return res.json({ Status: true, Result: updateResult });
+        });
+      });
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return res.json({ Status: false, Error: "Query error" });
+  }
+});
+
+// Mark Attendance API
+router.post('/mark_attendance', async (req, res) => {
+  const { memberID } = req.body;
+  console.log('Received memberID:', memberID); // Log received memberID
+
+  try {
+    const checkAttendanceSql = `SELECT * FROM attendance WHERE memberID = ? AND checkoutTime IS NULL`;
+    con.query(checkAttendanceSql, [memberID], (err, result) => {
+      if (err) {
+        console.error('Error querying attendance:', err);
+        return res.json({ Status: false, Error: "Query error" });
+      }
+
+      if (result.length > 0) {
+        // Check-out process
+        const updateAttendanceSql = `UPDATE attendance SET checkoutTime = NOW() WHERE memberID = ? AND checkoutTime IS NULL`;
+        con.query(updateAttendanceSql, [memberID], (err, result) => {
+          if (err) {
+            console.error('Error updating attendance:', err);
+            return res.json({ Status: false, Error: "Query error" });
+          }
+
+          return res.json({ Status: true, message: "Checkout successful", Result: result });
+        });
+      } else {
+        // Check-in process
+        const insertAttendanceSql = `INSERT INTO attendance (memberID, checkinTime) VALUES (?, NOW())`;
+        con.query(insertAttendanceSql, [memberID], (err, result) => {
+          if (err) {
+            console.error('Error inserting attendance:', err);
+            return res.json({ Status: false, Error: "Query error" });
+          }
+
+          return res.json({ Status: true, message: "Check-in successful.", Result: result });
+        });
+      }
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return res.json({ Status: false, Error: "Query error" });
+  }
+});
+
+
 
 router.get('/member',(req, res)=>{
   const sql = "SELECT * FROM member";
@@ -379,5 +439,6 @@ router.delete('/delete_announce/:AnnounceID', (req,res) => {
     return res.json({Status: true, Result: result})
   })
 })
+ 
 
 export { router as adminRouter };

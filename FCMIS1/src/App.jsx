@@ -27,6 +27,7 @@ import EditTrainer from './components/editTrainer'
 import AddEquipment from './components/addEquipment'
 import EditEquipment from './components/editEquipment'
 import AddAnnouncement from './components/addAnnouncement'
+import QRdisplay from './components/qrcodeDiplay'
 
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
@@ -62,6 +63,7 @@ function App() {
           <Route path='/dashboard/edit_package/:packageID' element={<EditPackage/>}></Route>
           <Route path='/dashboard/edit_trainer/:trainerID' element={<EditTrainer/>}></Route>
           <Route path='/dashboard/edit_equipment/:equipmentID' element={<EditEquipment/>}></Route>
+          <Route path='/dashboard/qr' element={<QRdisplay/>}></Route>
           
 
         </Route>
