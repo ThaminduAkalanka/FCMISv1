@@ -49,7 +49,7 @@ const packages = () => {
         <tbody>
           {
             Package.map((p, index) => (
-              <tr key={index}>
+              <tr key={index} className="border-b border-gray-200">
                 <td>{p.packageID}</td>
                 <td>{p.packageName}</td>
                 <td>{p.Rate}</td>

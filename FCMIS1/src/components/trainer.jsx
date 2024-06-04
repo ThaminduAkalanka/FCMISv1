@@ -64,7 +64,7 @@ const trainer = () => {
         <tbody>
           {
             trainer.map((m, index) => (
-              <tr key={index}>
+              <tr key={index} className="border-b border-gray-200">
                 <td>{m.trainerID}</td>
                 <td>{m.name}</td>
                 <td>{m.username}</td>

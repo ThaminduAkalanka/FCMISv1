@@ -75,8 +75,8 @@ const membershipStatus = () => {
         <h3>Membership Status</h3>
       </div>
 
-      <div class="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-      <table class="w-full text-sm text-center rtl:text-right text-white dark:text-gray-400">
+      <div className="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-2 pt-6 pb-8 mb-4">
+      <table className="w-full text-sm text-center rtl:text-right text-white dark:text-gray-400">
         <thead class="">
           <tr>
             <th class="py-3">ID</th>
@@ -93,7 +93,7 @@ const membershipStatus = () => {
         <tbody>
           {
             membership.map((m, index) => (
-              <tr key={index}>
+              <tr key={index} className="border-b border-gray-200">
                 <td class="py-2">{m.memberID}</td>
                 <td>{getName(m.memberID)}</td>
 
@@ -101,7 +101,9 @@ const membershipStatus = () => {
                 {/*<td>{m.personal}</td>*/}
                 <td>{formatDate(m.startDate)}</td>
                 <td>{formatDate(m.endDate)}</td>
-                <td>{m.status}</td>
+                <td style={{ color: m.status === 'active' ? 'lime' : m.status === 'pending' ? 'yellow' : 'red' }}>
+                  {m.status}
+                </td>
                 <td>
                   <Link to= {"/dashboard/add_payment/"+m.memberID} class="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
                     Add Payment</Link>

@@ -206,7 +206,6 @@ router.post('/mark_attendance', async (req, res) => {
 });
 
 
-
 router.get('/member',(req, res)=>{
   const sql = "SELECT * FROM member";
   con.query(sql, (err, result)=>{
@@ -214,6 +213,20 @@ router.get('/member',(req, res)=>{
     return res.json({Status: true, Result: result})
   })
 })
+
+
+// Get members with their membership status
+router.get('/member1', (req, res) => {
+  const sql = `
+    SELECT m.*, mem.status
+    FROM member m
+    LEFT JOIN membership mem ON m.memberID = mem.memberID
+  `;
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query error" });
+    return res.json({ Status: true, Result: result });
+  });
+});
 
 
 router.get('/member/:memberID', (req,res) => {
@@ -250,6 +263,18 @@ router.delete('/delete_member/:memberID', (req,res) => {
     return res.json({Status: true, Result: result})
   })
 })
+
+// Search member by name or memberID
+router.get('/search_member', (req, res) => {
+  const { query } = req.query;
+  const sql = `SELECT * FROM member WHERE name LIKE ? OR memberID LIKE ?`;
+  const searchQuery = `%${query}%`;
+  con.query(sql, [searchQuery, searchQuery], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query error" });
+    return res.json({ Status: true, Result: result });
+  });
+});
+
 
 
 //trainer
@@ -421,6 +446,28 @@ router.delete('/delete_payment/:paymentID', (req,res) => {
   })
 })
 
+//attendance
+// Get attendance with member name 
+router.get('/attendance', (req, res) => {
+  const sql = `
+    SELECT a.*, m.name
+    FROM attendance a
+    LEFT JOIN member m ON a.memberID = m.memberID
+  `;
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query error" });
+    return res.json({ Status: true, Result: result });
+  });
+});
+
+router.delete('/delete_attendance/:id', (req,res) => {
+  const id = req.params.id;
+  const sql = `DELETE FROM attendance WHERE id = ?`;
+  con.query(sql, [id], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
 //announcement
 
 router.get('/announcement',(req, res)=>{

@@ -74,36 +74,37 @@ const payments = () => {
         <h3>Payments</h3>
       </div>
       
-      <div class="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-2 pt-6 pb-8 mb-4 ">
-      <table class="w-full text-sm text-center rtl:text-right text-white dark:text-gray-400 ">
-        <thead class="">
-          <tr>
-            <th class="py-3">Payment ID</th>
-            <th class="py-3">Date</th>
-            <th class="py-3">Member</th>
-            <th class="py-3">Package</th>
-            <th class="py-3">Amount</th>
-            <th class="py-3">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            payment.map((p, index) => (
-              <tr key={index}>
-                <td class="py-2">{p.paymentID}</td>
-                <td class="py-2">{formatDate(p.paymentDate)}</td>
-                <td>{getName(p.memberID)}</td>
-                <td>{getPackageName(p.packageID)}</td>
-                <td>{p.amount}</td>
-                <td><button class="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 "
-                  onClick={() => handleDelete(p.paymentID)}>
-                    Delete</button></td>
-                </tr>
-            ))
-          }
-        </tbody>
-      </table>
-      </div>
+<div className="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-2 pt-6 pb-8 mb-4">
+  <table className="w-full text-sm text-center rtl:text-right text-white dark:text-gray-400">
+    <thead className="">
+      <tr>
+        <th className="py-3">Payment ID</th>
+        <th className="py-3">Date</th>
+        <th className="py-3">Member</th>
+        <th className="py-3">Package</th>
+        <th className="py-3">Amount</th>
+        <th className="py-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {payment.map((p, index) => (
+        <tr key={index} className="border-b border-gray-200">
+          <td className="py-2">{p.paymentID}</td>
+          <td className="py-2">{formatDate(p.paymentDate)}</td>
+          <td>{getName(p.memberID)}</td>
+          <td>{getPackageName(p.packageID)}</td>
+          <td>{p.amount}</td>
+          <td>
+            <button className="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2" onClick={() => handleDelete(p.paymentID)}>
+              Delete
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
     
     
     </div>

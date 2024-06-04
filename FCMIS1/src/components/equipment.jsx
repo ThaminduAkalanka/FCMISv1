@@ -62,7 +62,7 @@ const equipment = () => {
         <tbody>
           {
             equipment.map((m, index) => (
-              <tr key={index}>
+              <tr key={index} className="border-b border-gray-200">
                 <td>{m.equipmentID}</td>
                 <td>{m.equipmentName}</td>
                 <td>{m.quantity}</td>
