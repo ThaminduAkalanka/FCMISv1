@@ -267,7 +267,9 @@ router.delete('/delete_member/:memberID', (req,res) => {
 // Search member by name or memberID
 router.get('/search_member', (req, res) => {
   const { query } = req.query;
-  const sql = `SELECT * FROM member WHERE name LIKE ? OR memberID LIKE ?`;
+  const sql = `SELECT m.*, mem.status FROM member m
+  LEFT JOIN membership mem ON m.memberID = mem.memberID
+  WHERE m.name LIKE ? OR m.memberID LIKE ?`;
   const searchQuery = `%${query}%`;
   con.query(sql, [searchQuery, searchQuery], (err, result) => {
     if (err) return res.json({ Status: false, Error: "Query error" });
