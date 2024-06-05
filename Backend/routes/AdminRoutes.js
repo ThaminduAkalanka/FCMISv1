@@ -48,6 +48,28 @@ router.get('/logout', (req, res)=>{
 })
 
 
+//admin profile
+// Get admin details
+router.get('/admin', (req, res) => {
+  const sql = "SELECT name, email, contact FROM admin WHERE adminID = 1"; // Assuming adminID is 1 for the single admin user
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query error" });
+    return res.json({ Status: true, Result: result[0] });
+  });
+});
+
+// Change password
+router.post('/change_password', (req, res) => {
+  const { newPassword } = req.body;
+  const hash = bcrypt.hashSync(newPassword, 10);
+  const sql = "UPDATE admin SET password = ? WHERE adminID = 1"; // Assuming adminID is 1 for the single admin user
+  con.query(sql, [hash], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Update error" });
+    return res.json({ Status: true });
+  });
+});
+
+
 //image upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) =>{
