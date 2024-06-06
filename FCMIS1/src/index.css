@@ -41,3 +41,36 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+@layer utilities {
+  .clip-path-hero {
+    clip-path: polygon(0 0, 60% 0, 100% 100%, 30% 100%);
+  }
+  .clip-path-left {
+    clip-path: polygon(0 20%, 100% 0%, 100% 100%, 0% 100%);
+  }
+  .clip-path-right {
+    clip-path: polygon(0 0, 100% 20%, 100% 100%, 0% 100%);
+  }
+  .clip-path-hexagon {
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  }
+  .clip-path-hexagon-fix {
+    clip-path: polygon(0 0, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  .rotate-x-180 {
+    transform: rotateX(180deg);
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .perspective {
+    perspective: 100000px;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
