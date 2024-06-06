@@ -1,4 +1,4 @@
-import con from "../utils/db.js";
+import con from "./db.js";
 import bcrypt from "bcrypt";
 
 const adminID = 1;  // assuming adminID is 1 for admin1

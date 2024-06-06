@@ -22,7 +22,7 @@ cron.schedule('0 0 * * *', () => {  // Runs every day at midnight
 });
 
 
-//login
+//login with token
 router.post("/adminlogin", (req, res) => {
   const sql = "SELECT * FROM admin WHERE username = ?";
   con.query(sql, [req.body.username], (err, result) => {
@@ -44,6 +44,7 @@ router.get('/logout', (req, res)=>{
   return res.json({Status: true})
 })
 
+//middelware to verify token
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1]; // Extract the token after "Bearer "
@@ -58,7 +59,9 @@ const authenticateToken = (req, res, next) => {
 };
 
 
+//profile page
 
+//fetch admin details
 router.get("/adminprofile", authenticateToken, (req, res) => {
   const sql = "SELECT * FROM admin WHERE adminID = ?";
   con.query(sql, [req.user.adminID], (err, result) => {
@@ -67,6 +70,44 @@ router.get("/adminprofile", authenticateToken, (req, res) => {
       return res.json({ Status: true, admin: result[0] });
     }
     return res.json({ Status: false, Error: "Admin not found" });
+  });
+});
+
+// Change Password
+router.post("/changepassword", authenticateToken, (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const sql = "SELECT * FROM admin WHERE adminID = ?";
+  
+  con.query(sql, [req.user.adminID], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query error" });
+    if (result.length > 0) {
+      const admin = result[0];
+      const isPasswordValid = bcrypt.compareSync(currentPassword, admin.password);
+      if (isPasswordValid) {
+        const hashedPassword = bcrypt.hashSync(newPassword, 10);
+        const updateSql = "UPDATE admin SET password = ? WHERE adminID = ?";
+        con.query(updateSql, [hashedPassword, req.user.adminID], (err, result) => {
+          if (err) return res.json({ Status: false, Error: "Query error" });
+          return res.json({ Status: true });
+        });
+      } else {
+        return res.json({ Status: false, Error: "Incorrect current password" });
+      }
+    } else {
+      return res.json({ Status: false, Error: "Admin not found" });
+    }
+  });
+});
+
+// Register New Admin
+router.post("/registeradmin", authenticateToken, (req, res) => {
+  const { name, username, password, email, contact } = req.body;
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  const sql = "INSERT INTO admin (name, username, password, email, contact) VALUES (?, ?, ?, ?, ?)";
+  
+  con.query(sql, [name, username, hashedPassword, email, contact], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query error" });
+    return res.json({ Status: true });
   });
 });
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TrainersComponent from './trainerComp.jsx';
 
-
 const Dashboard = () => {
     const [data, setData] = useState({
         totalMembers: 0,
@@ -12,9 +11,10 @@ const Dashboard = () => {
         presentMembers: 0,
         earnings: 0,
     });
+    const [adminName, setAdminName] = useState('');
 
     useEffect(() => {
-        // Fetch data from the backend
+        // Fetch dashboard data from the backend
         axios.get('http://localhost:3000/dashboard-data')
             .then(response => {
                 setData(response.data);
@@ -22,12 +22,30 @@ const Dashboard = () => {
             .catch(error => {
                 console.error('There was an error fetching the data!', error);
             });
+
+        // Fetch admin details from the backend
+        const token = localStorage.getItem('token');
+        axios.get('http://localhost:3000/auth/adminprofile', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if (response.data.Status) {
+                setAdminName(response.data.admin.name);
+            } else {
+                console.error('Failed to fetch admin details');
+            }
+        })
+        .catch(error => {
+            console.error('There was an error fetching the admin details!', error);
+        });
     }, []);
 
     return (
         <div className="p-6 bg-gray text-gray-900 min-h-screen">
             <div className="bg-white p-6 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold">Welcome, <span className="text-blue-600">Admin</span></h2>
+                <h2 className="text-2xl font-bold">Welcome, <span className="text-blue-600">{adminName}</span></h2>
                 <p className="mt-2 text-gray-600">As an admin, you hold the key to streamline memberships, track progress, manage payments, and ensure a seamless fitness experience. Your dedication ensures the success of our fitness community. Thank you for being an essential part of our journey!</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
@@ -58,7 +76,7 @@ const Dashboard = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 <div className="bg-white p-6 rounded-lg shadow-md">
-                <TrainersComponent />
+                    <TrainersComponent />
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-md">
                     {/* MembersComponent */}

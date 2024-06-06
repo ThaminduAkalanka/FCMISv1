@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import LogoSmall from '../assets/logo1s.png'
 import Profile from '../assets/profile.jpg'
@@ -8,6 +8,31 @@ import axios from 'axios';
 const Dashboard = () => {
   const navigate = useNavigate()
   axios.defaults.withCredentials = true
+  const [adminname, setAdminname] = useState(null);
+  const [error, setError] = useState(null);
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        setError('No token found, please log in.');
+        return;
+    }
+
+    axios.get('http://localhost:3000/auth/adminprofile', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        if (response.data.Status) {
+            setAdminname(response.data.admin.username);
+        } else {
+            setError(response.data.Error);
+        }
+    })
+    .catch(err => setError('An error occurred while fetching data.'));
+}, []);
 
   const handleLogout = () => {
     axios.get('http://localhost:3000/auth/logout')
@@ -30,7 +55,7 @@ const Dashboard = () => {
             className="rounded-full h-10 w-10 flex items-center justify-center mr-3 border-2 border-blue-500"
           />
           <div className="ml-1">
-            <p className="ml-1 text-md font-medium tracking-wide truncate text-gray-100 font-sans">Chanaka Peter</p>
+            <p className="ml-1 text-md font-medium tracking-wide truncate text-gray-100 font-sans">{adminname}</p>
             <div className="badge">
               <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-800 bg-blue-100 rounded-full">Admin</span>
             </div>
