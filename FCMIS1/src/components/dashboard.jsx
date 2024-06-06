@@ -8,14 +8,17 @@ import axios from 'axios';
 const Dashboard = () => {
   const navigate = useNavigate()
   axios.defaults.withCredentials = true
+
   const handleLogout = () => {
     axios.get('http://localhost:3000/auth/logout')
-    .then(result =>{
-      if (result.data.Status){
-        navigate('/adminlogin');
-      }
-    }).catch(err => console.log(err))
-  }
+        .then(response => {
+            if (response.data.Status) {
+                localStorage.removeItem('token'); // Clear the token from localStorage
+                navigate('/adminlogin');
+            }
+        })
+        .catch(err => console.log(err));
+};
 
   return (
     <div className="min-h-screen flex flex-row bg-#1E1E1E">

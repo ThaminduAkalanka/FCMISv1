@@ -18,6 +18,7 @@ const Login = () => {
         axios.post('http://localhost:3000/auth/adminlogin', values)
             .then(result => {
                 if (result.data.loginStatus) {
+                    localStorage.setItem('token', result.data.token); // Store token
                     navigate('/dashboard');
                 } else {
                     setError(result.data.Error);
@@ -25,7 +26,8 @@ const Login = () => {
             })
             .catch(err => console.log(err));
     };
-
+    
+    
     return (
         <div className='relative flex flex-col md:flex-row justify-evenly items-center h-screen p-20 sd:p-0'>
             <div className='absolute top-8 right-8 flex space-x-4'>

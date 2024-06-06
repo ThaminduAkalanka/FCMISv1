@@ -31,46 +31,44 @@ router.post("/adminlogin", (req, res) => {
       const admin = result[0];
       const isPasswordValid = bcrypt.compareSync(req.body.password, admin.password);
       if (isPasswordValid) {
-        const token = jwt.sign(
-          { role: "admin", adminID: admin.adminID },
-          "jwt_secret_key",
-          { expiresIn: "1d" }
-        );
-        res.cookie('token', token);
-        return res.json({ loginStatus: true });
+        const token = jwt.sign({ adminID: admin.adminID }, 'your_jwt_secret', { expiresIn: '1h' });
+        return res.json({ loginStatus: true, token });
       }
     }
     return res.json({ loginStatus: false, Error: "Incorrect username or password" });
   });
 });
-
+ 
 router.get('/logout', (req, res)=>{
   res.clearCookie('token')
   return res.json({Status: true})
 })
 
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Extract the token after "Bearer "
 
-//admin profile
-// Get admin details
-router.get('/admin', (req, res) => {
-  const sql = "SELECT name, email, contact FROM admin WHERE adminID = 1"; // Assuming adminID is 1 for the single admin user
-  con.query(sql, (err, result) => {
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, 'your_jwt_secret', (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+
+
+router.get("/adminprofile", authenticateToken, (req, res) => {
+  const sql = "SELECT * FROM admin WHERE adminID = ?";
+  con.query(sql, [req.user.adminID], (err, result) => {
     if (err) return res.json({ Status: false, Error: "Query error" });
-    return res.json({ Status: true, Result: result[0] });
+    if (result.length > 0) {
+      return res.json({ Status: true, admin: result[0] });
+    }
+    return res.json({ Status: false, Error: "Admin not found" });
   });
 });
-
-// Change password
-router.post('/change_password', (req, res) => {
-  const { newPassword } = req.body;
-  const hash = bcrypt.hashSync(newPassword, 10);
-  const sql = "UPDATE admin SET password = ? WHERE adminID = 1"; // Assuming adminID is 1 for the single admin user
-  con.query(sql, [hash], (err, result) => {
-    if (err) return res.json({ Status: false, Error: "Update error" });
-    return res.json({ Status: true });
-  });
-});
-
 
 //image upload
 const storage = multer.diskStorage({

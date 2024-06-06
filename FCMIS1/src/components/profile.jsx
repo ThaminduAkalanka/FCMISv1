@@ -1,82 +1,49 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const profile = () => {
-  const [admin, setAdmin] = useState({});
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const navigate = useNavigate();
+const Profile = () => {
+    const [admin, setAdmin] = useState(null);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    axios.get('http://localhost:3000/auth/admin')
-      .then(result => {
-        if (result.data.Status) {
-          setAdmin(result.data.Result);
-        } else {
-          alert(result.data.Error);
-        }
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+          setError('No token found, please log in.');
+          return;
+      }
+  
+      axios.get('http://localhost:3000/auth/adminprofile', {
+          headers: {
+              'Authorization': `Bearer ${token}` // Add "Bearer " prefix
+          }
       })
-      .catch(err => console.log(err));
+      .then(response => {
+          if (response.data.Status) {
+              setAdmin(response.data.admin);
+          } else {
+              setError(response.data.Error);
+          }
+      })
+      .catch(err => setError('An error occurred while fetching the profile data.'));
   }, []);
+  
 
-  const handlePasswordChange = () => {
-    if (newPassword !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
+    if (error) {
+        return <div className="error">{error}</div>;
     }
 
-    axios.post('http://localhost:3000/auth/change_password', { newPassword })
-      .then(result => {
-        if (result.data.Status) {
-          alert('Password updated successfully');
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch(err => console.log(err));
-  };
+    if (!admin) {
+        return <div>Loading...</div>;
+    }
 
-  const handleRegisterMember = () => {
-    navigate('/dashboard/add_member');
-  };
-
-  return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Admin Profile</h2>
-      <div className="mb-4">
-        <h3 className="text-xl font-semibold">Basic Information</h3>
-        <p><strong>Name:</strong> {admin.name}</p>
-        <p><strong>Email:</strong> {admin.email}</p>
-        <p><strong>Contact:</strong> {admin.contact}</p>
-      </div>
-      <div className="mb-4">
-        <h3 className="text-xl font-semibold">Change Password</h3>
-        <input
-          type="password"
-          placeholder="New Password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          className="border p-2 mb-2 w-full"
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="border p-2 mb-2 w-full"
-        />
-        <button onClick={handlePasswordChange} className="bg-blue-500 text-white p-2 rounded">
-          Change Password
-        </button>
-      </div>
-      <div>
-        <button onClick={handleRegisterMember} className="bg-green-500 text-white p-2 rounded">
-          Register New Member
-        </button>
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <h1>Admin Profile</h1>
+            <p>Username: {admin.username}</p>
+            <p>Email: {admin.email}</p>
+            {/* Add other fields as necessary */}
+        </div>
+    );
 };
 
-export default profile;
+export default Profile;
