@@ -3,11 +3,11 @@ import workout from "../../images/who-we-are/workout.png";
 import nutritions from "../../images/who-we-are/nutritions.png";
 
 const cardStyles =
-  "relative z-10 flex flex-col items-center gap-4 overflow-hidden rounded-br-3xl rounded-tl-3xl bg-white bg-[url('./images/who-we-are/card-bg.webp')] bg-cover bg-center bg-no-repeat px-5 py-10 text-center shadow-2xl transition-all duration-300 before:absolute before:inset-0 before:z-[-1] before:bg-white before:transition-all before:duration-300 hover:text-white hover:before:bg-opacity-0";
+  "relative z-10 flex flex-col items-center gap-4 overflow-hidden rounded-br-3xl rounded-tl-3xl bg-bg-neutral-800 bg-[url('./images/who-we-are/card-bg.webp')] bg-cover bg-center bg-no-repeat px-5 py-10 text-center shadow-2xl transition-all duration-300 before:absolute before:inset-0 before:z-[-1] before:bg-neutral-800 before:transition-all before:duration-300 hover:text-white hover:before:bg-opacity-0";
 
 function FeatureCards() {
   return (
-    <div className="mt-[-50px] grid gap-14 2xl:grid-cols-3 2xl:gap-6">
+    <div className="mt-[-50px] grid gap-14 2xl:grid-cols-3 2xl:gap-6 bg">
       <div className={cardStyles}>
         <img src={progression} alt="progression" className="h-auto w-20" />
         <h5 className="text-2xl font-bold uppercase">Progression</h5>

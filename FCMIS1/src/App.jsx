@@ -31,7 +31,7 @@ import ScanQR from './components/scanQR';
 import Home1 from "./Pages/Home";
 import About from "./Pages/About";
 import Schedule1 from "./Pages/Schedule";
-import Gallery from "./Pages/Gallery";
+
 import Blog from "./Pages/Blog";
 import Contact from "./Pages/Contact";
 import Pricing from "./Pages/Pricing";
@@ -76,15 +76,15 @@ function App() {
           <Route path='/dashboard/scanqr' element={<ScanQR />} />
         </Route>
 
-        <Route element={<MemberLayout />}>
-          <Route index element={<Home1 />} />
-          <Route path='about' element={<About />} />
-          <Route path='schedule' element={<Schedule1 />} />
-          <Route path='gallery' element={<Gallery />} />
-          <Route path='blog' element={<Blog />} />
-          <Route path='contact' element={<Contact />} />
-          <Route path='pricing' element={<Pricing />} />
-          <Route path='classes' element={<Classes />} />
+        <Route path='/member' element={<MemberLayout />}>
+          <Route path='/member/' element={<Home1 />} />
+          <Route path='/member/about' element={<About />} />
+          <Route path='/member/schedule' element={<Schedule1 />} />
+          
+          <Route path='/member/blog' element={<Blog />} />
+          <Route path='/member/contact' element={<Contact />} />
+          <Route path='/member/pricing' element={<Pricing />} />
+          <Route path='/member/classes' element={<Classes />} />
         </Route>
       </Routes>
       <ScrollToTop />

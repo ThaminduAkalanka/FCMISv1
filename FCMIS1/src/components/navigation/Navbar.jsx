@@ -3,7 +3,6 @@ import Logo from "../logo/Logo";
 import NavLinks from "./NavLinks";
 import NavButtons from "./NavButtons";
 import MobileNav from "./MobileNav";
-import Sidebar from "./Sidebar";
 
 function Navigation() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -55,10 +54,6 @@ function Navigation() {
 
       <MobileNav isNavOpen={isNavOpen} onToggleNav={handleToggleNav} />
 
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        handleToggleSidebar={handleToggleSidebar}
-      />
     </>
   );
 }

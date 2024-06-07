@@ -7,43 +7,40 @@ function NavLinks({ onToggleNav, styles }) {
   return (
     <ul className={styles}>
       <li>
-        <Link to="/" className={linkStyles} onClick={onToggleNav}>
+        <Link to="/member" className={linkStyles} onClick={onToggleNav}>
           Home
         </Link>
       </li>
       <li>
-        <Link to="/about" className={linkStyles} onClick={onToggleNav}>
-          About
+        <Link to="/member/about" className={linkStyles} onClick={onToggleNav}>
+          Profile
         </Link>
       </li>
+
       <li>
-        <Link to="/gallery" className={linkStyles} onClick={onToggleNav}>
-          Gallery
-        </Link>
-      </li>
-      <li>
-        <Link to="/schedule" className={linkStyles} onClick={onToggleNav}>
+        <Link to="/member/schedule" className={linkStyles} onClick={onToggleNav}>
           Schedule
         </Link>
       </li>
+
       <li>
-        <Link to="/blog" className={linkStyles} onClick={onToggleNav}>
-          Blog
+        <Link to="/member/pricing" className={linkStyles} onClick={onToggleNav}>
+          Package
         </Link>
       </li>
       <li>
-        <Link to="/pricing" className={linkStyles} onClick={onToggleNav}>
-          Pricing
+        <Link to="/member/classes" className={linkStyles} onClick={onToggleNav}>
+          Progress
         </Link>
       </li>
       <li>
-        <Link to="/classes" className={linkStyles} onClick={onToggleNav}>
-          Classes
-        </Link>
-      </li>
-      <li>
-        <Link to="/contact" className={linkStyles} onClick={onToggleNav}>
+        <Link to="/member/contact" className={linkStyles} onClick={onToggleNav}>
           Contact
+        </Link>
+      </li>
+      <li>
+        <Link to="/member/blog" className={linkStyles} onClick={onToggleNav}>
+          Updates
         </Link>
       </li>
     </ul>
