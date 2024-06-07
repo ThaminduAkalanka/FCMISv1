@@ -15,11 +15,11 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:3000/auth/adminlogin', values)
+        axios.post('http://localhost:3000/mem/memberlogin', values)
             .then(result => {
                 if (result.data.loginStatus) {
                     localStorage.setItem('token', result.data.token); // Store token
-                    navigate('/dashboard');
+                    navigate('/member');
                 } else {
                     setError(result.data.Error);
                 }
@@ -31,12 +31,12 @@ const Login = () => {
     return (
         <div className='relative flex flex-col md:flex-row justify-evenly items-center h-screen p-20 sd:p-0'>
             <div className='absolute top-8 right-8 flex space-x-4'>
-                <Link to="/memberlogin" className="text-sm text-white hover:text-red-100">Member Login</Link>
+                <Link to="/adminlogin" className="text-sm text-white hover:text-red-100">Admin Login</Link>
                 <Link to="/trainerlogin" className="text-sm text-white hover:text-blue-100">Trainer Login</Link>
             </div>
             <div>
                 <h2 className='flex justify-left font-bold text-lg pb-6'>
-                    Admin Login
+                    Member Login
                 </h2>
                 <div className="text-red-700 text-xs">
                     {error && error}

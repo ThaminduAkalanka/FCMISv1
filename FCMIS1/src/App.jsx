@@ -1,6 +1,7 @@
 // App.jsx
 import './App.css';
 import Login from './components/login';
+import MemberLogin from './components/memberLogin';
 import Dashboard from './components/dashboard';
 import Home from './components/home';
 import Profile from './components/profile';
@@ -48,6 +49,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/adminlogin' element={<Login />} />
+        <Route path='/memberlogin' element={<MemberLogin />} />
         
         <Route path='/dashboard' element={<Dashboard/>}>
           <Route path='/dashboard/' element={<Home />} />
