@@ -30,14 +30,13 @@ import AddAnnouncement from './components/addAnnouncement';
 import ScanQR from './components/scanQR';
 
 import Home1 from "./Pages/Home";
-import About from "./Pages/About";
+import MemberProfile from "./Pages/memberProfile";
 import Schedule1 from "./Pages/Schedule";
 
-import Blog from "./Pages/Blog";
+import Update from "./Pages/update";
 import Contact from "./Pages/Contact";
-import Pricing from "./Pages/Pricing";
+import MemberPackage from "./Pages/memberPackage";
 import Classes from "./Pages/Classes";
-
 import AdminLayout from './components/layouts/AdminLayout';
 import MemberLayout from './components/layouts/MemberLayout';
 import ScrollToTop from "./components/ScrollToTop";
@@ -80,12 +79,11 @@ function App() {
 
         <Route path='/member' element={<MemberLayout />}>
           <Route path='/member/' element={<Home1 />} />
-          <Route path='/member/about' element={<About />} />
+          <Route path='/member/about' element={<MemberProfile />} />
           <Route path='/member/schedule' element={<Schedule1 />} />
-          
-          <Route path='/member/blog' element={<Blog />} />
+          <Route path='/member/update' element={<Update />} />
           <Route path='/member/contact' element={<Contact />} />
-          <Route path='/member/pricing' element={<Pricing />} />
+          <Route path='/member/memberpackage' element={<MemberPackage />} />
           <Route path='/member/classes' element={<Classes />} />
         </Route>
       </Routes>

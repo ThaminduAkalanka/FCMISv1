@@ -1,4 +1,4 @@
-import SocialLinks from "../footer/SocialLinks";
+
 
 const headingStyles = `relative mb-4 mt-6 pb-2 text-xl font-bold capitalize before:absolute before:bottom-0 before:h-1 before:w-16 before:bg-red`;
 
@@ -48,7 +48,7 @@ function Info() {
         </div>
         <div>
           <h4 className={headingStyles}>Follow Us On</h4>
-          <SocialLinks />
+          
         </div>
       </div>
     </div>

@@ -12,8 +12,8 @@ function NavLinks({ onToggleNav, styles }) {
         </Link>
       </li>
       <li>
-        <Link to="/member/about" className={linkStyles} onClick={onToggleNav}>
-          Profile
+        <Link to="/member/memberPackage" className={linkStyles} onClick={onToggleNav}>
+          Package
         </Link>
       </li>
 
@@ -23,11 +23,6 @@ function NavLinks({ onToggleNav, styles }) {
         </Link>
       </li>
 
-      <li>
-        <Link to="/member/pricing" className={linkStyles} onClick={onToggleNav}>
-          Package
-        </Link>
-      </li>
       <li>
         <Link to="/member/classes" className={linkStyles} onClick={onToggleNav}>
           Progress
@@ -39,7 +34,7 @@ function NavLinks({ onToggleNav, styles }) {
         </Link>
       </li>
       <li>
-        <Link to="/member/blog" className={linkStyles} onClick={onToggleNav}>
+        <Link to="/member/update" className={linkStyles} onClick={onToggleNav}>
           Updates
         </Link>
       </li>

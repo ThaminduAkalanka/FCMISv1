@@ -4,16 +4,16 @@ function Copyright() {
   return (
     <div className="font-medium text-gray-300">
       <p className=" ">
-        Privacy Policy | &copy; <span>{new Date().getFullYear()}</span> Gymat
+        Privacy Policy | &copy; <span>{new Date().getFullYear()}</span> MuscleMax
       </p>
       <p>
         Designed by{" "}
         <Link
-          to="https://www.radiustheme.com/"
+          to="https://github.com/ThaminduAkalanka"
           target="_blank"
           className="focus text-red"
         >
-          RadiusTheme
+          Thamindu Senanayake
         </Link>
       </p>
     </div>

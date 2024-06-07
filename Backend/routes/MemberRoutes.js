@@ -32,4 +32,77 @@ router.post("/memberlogin", (req, res) => {
   })
   
 
+//middelware to verify token
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Extract the token after "Bearer "
+  
+    if (token == null) return res.sendStatus(401);
+  
+    jwt.verify(token, 'your_jwt_secret', (err, user) => {
+      if (err) return res.sendStatus(403);
+      req.user = user;
+      next();
+    });
+  };
+  
+  
+  //profile page
+  
+  //fetch admin details
+  router.get("/memberprofile", authenticateToken, (req, res) => {
+    const sql = "SELECT * FROM member WHERE memberID = ?";
+    con.query(sql, [req.user.memberID], (err, result) => {
+      if (err) return res.json({ Status: false, Error: "Query error" });
+      if (result.length > 0) {
+        return res.json({ Status: true, member: result[0] });
+      }
+      return res.json({ Status: false, Error: "Member not found" });
+    });
+  });
+
+  // Change Password
+  router.post("/changepassword", authenticateToken, (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+    const sql = "SELECT * FROM member WHERE memberID = ?";
+    
+    con.query(sql, [req.user.memberID], (err, result) => {
+      if (err) return res.json({ Status: false, Error: "Query error" });
+      if (result.length > 0) {
+        const member = result[0];
+        const isPasswordValid = bcrypt.compareSync(currentPassword, member.password);
+        if (isPasswordValid) {
+          const hashedPassword = bcrypt.hashSync(newPassword, 10);
+          const updateSql = "UPDATE member SET password = ? WHERE memberID = ?";
+          con.query(updateSql, [hashedPassword, req.user.memberID], (err, result) => {
+            if (err) return res.json({ Status: false, Error: "Query error" });
+            return res.json({ Status: true });
+          });
+        } else {
+          return res.json({ Status: false, Error: "Incorrect current password" });
+        }
+      } else {
+        return res.json({ Status: false, Error: "member not found" });
+      }
+    });
+  });
+
+
+    //fetch package details
+    router.get("/memberpackage", authenticateToken, (req, res) => {
+        const sql =  `
+        SELECT m.*, mem.status, mem.startDate, mem.endDate
+        FROM member m
+        LEFT JOIN membership mem ON m.memberID = mem.memberID
+      `;
+        con.query(sql, [req.user.memberID], (err, result) => {
+          if (err) return res.json({ Status: false, Error: "Query error" });
+          if (result.length > 0) {
+            return res.json({ Status: true, member: result[0] });
+          }
+          return res.json({ Status: false, Error: "Member not found" });
+        });
+      });
+
+
   export { router as MemberRouter }
