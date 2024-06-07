@@ -81,7 +81,7 @@ const Profile = () => {
       <div>
         <HeroPages page="Profile" />
       
-        <div className="container mx-auto p-20">
+        <div className="container mx-auto p-10 mt-10 sd:p-4  ">
             <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded p-6 space-y-6">
                 
                 <p><strong>Name:</strong> {member.name}</p>
