@@ -31,7 +31,7 @@ router.post("/adminlogin", (req, res) => {
       const admin = result[0];
       const isPasswordValid = bcrypt.compareSync(req.body.password, admin.password);
       if (isPasswordValid) {
-        const token = jwt.sign({ adminID: admin.adminID }, 'your_jwt_secret', { expiresIn: '1h' });
+        const token = jwt.sign({ adminID: admin.adminID }, 'your_jwt_secret', { expiresIn: '1d' });
         return res.json({ loginStatus: true, token });
       }
     }

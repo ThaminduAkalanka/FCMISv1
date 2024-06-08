@@ -69,7 +69,7 @@ const getPackageName = (packageID) => {
       <HeroPages page="Package" />
       <h1 className="text-2xl font-bold text-neutral-800 mt-16 mb-4">Current Package</h1>
       <div className="max-w-xl mx-auto mt-6">
-        <div className="bg-neutral-600 shadow-lg rounded-lg p-6"> 
+        <div className="bg-neutral-800 shadow-lg rounded-lg p-6"> 
           <div className="space-y-4">
             <p className="text-lg"><span className="font-semibold">Package:</span> {getPackageName(member.packageID)}</p>
             

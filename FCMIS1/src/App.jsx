@@ -2,6 +2,8 @@
 import './App.css';
 import Login from './components/login';
 import MemberLogin from './components/memberLogin';
+import TrainerLogin from './components/trainer/trainerlogin';
+
 import Dashboard from './components/dashboard';
 import Home from './components/home';
 import Profile from './components/profile';
@@ -28,11 +30,9 @@ import EditEquipment from './components/editEquipment';
 import AddAnnouncement from './components/addAnnouncement';
 
 import ScanQR from './components/scanQR';
-
 import Home1 from "./Pages/Home";
 import MemberProfile from "./Pages/memberProfile";
 import Schedule1 from "./Pages/Schedule";
-
 import Update from "./Pages/update";
 import Contact from "./Pages/Contact";
 import MemberPackage from "./Pages/memberPackage";
@@ -40,6 +40,10 @@ import Classes from "./Pages/Classes";
 import AdminLayout from './components/layouts/AdminLayout';
 import MemberLayout from './components/layouts/MemberLayout';
 import ScrollToTop from "./components/ScrollToTop";
+
+import TrainerDashboard from './components/trainer/trainerDashboard';
+import TrainerHome from './components/trainer/trainerHome';
+
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -49,6 +53,7 @@ function App() {
       <Routes>
         <Route path='/adminlogin' element={<Login />} />
         <Route path='/memberlogin' element={<MemberLogin />} />
+        <Route path='/trainerlogin' element={<TrainerLogin />} />
         
         <Route path='/dashboard' element={<Dashboard/>}>
           <Route path='/dashboard/' element={<Home />} />
@@ -86,6 +91,15 @@ function App() {
           <Route path='/member/memberpackage' element={<MemberPackage />} />
           <Route path='/member/classes' element={<Classes />} />
         </Route>
+
+        <Route path='/trainerDashboard' element={<TrainerDashboard />}>
+          <Route path='/trainerDashboard/' element={<TrainerHome />} />
+
+        </Route>
+
+
+
+
       </Routes>
       <ScrollToTop />
     </BrowserRouter>

@@ -10,15 +10,15 @@ import QRCode from 'qrcode';
 const router = express.Router();
 
 //login with token
-router.post("/memberlogin", (req, res) => {
-    const sql = "SELECT * FROM member WHERE username = ?";
+router.post("/trainerlogin", (req, res) => {
+    const sql = "SELECT * FROM trainer WHERE username = ?";
     con.query(sql, [req.body.username], (err, result) => {
       if (err) return res.json({ loginStatus: false, Error: "Query error" });
       if (result.length > 0) {
-        const member = result[0];
-        const isPasswordValid = bcrypt.compareSync(req.body.password, member.password);
+        const trainer = result[0];
+        const isPasswordValid = bcrypt.compareSync(req.body.password, trainer.password);
         if (isPasswordValid) {
-          const token = jwt.sign({ memberID: member.memberID }, 'your_jwt_secret', { expiresIn: '1d' });
+          const token = jwt.sign({ trainerID: trainer.trainerID }, 'your_jwt_secret', { expiresIn: '1d' });
           return res.json({ loginStatus: true, token });
         }
       }
@@ -50,12 +50,12 @@ const authenticateToken = (req, res, next) => {
   //profile page
   
   //fetch admin details
-  router.get("/memberprofile", authenticateToken, (req, res) => {
-    const sql = "SELECT * FROM member WHERE memberID = ?";
-    con.query(sql, [req.user.memberID], (err, result) => {
+  router.get("/trainerprofile", authenticateToken, (req, res) => {
+    const sql = "SELECT * FROM trainer WHERE trainerID = ?";
+    con.query(sql, [req.user.trainerID], (err, result) => {
       if (err) return res.json({ Status: false, Error: "Query error" });
       if (result.length > 0) {
-        return res.json({ Status: true, member: result[0] });
+        return res.json({ Status: true, trainer: result[0] });
       }
       return res.json({ Status: false, Error: "Member not found" });
     });
@@ -66,15 +66,15 @@ const authenticateToken = (req, res, next) => {
     const { currentPassword, newPassword } = req.body;
     const sql = "SELECT * FROM member WHERE memberID = ?";
     
-    con.query(sql, [req.user.memberID], (err, result) => {
+    con.query(sql, [req.user.trainerID], (err, result) => {
       if (err) return res.json({ Status: false, Error: "Query error" });
       if (result.length > 0) {
-        const member = result[0];
-        const isPasswordValid = bcrypt.compareSync(currentPassword, member.password);
+        const trainer = result[0];
+        const isPasswordValid = bcrypt.compareSync(currentPassword, trainer.password);
         if (isPasswordValid) {
           const hashedPassword = bcrypt.hashSync(newPassword, 10);
-          const updateSql = "UPDATE member SET password = ? WHERE memberID = ?";
-          con.query(updateSql, [hashedPassword, req.user.memberID], (err, result) => {
+          const updateSql = "UPDATE trainer SET password = ? WHERE trainerID = ?";
+          con.query(updateSql, [hashedPassword, req.user.trainerID], (err, result) => {
             if (err) return res.json({ Status: false, Error: "Query error" });
             return res.json({ Status: true });
           });
@@ -82,27 +82,11 @@ const authenticateToken = (req, res, next) => {
           return res.json({ Status: false, Error: "Incorrect current password" });
         }
       } else {
-        return res.json({ Status: false, Error: "member not found" });
+        return res.json({ Status: false, Error: "trainer not found" });
       }
     });
   });
 
 
-    //fetch package details
-    router.get("/memberpackage", authenticateToken, (req, res) => {
-        const sql =  `
-        SELECT m.*, mem.status, mem.startDate, mem.endDate
-        FROM member m
-        LEFT JOIN membership mem ON m.memberID = mem.memberID
-      `;
-        con.query(sql, [req.user.memberID], (err, result) => {
-          if (err) return res.json({ Status: false, Error: "Query error" });
-          if (result.length > 0) {
-            return res.json({ Status: true, member: result[0] });
-          }
-          return res.json({ Status: false, Error: "Member not found" });
-        });
-      });
 
-
-  export { router as MemberRouter }
+  export { router as TrainerRouter }
