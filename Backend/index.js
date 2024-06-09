@@ -14,6 +14,7 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.json())
+app.use(express.static('public'))
 app.use('/auth', adminRouter)
 app.use('/mem', MemberRouter)
 app.use('/train', TrainerRouter)

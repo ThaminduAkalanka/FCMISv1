@@ -9,9 +9,9 @@ function HeroPages({ page }) {
         <h1 className="ml-8 text-4xl font-bold text-white">{page}</h1>
         <SecondaryHeading bgColor="black" uppercase={false}>
           <Link to="/member" className="focus text-red">
-            MuscleMax - {""}
+            Muscle Max
           </Link>
-          {page}
+          
         </SecondaryHeading>
       </div>
     </section>

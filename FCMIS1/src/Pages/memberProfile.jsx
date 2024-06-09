@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HeroPages from "../components/hero-pages/HeroPages";
 
 const Profile = () => {
@@ -42,24 +42,6 @@ const Profile = () => {
             .catch(err => console.log(err));
     };
 
-    const handleChangePassword = (event) => {
-        event.preventDefault();
-        const token = localStorage.getItem('token');
-        axios.post('http://localhost:3000/mem/changepassword', changePasswordValues, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if (response.data.Status) {
-                alert('Password changed successfully.');
-                setChangePasswordValues({ currentPassword: '', newPassword: '' });
-            } else {
-                alert(response.data.Error);
-            }
-        })
-        .catch(err => console.log(err));
-    };
 
     if (error) {
         return <div className="text-red-500 text-center mt-4">{error}</div>;
@@ -82,51 +64,39 @@ const Profile = () => {
         <HeroPages page="Profile" />
       
         <div className="container mx-auto p-10 mt-10 sd:p-4  ">
-            <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded p-6 space-y-6">
-                
+            <div className="felx max-w-lg mx-auto bg-neutral-600 shadow-md rounded-lg p-6 space-y-6">
+                <div className='flex justify-center space-x-10'>
+                <img src ={ `http://localhost:3000/images/`+member.image} class='bg-black w-40 h-auto rounded-full'/>
+                <img src ={member.qrCode} class='bg-black w-40 h-auto rounded-lg'/></div>
                 <p><strong>Name:</strong> {member.name}</p>
                 <p><strong>Username:</strong> {member.username}</p>
                 <p><strong>Email:</strong> {member.email}</p>
                 <p><strong>Contact:</strong> {member.contact}</p>
                 <p><strong>Registered Date:</strong> {formatDate(member.registerDate)}</p>
+            </div>
+
+
+            <div className='space-y-4 space-x-6 '>
+            <Link
+                    to={'/member/editprofile'}
+                    className="bg-white max text-black font-medium rounded-lg px-4 py-2 hover:bg-neutral-300"
+                >
+                    Edit Details
+                </Link>
+
+                <Link
+                    to={'/member/changepassword'}
+                    className="bg-white text-black font-medium rounded-lg px-4 py-2  hover:bg-neutral-300"
+                >
+                    Change Password
+                </Link>
+
                 <button
                     onClick={handleLogout}
                     className="bg-red-600 text-white font-medium rounded-lg px-4 py-2 hover:bg-red-700"
                 >
                     Logout
                 </button>
-            </div>
-
-            <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded p-6 space-y-6 mt-8">
-                <h2 className="text-xl font-bold">Change Password</h2>
-                <form onSubmit={handleChangePassword} className="space-y-4">
-                    <div>
-                        <label className="block font-medium" htmlFor="currentPassword">Current Password</label>
-                        <input
-                            type="password"
-                            id="currentPassword"
-                            value={changePasswordValues.currentPassword}
-                            onChange={(e) => setChangePasswordValues({ ...changePasswordValues, currentPassword: e.target.value })}
-                            className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                        />
-                    </div>
-                    <div>
-                        <label className="block font-medium" htmlFor="newPassword">New Password</label>
-                        <input
-                            type="password"
-                            id="newPassword"
-                            value={changePasswordValues.newPassword}
-                            onChange={(e) => setChangePasswordValues({ ...changePasswordValues, newPassword: e.target.value })}
-                            className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="bg-blue-600 text-white font-medium rounded-lg px-4 py-2 hover:bg-blue-700"
-                    >
-                        Change Password
-                    </button>
-                </form>
             </div>
 
             </div>

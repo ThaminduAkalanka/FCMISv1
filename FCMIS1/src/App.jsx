@@ -28,6 +28,7 @@ import EditTrainer from './components/editTrainer';
 import AddEquipment from './components/addEquipment';
 import EditEquipment from './components/editEquipment';
 import AddAnnouncement from './components/addAnnouncement';
+import AddAdmin from './components/addAdmin';
 
 import ScanQR from './components/scanQR';
 import Home1 from "./Pages/Home";
@@ -43,7 +44,8 @@ import ScrollToTop from "./components/ScrollToTop";
 
 import TrainerDashboard from './components/trainer/trainerDashboard';
 import TrainerHome from './components/trainer/trainerHome';
-
+import EditProfile from './components/profile/editProfile';
+import ChangePassword from './components/profile/changePassword';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -69,6 +71,7 @@ function App() {
           <Route path='/dashboard/announcement' element={<Announcement />} />
           <Route path='/dashboard/report' element={<Report />} />
           <Route path='/dashboard/feedback' element={<Feedback />} />
+          <Route path='/dashboard/add_admin' element={<AddAdmin />} />
           <Route path='/dashboard/add_package' element={<AddPackage />} />
           <Route path='/dashboard/add_member' element={<AddMember />} />
           <Route path='/dashboard/add_trainer' element={<AddTrainer />} />
@@ -90,6 +93,8 @@ function App() {
           <Route path='/member/contact' element={<Contact />} />
           <Route path='/member/memberpackage' element={<MemberPackage />} />
           <Route path='/member/classes' element={<Classes />} />
+          <Route path='/member/editprofile' element={<EditProfile />} />
+          <Route path='/member/changepassword' element={<ChangePassword />} />
         </Route>
 
         <Route path='/trainerDashboard' element={<TrainerDashboard />}>

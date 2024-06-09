@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import logoWhite from "../../images/logo/logo.svg";
-import logoBlack from "../../images/logo/logo-footer.svg";
+import logolong from "../../images/logo/logolong.svg";
+
 
 function Logo({ size = "w-full", type = "white" }) {
   return (
-    <Link to="/" className="focus inline-block">
+    <Link to="/member" className="focus inline-block">
       <img
-        src={`${type === "black" ? logoBlack : logoWhite}`}
+        src={logolong}
         alt="gymate logo"
         className={`h-auto ${size}`}
       />

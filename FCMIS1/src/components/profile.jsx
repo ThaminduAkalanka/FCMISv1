@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const [admin, setAdmin] = useState(null);
@@ -61,24 +61,7 @@ const Profile = () => {
         .catch(err => console.log(err));
     };
 
-    const handleRegister = (event) => {
-        event.preventDefault();
-        const token = localStorage.getItem('token');
-        axios.post('http://localhost:3000/auth/registeradmin', registerValues, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if (response.data.Status) {
-                alert('New admin registered successfully.');
-                setRegisterValues({ name:'', username: '',  password: '', email: '', contact: '' });
-            } else {
-                alert(response.data.Error);
-            }
-        })
-        .catch(err => console.log(err));
-    };
+
 
     if (error) {
         return <div className="text-red-500 text-center mt-4">{error}</div>;
@@ -94,6 +77,24 @@ const Profile = () => {
                 <h1 className="text-2xl font-bold">Admin Profile</h1>
                 <p><strong>Username:</strong> {admin.username}</p>
                 <p><strong>Email:</strong> {admin.email}</p>
+ 
+            </div>
+
+            <div className='space-y-4 space-x-6 '>
+            <Link
+                    to={'/member/add_admin'}
+                    className="bg-white max text-black font-medium rounded-lg px-4 py-2 hover:bg-neutral-300"
+                >
+                    New Admin
+                </Link>
+
+                <Link
+                    to={'/member/changepassword'}
+                    className="bg-white text-black font-medium rounded-lg px-4 py-2  hover:bg-neutral-300"
+                >
+                    Change Password
+                </Link>
+
                 <button
                     onClick={handleLogout}
                     className="bg-red-600 text-white font-medium rounded-lg px-4 py-2 hover:bg-red-700"
@@ -134,68 +135,6 @@ const Profile = () => {
                 </form>
             </div>
 
-            <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded p-6 space-y-6 mt-8">
-                <h2 className="text-xl font-bold">Register New Admin</h2>
-                <form onSubmit={handleRegister} className="space-y-4">
-                    <div>
-                        <label className="block font-medium" htmlFor="name">Name</label>
-                        <input
-                            type="text"
-                            id="username"
-                            value={registerValues.name}
-                            onChange={(e) => setRegisterValues({ ...registerValues, name: e.target.value })}
-                            className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                        />
-                    </div>
-                    <div>
-                        <label className="block font-medium" htmlFor="username">Username</label>
-                        <input
-                            type="text"
-                            id="username"
-                            value={registerValues.username}
-                            onChange={(e) => setRegisterValues({ ...registerValues, username: e.target.value })}
-                            className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block font-medium" htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={registerValues.password}
-                            onChange={(e) => setRegisterValues({ ...registerValues, password: e.target.value })}
-                            className="block w-full mt-1 border border-gray-300 text-black rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                        />
-                    </div>
-                    <div>
-                        <label className="block font-medium" htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={registerValues.email}
-                            onChange={(e) => setRegisterValues({ ...registerValues, email: e.target.value })}
-                            className="block w-full mt-1 border border-gray-300 text-black rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                        />
-                    </div>
-                    <div>
-                        <label className="block font-medium" htmlFor="contact">Contact</label>
-                        <input
-                            type="tel"
-                            id="contact"
-                            value={registerValues.contact}
-                            onChange={(e) => setRegisterValues({ ...registerValues, contact: e.target.value })}
-                            className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="bg-green-600 text-white font-medium rounded-lg px-4 py-2 hover:bg-green-700"
-                    >
-                        Register
-                    </button>
-                </form>
-            </div>
         </div>
     );
 };
