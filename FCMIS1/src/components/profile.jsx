@@ -5,8 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 const Profile = () => {
     const [admin, setAdmin] = useState(null);
     const [error, setError] = useState(null);
-    const [changePasswordValues, setChangePasswordValues] = useState({ currentPassword: '', newPassword: '' });
-    const [registerValues, setRegisterValues] = useState({ name:'', username: '', password: '', email: '', contact: '' });
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,24 +40,6 @@ const Profile = () => {
             .catch(err => console.log(err));
     };
 
-    const handleChangePassword = (event) => {
-        event.preventDefault();
-        const token = localStorage.getItem('token');
-        axios.post('http://localhost:3000/auth/changepassword', changePasswordValues, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if (response.data.Status) {
-                alert('Password changed successfully.');
-                setChangePasswordValues({ currentPassword: '', newPassword: '' });
-            } else {
-                alert(response.data.Error);
-            }
-        })
-        .catch(err => console.log(err));
-    };
 
 
 
@@ -73,10 +53,13 @@ const Profile = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded p-6 space-y-6">
+            <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded-lg p-6 space-y-6">
                 <h1 className="text-2xl font-bold">Admin Profile</h1>
+                <p><strong>Name:</strong> {admin.name}</p>
                 <p><strong>Username:</strong> {admin.username}</p>
                 <p><strong>Email:</strong> {admin.email}</p>
+                <p><strong>Contact Number:</strong> {admin.contact}</p>
+
  
             </div>
 
@@ -89,7 +72,7 @@ const Profile = () => {
                 </Link>
 
                 <Link
-                    to={'/member/changepassword'}
+                    to={'/Dashboard/change_adminpassword'}
                     className="bg-white text-black font-medium rounded-lg px-4 py-2  hover:bg-neutral-300"
                 >
                     Change Password
@@ -103,38 +86,7 @@ const Profile = () => {
                 </button>
             </div>
 
-            <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded p-6 space-y-6 mt-8">
-                <h2 className="text-xl font-bold">Change Password</h2>
-                <form onSubmit={handleChangePassword} className="space-y-4">
-                    <div>
-                        <label className="block font-medium" htmlFor="currentPassword">Current Password</label>
-                        <input
-                            type="password"
-                            id="currentPassword"
-                            value={changePasswordValues.currentPassword}
-                            onChange={(e) => setChangePasswordValues({ ...changePasswordValues, currentPassword: e.target.value })}
-                            className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                        />
-                    </div>
-                    <div>
-                        <label className="block font-medium" htmlFor="newPassword">New Password</label>
-                        <input
-                            type="password"
-                            id="newPassword"
-                            value={changePasswordValues.newPassword}
-                            onChange={(e) => setChangePasswordValues({ ...changePasswordValues, newPassword: e.target.value })}
-                            className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="bg-blue-600 text-white font-medium rounded-lg px-4 py-2 hover:bg-blue-700"
-                    >
-                        Change Password
-                    </button>
-                </form>
-            </div>
-
+           
         </div>
     );
 };

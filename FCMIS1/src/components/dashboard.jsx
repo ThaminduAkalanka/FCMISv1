@@ -51,7 +51,7 @@ const Dashboard = () => {
         <div className="flex items-center pl-6 h-20 border-b border-gray-800 ">
           <img
             src={Profile}
-            alt="profilde"
+            alt="profile"
             className="rounded-full h-10 w-10 flex items-center justify-center mr-3 border-2 border-blue-500"
           />
           <div className="ml-1">

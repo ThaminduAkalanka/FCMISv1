@@ -87,6 +87,14 @@ const authenticateToken = (req, res, next) => {
     });
   });
 
-
+  router.post('/assignSchedules', (req, res) => {
+    const { memberID, trainerID, scheduleID, startDate, endDate } = req.body;
+    const sql = "INSERT INTO AssignSchedule (memberID, trainerID, scheduleID, startDate, endDate) VALUES (?, ?, ?, ?, ?)";
+    
+    con.query(sql, [memberID, trainerID, scheduleID, startDate, endDate], (err, result) => {
+        if (err) return res.status(500).json({ Status: false, Error: "Query error" });
+        return res.json({ Status: true, assignID: result.insertId });
+    });
+});
 
   export { router as TrainerRouter }

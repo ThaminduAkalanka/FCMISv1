@@ -7,7 +7,8 @@ const addpayment = () => {
   const { memberID } = useParams();
   const [packageID, setPackageID] = useState("");
   const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
+  const [startDate, setstartDate] = useState("");
+  const [endDate, setendDate] = useState("");
   const [packages, setPackage] = useState([]);
 
   useEffect(() => {
@@ -31,7 +32,8 @@ const addpayment = () => {
         memberID,
         packageID,
         amount,
-        date,
+        startDate,
+        endDate,
       })
       .then((result) => {
         if (result.data.Status) {
@@ -47,9 +49,9 @@ const addpayment = () => {
 
   return (
     
-      <div class='grid grid-flow-row auto-rows-max space-y-4'>
+      <div class=''>
         <h2 className='flex justify-left font-bold text-lg pb-6'>Make Payment</h2>
-        <div className='w-full max-w-s'>
+        <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded-lg p-6 space-y-6">
         <label className="flex justify-left" htmlFor="username1">
           Member ID
         </label>
@@ -88,6 +90,19 @@ const addpayment = () => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
 
+      <label className="flex justify-left" htmlFor="username1">
+          Start date
+        </label>
+        <input
+          type="date"
+          name="startdate"
+          autoComplete="off"
+          value={startDate}
+          placeholder=""
+          onChange={(e) => setstartDate(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+
         <label className="flex justify-left" htmlFor="username1">
           Expire date
         </label>
@@ -95,9 +110,9 @@ const addpayment = () => {
           type="date"
           name="expiredate"
           autoComplete="off"
-          value={date}
+          value={endDate}
           placeholder=""
-          onChange={(e) => setDate(e.target.value)}
+          onChange={(e) => setendDate(e.target.value)}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
         <div class='space-y-10 space-x-10'>

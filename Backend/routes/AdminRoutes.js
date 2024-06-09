@@ -456,12 +456,12 @@ router.delete('/delete_equipment/:equipmentID', (req,res) => {
 //payment
 // Record a payment,update membership status and update packageID
 router.post('/payment', (req, res) => {
-  const { memberID, packageID, amount, date } = req.body;
+  const { memberID, packageID, amount, date, startDate, endDate, } = req.body;
   const paymentSql = `INSERT INTO payment (memberID, packageID, amount, paymentDate) VALUES (?, ?, ?, NOW())`;
-  con.query(paymentSql, [memberID, packageID, amount], (err, result) => {
+  con.query(paymentSql, [memberID, packageID, amount, date], (err, result) => {
       if (err) throw err;
-      const membershipUpdateSql = `UPDATE membership SET packageID = ?, status = 'active', startDate = NOW(), endDate = ? WHERE memberID = ?`;
-      con.query(membershipUpdateSql, [packageID, date, memberID], (err, result) => {
+      const membershipUpdateSql = `UPDATE membership SET packageID = ?, status = 'active', startDate = ?, endDate = ? WHERE memberID = ?`;
+      con.query(membershipUpdateSql, [packageID, startDate, endDate, memberID], (err, result) => {
           if (err) throw err;
           const updateMemberSql = `UPDATE member SET packageID = ? WHERE memberID = ?`;
             con.query(updateMemberSql, [packageID, memberID], (err, result) => {

@@ -51,7 +51,7 @@ const addAdmin = () => {
 
   return (
     
-    <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded p-6 space-y-6 mt-8">
+    <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded p-6 space-y-6 mt-8 text-left">
     <h2 className="text-xl font-bold">Register New Admin</h2>
     <form onSubmit={handleRegister} className="space-y-4">
         <div>
@@ -105,12 +105,16 @@ const addAdmin = () => {
                 className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
             />
         </div>
+        <div class ='space-x-6'>
         <button
             type="submit"
-            className="bg-green-600 text-white font-medium rounded-lg px-4 py-2 hover:bg-green-700"
+            className="bg-red-600 text-white font-medium rounded-lg px-4 py-2 hover:bg-red-700"
         >
             Register
         </button>
+        <button type="button" onClick={() => navigate('/dashboard/profile')} className="flex-1 focus:outline-none text-black bg-white hover:bg-neutral-400 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900">
+        Cancel
+        </button></div>
     </form>
 </div>
   )

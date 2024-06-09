@@ -29,6 +29,7 @@ import AddEquipment from './components/addEquipment';
 import EditEquipment from './components/editEquipment';
 import AddAnnouncement from './components/addAnnouncement';
 import AddAdmin from './components/addAdmin';
+import AdminPassword from './components/adminPassword';
 
 import ScanQR from './components/scanQR';
 import Home1 from "./Pages/Home";
@@ -46,6 +47,12 @@ import TrainerDashboard from './components/trainer/trainerDashboard';
 import TrainerHome from './components/trainer/trainerHome';
 import EditProfile from './components/profile/editProfile';
 import ChangePassword from './components/profile/changePassword';
+import AssignSchedule from './components/trainer/assignSchedule';
+import ManageSchedule from './components/trainer/manageSchedule';
+import Category from './components/trainer/category';
+import MemberStat from './components/trainer/memberStat';
+import TrainerProfile from './components/trainer/trainerProfile';
+import MemberSchedule from './components/trainer/memberSchedule';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -82,6 +89,7 @@ function App() {
           <Route path='/dashboard/edit_package/:packageID' element={<EditPackage />} />
           <Route path='/dashboard/edit_trainer/:trainerID' element={<EditTrainer />} />
           <Route path='/dashboard/edit_equipment/:equipmentID' element={<EditEquipment />} />
+          <Route path='/dashboard/change_adminpassword' element={<AdminPassword />} />
           <Route path='/dashboard/scanqr' element={<ScanQR />} />
         </Route>
 
@@ -99,6 +107,13 @@ function App() {
 
         <Route path='/trainerDashboard' element={<TrainerDashboard />}>
           <Route path='/trainerDashboard/' element={<TrainerHome />} />
+          <Route path='/trainerDashboard/assignschedule' element={<AssignSchedule />} />
+          <Route path='/trainerDashboard/manageschedule' element={<ManageSchedule />} />
+          <Route path='/trainerDashboard/memberschedule' element={<MemberSchedule />} />
+          <Route path='/trainerDashboard/category' element={<Category />} />
+          <Route path='/trainerDashboard/memberstat' element={<MemberStat />} />
+          <Route path='/trainerDashboard/trainerprofile' element={<TrainerProfile />} />
+
 
         </Route>
 

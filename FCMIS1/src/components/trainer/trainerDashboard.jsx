@@ -66,7 +66,7 @@ const trainerDashboard = () => {
           <ul className="flex flex-col py-6 space-y-1">
 
             <li>
-              <Link to="/dashboard" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+              <Link to="/trainerDashboard/" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                 <span className="inline-flex justify-center items-center ml-4">
                   <svg className="w-5 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.64104 0.163528C2.812 0.163528 2.01691 0.540832 1.43069 1.21244C0.844472 1.88404 0.515137 2.79494 0.515137 3.74473L0.515137 21.6507C0.515137 22.6005 0.844472 23.5114 1.43069 24.183C2.01691 24.8546 2.812 25.2319 3.64104 25.2319H22.3964C23.2255 25.2319 24.0205 24.8546 24.6068 24.183C25.193 23.5114 25.5223 22.6005 25.5223 21.6507V3.74473C25.5223 2.79494 25.193 1.88404 24.6068 1.21244C24.0205 0.540832 23.2255 0.163528 22.3964 0.163528H3.64104ZM22.3964 1.95413C22.8109 1.95413 23.2085 2.14278 23.5016 2.47858C23.7947 2.81439 23.9594 3.26983 23.9594 3.74473V7.32593H2.07809V3.74473C2.07809 3.26983 2.24275 2.81439 2.53586 2.47858C2.82897 2.14278 3.22652 1.95413 3.64104 1.95413H22.3964ZM2.07809 21.6507V9.11653H8.32988V23.4413H3.64104C3.22652 23.4413 2.82897 23.2527 2.53586 22.9169C2.24275 22.5811 2.07809 22.1256 2.07809 21.6507ZM9.89283 23.4413V9.11653H23.9594V21.6507C23.9594 22.1256 23.7947 22.5811 23.5016 22.9169C23.2085 23.2527 22.8109 23.4413 22.3964 23.4413H9.89283Z"></path>
@@ -77,7 +77,7 @@ const trainerDashboard = () => {
 
             </li>
             <li>
-              <Link to="/dashboard/profile" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+              <Link to="/trainerDashboard/trainerprofile" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                 <span className="inline-flex justify-center items-center ml-4">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
@@ -88,7 +88,7 @@ const trainerDashboard = () => {
             </li>
 
             <li>
-              <Link to="/dashboard/member" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+              <Link to="/trainerDashboard/memberschedule" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                 <span className="inline-flex justify-center items-center ml-4">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -99,7 +99,7 @@ const trainerDashboard = () => {
 
             </li>
             <li>
-              <Link to="/dashboard/status" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+              <Link to="/trainerDashboard/manageschedule" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                 <span className="inline-flex justify-center items-center ml-4">
                   <svg className="w-6 h-5" fill="" stroke="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path fill="currentColor" d="M7 11c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2s2 .9 2 2v1c0 1.1-.9 2-2 2zm-2 6.993L9 18c.55 0 1-.45 1-1v-2c0-1.65-1.35-3-3-3s-3 1.35-3 3v2c0 .552.448.993 1 .993zM19 18h-6c-.553 0-1-.447-1-1s.447-1 1-1h6c.553 0 1 .447 1 1s-.447 1-1 1zm0-4h-6c-.553 0-1-.448-1-1s.447-1 1-1h6c.553 0 1 .448 1 1s-.447 1-1 1zm0-4h-6c-.553 0-1-.448-1-1s.447-1 1-1h6c.553 0 1 .448 1 1s-.447 1-1 1z"/>
@@ -110,7 +110,7 @@ const trainerDashboard = () => {
             </li>
 
             <li>
-            <Link to="/dashboard/payment" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+            <Link to="/trainerDashboard/category" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                 <span class="inline-flex justify-center items-center ml-4">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -123,7 +123,7 @@ const trainerDashboard = () => {
             </li>
 
             <li>
-            <Link to="/dashboard/" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
+            <Link to="/trainerDashboard/memberstat" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                 <span class="inline-flex justify-center items-center ml-4">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
