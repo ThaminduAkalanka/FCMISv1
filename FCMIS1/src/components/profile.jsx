@@ -82,7 +82,7 @@ const Profile = () => {
 
             <div className='space-y-4 space-x-6 '>
             <Link
-                    to={'/member/add_admin'}
+                    to={'/Dashboard/add_admin'}
                     className="bg-white max text-black font-medium rounded-lg px-4 py-2 hover:bg-neutral-300"
                 >
                     New Admin
