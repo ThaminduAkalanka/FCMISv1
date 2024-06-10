@@ -215,9 +215,15 @@ router.post('/add_member', upload.single('image'), async (req, res) => {
         con.query(updateMemberSql, [qrCodeUrl, memberId], (err, updateResult) => {
           if (err) return res.json({ Status: false, Error: "Query error" });
 
+          //assign schedule
+          const scheduleSql = `INSERT INTO assignschedule (memberID) VALUES (?)`;
+          con.query(scheduleSql, [memberId], async (err, result) => {
+            if (err) return res.json({ Status: false, Error: "Query error" });
+
           return res.json({ Status: true, Result: updateResult });
         });
       });
+    });
     });
   } catch (error) {
     console.error('Error:', error);

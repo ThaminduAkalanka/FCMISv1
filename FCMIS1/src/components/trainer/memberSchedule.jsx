@@ -5,15 +5,15 @@ import { Link, useNavigate } from 'react-router-dom'
 const memberSchedule = () => {
 
   const [member, setMember] = useState([])
-  const [membership, setMembership] = useState([])
+  const [memberschedule, setMemberschedule] = useState([])
   const [Package, setPackages] = useState([])
   const navigate = useNavigate()
 
   useEffect(() =>{
-    axios.get('http://localhost:3000/auth/membershipstatus')
+    axios.get('http://localhost:3000/train/memberschedule')
     .then(result =>{
       if (result.data.Status){
-        setMembership(result.data.Result);
+        setMemberschedule(result.data.Result);
       }else{
         alert(result.data.Error)
       }
@@ -72,7 +72,7 @@ const memberSchedule = () => {
   return (
     <div class="grid grid-flow-row auto-rows-max space-y-4">
       <div>
-        <h3>Membership Status</h3>
+        <h3>Assign Schedule</h3>
       </div>
 
       <div className="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-2 pt-6 pb-8 mb-4">
@@ -92,20 +92,22 @@ const memberSchedule = () => {
         </thead>
         <tbody>
           {
-            membership.map((m, index) => (
+            memberschedule.map((m, index) => (
               <tr key={index} className="border-b border-gray-200">
-                <td class="py-2">{m.memberID}</td>
-                <td>{getName(m.memberID)}</td>
+                <td >{m.memberID}</td>
+                <td class="py-2">{m.name}</td>
 
                 <td>{getPackageName(m.packageID)}</td>
-                {/*<td>{m.personal}</td>*/}
+                {/*<td>{m.personal}</td>
                 <td>{formatDate(m.startDate)}</td>
-                <td>{formatDate(m.endDate)}</td>
-                <td style={{ color: m.status === 'active' ? 'lime' : m.status === 'pending' ? 'yellow' : 'red' }}>
-                  {m.status}
+                <td>{formatDate(m.endDate)}</td>*/}
+                <td>{m.categoryID}</td>
+                <td>{m.scheduleID}</td>
+                <td style={{ color: m.scheduleStatus === 'active' ? 'lime' : m.scheduleStatus === 'in progress' ? 'yellow' : 'red' }}>
+                  {m.scheduleStatus}
                 </td>
                 <td>
-                  <Link to= {"/dashboard/add_payment/"+m.memberID} class="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
+                  <Link to= {"/trainerDashboard/assignschedule/"+m.memberID} class="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 ">
                     Assign Schedule</Link>
                   {/*<button class="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2 "
                   onClick={() => handleDelete(m.memberID)}>

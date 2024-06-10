@@ -108,7 +108,7 @@ function App() {
 
         <Route path='/trainerDashboard' element={<TrainerDashboard />}>
           <Route path='/trainerDashboard/' element={<TrainerHome />} />
-          <Route path='/trainerDashboard/assignschedule' element={<AssignSchedule />} />
+          <Route path='/trainerDashboard/assignschedule/:memberID' element={<AssignSchedule />} />
           <Route path='/trainerDashboard/manageschedule' element={<ManageSchedule />} />
           <Route path='/trainerDashboard/memberschedule' element={<MemberSchedule />} />
           <Route path='/trainerDashboard/add_schedule' element={<AddSchedule />} />

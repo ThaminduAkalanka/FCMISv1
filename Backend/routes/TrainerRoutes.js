@@ -90,14 +90,27 @@ const authenticateToken = (req, res, next) => {
 
 
 //schedule
-  router.post('/assignSchedules', (req, res) => {
-    const { memberID, trainerID, scheduleID, startDate, endDate } = req.body;
-    const sql = "INSERT INTO AssignSchedule (memberID, trainerID, scheduleID, startDate, endDate) VALUES (?, ?, ?, ?, ?)";
-    
-    con.query(sql, [memberID, trainerID, scheduleID, startDate, endDate], (err, result) => {
-        if (err) return res.status(500).json({ Status: false, Error: "Query error" });
-        return res.json({ Status: true, assignID: result.insertId });
-    });
+router.post('/assignschedule', (req, res) => {
+  const { memberID, trainerID, scheduleID, startDate, endDate } = req.body;
+      const membershipUpdateSql = `UPDATE assignschedule SET trainerID= ?, scheduleID= ?, scheduleStatus = 'in progress', startDate = ?, endDate = ? WHERE memberID = ?`;
+      con.query(membershipUpdateSql, [trainerID, scheduleID, startDate, endDate, memberID], (err, result) => {
+              if (err) return res.json({ Status: false, Error: "Query error" })
+                return res.json({Status: true, Result: result})
+      });
+  });
+
+
+
+router.get('/memberschedule', (req, res) => {
+  const sql = `
+    SELECT m.*, a.*
+    FROM member m
+    LEFT JOIN assignschedule a ON m.memberID = a.memberID
+  `;
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query error" });
+    return res.json({ Status: true, Result: result });
+  });
 });
 
 //manage schedule
@@ -142,7 +155,7 @@ router.put('/edit_schedule/:scheduleID', (req,res) => {
 })
 
 
-router.delete('/delete_package/:packageID', (req,res) => {
+router.delete('/delete_schedule/:scheduleID', (req,res) => {
   const scheduleID = req.params.scheduleID;
   const sql = `DELETE FROM schedule WHERE scheduleID = ?`;
   con.query(sql, [scheduleID], (err, result)=>{
@@ -150,5 +163,18 @@ router.delete('/delete_package/:packageID', (req,res) => {
     return res.json({Status: true, Result: result})
   })
 })
+
+
+//category
+router.get('/category',(req, res)=>{
+  const sql = "SELECT * FROM workoutcategory";
+  con.query(sql, (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+
+
 
   export { router as TrainerRouter }
