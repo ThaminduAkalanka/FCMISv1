@@ -53,6 +53,7 @@ import Category from './components/trainer/category';
 import MemberStat from './components/trainer/memberStat';
 import TrainerProfile from './components/trainer/trainerProfile';
 import MemberSchedule from './components/trainer/memberSchedule';
+import AddSchedule from './components/trainer/addSchedule';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -110,9 +111,11 @@ function App() {
           <Route path='/trainerDashboard/assignschedule' element={<AssignSchedule />} />
           <Route path='/trainerDashboard/manageschedule' element={<ManageSchedule />} />
           <Route path='/trainerDashboard/memberschedule' element={<MemberSchedule />} />
+          <Route path='/trainerDashboard/add_schedule' element={<AddSchedule />} />
           <Route path='/trainerDashboard/category' element={<Category />} />
           <Route path='/trainerDashboard/memberstat' element={<MemberStat />} />
           <Route path='/trainerDashboard/trainerprofile' element={<TrainerProfile />} />
+          
 
 
         </Route>

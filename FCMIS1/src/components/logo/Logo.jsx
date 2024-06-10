@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logolong from "../../images/logo/logolong.svg";
 
 
-function Logo({ size = "w-full", type = "white" }) {
+function Logo({ size = "w-48", type = "white" }) {
   return (
     <Link to="/member" className="focus inline-block">
       <img

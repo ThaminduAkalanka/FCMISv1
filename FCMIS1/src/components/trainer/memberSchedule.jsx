@@ -84,9 +84,9 @@ const memberSchedule = () => {
 
             <th class="py-3">Package</th>
             {/*<th class="py-3">Personal<br></br> Training</th>*/}
-            <th class="py-3">Start Date</th>
-            <th class="py-3">Expire Date</th>
-            <th class="py-3">Status</th>
+            <th class="py-3">Currnet Category</th>
+            <th class="py-3">Current Schedule</th>
+            <th class="py-3">Schedule Status</th>
             <th class="py-3">Actions</th>
           </tr>
         </thead>

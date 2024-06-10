@@ -87,6 +87,9 @@ const authenticateToken = (req, res, next) => {
     });
   });
 
+
+
+//schedule
   router.post('/assignSchedules', (req, res) => {
     const { memberID, trainerID, scheduleID, startDate, endDate } = req.body;
     const sql = "INSERT INTO AssignSchedule (memberID, trainerID, scheduleID, startDate, endDate) VALUES (?, ?, ?, ?, ?)";
@@ -96,5 +99,56 @@ const authenticateToken = (req, res, next) => {
         return res.json({ Status: true, assignID: result.insertId });
     });
 });
+
+//manage schedule
+router.post('/add_schedule', (req, res) =>{
+  const sql = " INSERT INTO schedule (`categoryID`, `name`, `level`, `scheduleDetail`) VALUES (?, ?, ?, ?)";
+  con.query(sql, [req.body.categoryID, req.body.name, req.body.level, req.body.scheduleDetail], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error", err })
+    return res.json({Status: true})
+  })
+})
+
+router.get('/manageschedule',(req, res)=>{
+  const sql = "SELECT * FROM schedule";
+  con.query(sql, (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.get('/schedule/:scheduleID', (req,res) => {
+  const scheduleID = req.params.scheduleID;
+  const sql = `SELECT * FROM schedule WHERE scheduleID = ?`;
+  con.query(sql, [scheduleID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+router.put('/edit_schedule/:scheduleID', (req,res) => {
+  const scheduleID = req.params.scheduleID;
+  const sql = `UPDATE schedule SET categoryID = ?, name = ?, level = ?, scheduleDetails = ?  WHERE scheduleID = ?`;
+  const values=[
+    req.body.categoryID, 
+    req.body.name,
+    req.body.level, 
+    req.body.scheduleDetail, 
+  ]
+  con.query(sql, [...values, scheduleID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error"+err })
+    return res.json({Status: true, Result: result})
+  })
+})
+
+
+router.delete('/delete_package/:packageID', (req,res) => {
+  const scheduleID = req.params.scheduleID;
+  const sql = `DELETE FROM schedule WHERE scheduleID = ?`;
+  con.query(sql, [scheduleID], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
 
   export { router as TrainerRouter }

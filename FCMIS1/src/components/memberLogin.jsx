@@ -29,15 +29,15 @@ const Login = () => {
     
     
     return (
-        <div className='relative flex flex-col md:flex-row justify-evenly items-center h-screen p-20 sd:p-0'>
+        <div className='relative flex flex-col md:flex-row justify-evenly items-center h-screen p-20 sm:p-10'>
             <div className='absolute top-8 right-8 flex space-x-4'>
                 <Link to="/adminlogin" className="text-sm text-white hover:text-red-100">Admin Login</Link>
                 <Link to="/trainerlogin" className="text-sm text-white hover:text-blue-100">Trainer Login</Link>
             </div>
             <div>
-                <h2 className='flex justify-left font-bold text-lg pb-6'>
-                    Member Login
-                </h2>
+            <div className='flex justify-left font-bold text-xl pb-6 space-x-2 mt-8'>
+                    <p class='text-blue-500'>Member</p> <p>Login</p>
+                </div>
                 <div className="text-red-700 text-xs">
                     {error && error}
                 </div>
