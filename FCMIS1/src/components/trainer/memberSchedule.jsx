@@ -8,6 +8,8 @@ const memberSchedule = () => {
   const [memberschedule, setMemberschedule] = useState([])
   const [Package, setPackages] = useState([])
   const navigate = useNavigate()
+  const [category, setCategory] = useState([])
+  const [schedule, setSchedule] = useState([])
 
   useEffect(() =>{
     axios.get('http://localhost:3000/train/memberschedule')
@@ -36,6 +38,24 @@ const memberSchedule = () => {
         alert(result.data.Error)
       }
     }).catch(err => console.log(err))
+
+    axios.get('http://localhost:3000/train/category')
+    .then(result =>{
+      if (result.data.Status){
+        setCategory(result.data.Result);
+      }else{
+        alert(result.data.Error)
+      }
+    }).catch(err => console.log(err))
+
+    axios.get('http://localhost:3000/train/manageschedule')
+    .then(result =>{
+      if (result.data.Status){
+        setSchedule(result.data.Result);
+      }else{
+        alert(result.data.Error)
+      }
+    }).catch(err => console.log(err))
   },[])
 
   const getPackageName = (packageID) => {
@@ -47,7 +67,15 @@ const memberSchedule = () => {
     const mem = member.find(s => s.memberID === memberID)
     return mem ? mem.name : 'Unknown'
   }
+  const getcatName = (categoryID) => {
+    const c = category.find(s => s.categoryID === categoryID)
+    return c ? c.categoryName : 'Unknown'
+  }
 
+  const getscheduleName = (scheduleID) => {
+    const c = schedule.find(s => s.scheduleID === scheduleID)
+    return c ? c.name : 'Unknown'
+  }
 
   const handleDelete = (memberID) =>{
     axios.delete('http://localhost:3000/auth/delete_membership/'+memberID)
@@ -101,8 +129,8 @@ const memberSchedule = () => {
                 {/*<td>{m.personal}</td>
                 <td>{formatDate(m.startDate)}</td>
                 <td>{formatDate(m.endDate)}</td>*/}
-                <td>{m.categoryID}</td>
-                <td>{m.scheduleID}</td>
+                <td>{getcatName(m.categoryID)}</td>
+                <td>{getscheduleName(m.scheduleID)}</td>
                 <td style={{ color: m.scheduleStatus === 'active' ? 'lime' : m.scheduleStatus === 'in progress' ? 'yellow' : 'red' }}>
                   {m.scheduleStatus}
                 </td>

@@ -4,11 +4,10 @@ import TertiaryHeading from "../headings/TertiaryHeading";
 function Title() {
   return (
     <div className="text-center">
-      <SecondaryHeading>Latest blog</SecondaryHeading>
-      <TertiaryHeading>Our recent news</TertiaryHeading>
-      <p className="mx-auto max-w-[50ch] font-medium text-gray-300">
-        Gymat an unknown printer took a galley of type and scrambled make a type
-        specimen book.
+      <SecondaryHeading>Latest</SecondaryHeading>
+      <TertiaryHeading>Recent Announcements</TertiaryHeading>
+      <p className="mx-auto max-w-[50ch] font-medium text-neutral-100">
+        Muscle Max Fitness Kingdom Annoucements.
       </p>
     </div>
   );

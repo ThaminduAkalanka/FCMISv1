@@ -53,8 +53,10 @@ const Profile = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded-lg p-6 space-y-6">
-                <h1 className="text-2xl font-bold">Admin Profile</h1>
+            <h1 className="text-2xl font-bold ">Admin Profile</h1>
+
+            <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded-lg p-6 space-y-6 mt-10">
+                
                 <p><strong>Name:</strong> {admin.name}</p>
                 <p><strong>Username:</strong> {admin.username}</p>
                 <p><strong>Email:</strong> {admin.email}</p>
@@ -63,7 +65,7 @@ const Profile = () => {
  
             </div>
 
-            <div className='space-y-4 space-x-6 '>
+            <div className='space-y-10 space-x-6 '>
             <Link
                     to={'/Dashboard/add_admin'}
                     className="bg-white max text-black font-medium rounded-lg px-4 py-2 hover:bg-neutral-300"

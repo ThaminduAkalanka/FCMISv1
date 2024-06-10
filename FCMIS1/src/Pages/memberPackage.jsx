@@ -64,6 +64,7 @@ const getPackageName = (packageID) => {
   return pkg ? pkg.packageName : 'Unknown'
 }
 
+
   return (
     <main className="bg-gray-100 min-h-screen ">
       <HeroPages page="Package" />
@@ -75,7 +76,7 @@ const getPackageName = (packageID) => {
             
             <div className="flex justify-center text-lg space-x-2">
               <span className="font-semibold">Status:</span>
-              <div style={{ color: member.status === 'active' ? 'lime' : m.status === 'pending' ? 'yellow' : 'red' }}>
+              <div style={{ color: member.status === 'active' ? 'lime' : member.status === 'pending' ? 'yellow' : 'red' }}>
                 {member.status}
               </div>
             </div>

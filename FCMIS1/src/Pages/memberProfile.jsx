@@ -60,11 +60,11 @@ const Profile = () => {
     };
 
     return (
-      <div>
+      <div className="bg-gray-100 min-h-screen ">
         <HeroPages page="Profile" />
       
         <div className="container mx-auto p-10 mt-10 sd:p-4  ">
-            <div className="felx max-w-lg mx-auto bg-neutral-600 shadow-md rounded-lg p-6 space-y-6">
+            <div className="felx max-w-lg mx-auto bg-neutral-800 shadow-md rounded-lg p-6 space-y-6">
                 <div className='flex justify-center space-x-10'>
                 <img src ={ `http://localhost:3000/images/`+member.image} class='bg-black w-40 h-auto rounded-full'/>
                 <img src ={member.qrCode} class='bg-black w-40 h-auto rounded-lg'/></div>
@@ -79,14 +79,14 @@ const Profile = () => {
             <div className='space-y-4 space-x-6 '>
             <Link
                     to={'/member/editprofile'}
-                    className="bg-white max text-black font-medium rounded-lg px-4 py-2 hover:bg-neutral-300"
+                    className="bg-blue-600 max text-white font-medium rounded-lg px-4 py-2 hover:bg-blue-500"
                 >
                     Edit Details
                 </Link>
 
                 <Link
                     to={'/member/changepassword'}
-                    className="bg-white text-black font-medium rounded-lg px-4 py-2  hover:bg-neutral-300"
+                    className="bg-blue-600 text-white font-medium rounded-lg px-4 py-2  hover:bg-blue-500"
                 >
                     Change Password
                 </Link>

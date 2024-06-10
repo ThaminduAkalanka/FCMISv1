@@ -5,12 +5,22 @@ import { Link } from 'react-router-dom'
 const manageSchedule = () => {
 
     const [schedule, setSchedule] = useState([])
+    const [category, setCategory] = useState([])
 
     useEffect(() =>{
       axios.get('http://localhost:3000/train/manageschedule')
       .then(result =>{
         if (result.data.Status){
           setSchedule(result.data.Result);
+        }else{
+          alert(result.data.Error)
+        }
+      }).catch(err => console.log(err))
+
+      axios.get('http://localhost:3000/train/category')
+      .then(result =>{
+        if (result.data.Status){
+          setCategory(result.data.Result);
         }else{
           alert(result.data.Error)
         }
@@ -29,6 +39,10 @@ const manageSchedule = () => {
       }).catch(err => console.log(err))
     }
 
+    const getcatName = (categoryID) => {
+      const mem = category.find(s => s.categoryID === categoryID)
+      return mem ? mem.categoryName : 'Unknown'
+    }
   return (
     <div class='grid grid-flow-row auto-rows-max space-y-4'>
       <div>
@@ -53,7 +67,7 @@ const manageSchedule = () => {
             schedule.map((p, index) => (
               <tr key={index} className="border-b border-gray-200">
                 <td>{p.scheduleID}</td>
-                <td>{p.categoryID}</td>
+                <td>{getcatName(p.categoryID)}</td>
                 <td>{p.name}</td>
                 <td>{p.level}</td>
                 <td>{p.scheduleDetail}</td>

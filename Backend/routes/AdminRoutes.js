@@ -180,7 +180,8 @@ router.delete('/delete_package/:packageID', (req,res) => {
 router.post('/add_member', upload.single('image'), async (req, res) => {
   const registerDate = new Date();
   const packageID = req.body.packageID;
-  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `registerDate`, `packageID`) VALUES (?)";
+  const categoryID = req.body.categoryID;
+  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `registerDate`, `packageID`, `categoryID`) VALUES (?)";
   
   try {
     const hash = await bcrypt.hash(req.body.password, 10);
@@ -195,7 +196,8 @@ router.post('/add_member', upload.single('image'), async (req, res) => {
       req.body.dob,
       req.body.gender,
       registerDate,
-      packageID
+      packageID,
+      categoryID
     ];
 
     con.query(sql, [values], async (err, result) => {

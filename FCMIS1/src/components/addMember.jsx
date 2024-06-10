@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const addMember = () => {
+  
+  const [category, setCategory] = useState([])
   const [values, setvalues] = useState({
     name: "",
     username: "",
@@ -44,6 +46,15 @@ const addMember = () => {
       .catch((err) =>
         console.log("There was an error fetching the categories!", err)
       );
+
+      axios.get('http://localhost:3000/train/category')
+      .then(result =>{
+        if (result.data.Status){
+          setCategory(result.data.Result);
+        }else{
+          alert(result.data.Error)
+        }
+      }).catch(err => console.log(err))
   }, []); /*there are 3 types of use effect*/
 
   const handleSubmit = (event) => {
@@ -59,6 +70,7 @@ const addMember = () => {
     formData.append("dob", values.dob);
     formData.append("gender", values.gender);
     formData.append("packageID", values.packageID);
+    formData.append("categoryID", values.categoryID);
     {
       /*formData.append('personal', values.personal);*/
     }
@@ -83,7 +95,7 @@ const addMember = () => {
       <div className="w-full max-w-">
         <form
           onSubmit={handleSubmit}
-          className="relative overflow-x-auto" //bg-neutral-600 shadow-md rounded px-8 pt-3 pb-5 mb-4
+          className="relative overflow-x-auto bg-neutral-700 shadow-md rounded  px-8 pt-10 pb-5 mb-4" //bg-neutral-600 shadow-md rounded px-8 pt-3 pb-5 mb-4
         >
           <div className="grid grid-cols-2 gap-10">
             <div className="col-span-1 space-y-2">
@@ -164,11 +176,11 @@ const addMember = () => {
                 onChange={(e) =>
                   setvalues({ ...values, image: e.target.files[0] })
                 }
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
 
-            <div className="col-span-1 space-y-2">
+            <div className="col-span-1 space-y-2.5">
               <label className="flex justify-left" htmlFor="medical">
                 Medical conditions
               </label>
@@ -227,7 +239,9 @@ const addMember = () => {
                   return <option value={p.packageID}>{p.packageName}</option>;
                 })}
               </select>
-
+              <label className="flex justify-left" htmlFor="package">
+                Workout Category
+              </label>
               <select
                 value={values.categoryID}
                 onChange={(e) =>

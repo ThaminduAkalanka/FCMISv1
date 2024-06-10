@@ -4,7 +4,7 @@ import BlogLayout from "../components/blog-page/BlogLayout";
 function Blog() {
   return (
     <main>
-      <HeroPages page="Blog" />
+      <HeroPages page="Annoucemnts" />
 
       <BlogLayout />
     </main>

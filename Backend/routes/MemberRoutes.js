@@ -91,9 +91,7 @@ const authenticateToken = (req, res, next) => {
     //fetch package details
     router.get("/memberpackage", authenticateToken, (req, res) => {
         const sql =  `
-        SELECT m.*, mem.status, mem.startDate, mem.endDate
-        FROM member m
-        LEFT JOIN membership mem ON m.memberID = mem.memberID
+        SELECT * FROM membership WHERE memberID= ?
       `;
         con.query(sql, [req.user.memberID], (err, result) => {
           if (err) return res.json({ Status: false, Error: "Query error" });
@@ -104,5 +102,26 @@ const authenticateToken = (req, res, next) => {
         });
       });
 
+//fetch schedule
+      router.get("/memberschedule", authenticateToken, (req, res) => {
+        const sql = "SELECT * FROM assignschedule WHERE memberID = ?";
+        con.query(sql, [req.user.memberID], (err, result) => {
+          if (err) return res.json({ Status: false, Error: "Query error" });
+          if (result.length > 0) {
+            return res.json({ Status: true, member: result[0] });
+          }
+          return res.json({ Status: false, Error: "schedule not found" });
+        });
+      });
+
+
+      router.put('/updateschedule', authenticateToken, (req, res) => {
+        const sql = "UPDATE assignschedule SET scheduleStatus = ? WHERE memberID = ?";
+        con.query(sql, [req.body.scheduleStatus, req.body.memberID], (err, result) => {
+          if (err) return res.json({ Status: false, Error: "Query error" });
+          return res.json({ Status: true });
+        });
+      });
+      
 
   export { router as MemberRouter }

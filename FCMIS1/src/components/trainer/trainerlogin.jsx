@@ -47,7 +47,7 @@ const trainerLogin = () => {
                             <label className='flex justify-left' htmlFor="username">Username</label>
                             <input type="text" name='username' autoComplete='off' placeholder='Enter Username'
                                 onChange={(e) => setValues({ ...values, username: e.target.value })}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                                className="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                         </div>
                         <div className='space-y-3'>
                             <label className='flex justify-left' htmlFor="password">Password</label>

@@ -6,7 +6,7 @@ function SecondaryHeading({
 }) {
   return (
     <h2
-      className={`mb-6 inline-block whitespace-nowrap bg-[length:250px_auto] bg-center bg-no-repeat py-2.5 ${
+      className={`mb-6 inline-block whitespace-nowrap bg-[length:300px_auto] bg-center bg-no-repeat py-2.5 ${
         uppercase ? "uppercase" : "capitalize"
       } ${
         textColor === "black"
