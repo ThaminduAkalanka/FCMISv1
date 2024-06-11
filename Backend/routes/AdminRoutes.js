@@ -285,6 +285,14 @@ router.get('/member',(req, res)=>{
   })
 })
 
+router.get('/activemember',(req, res)=>{
+  const sql = "SELECT * FROM membership WHERE status='active' ";
+  con.query(sql, (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true, Result: result})
+  })
+})
+
 
 // Get members with their membership status
 router.get('/member1', (req, res) => {

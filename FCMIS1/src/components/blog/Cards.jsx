@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 const cardStyles = `preserve-3d relative h-full w-full duration-500`;
 
 const frontStyles = {
-  card: `backface-hidden absolute h-full w-full space-y-4     bg-gray-50 px-6 py-12 shadow-xl`,
-  date: `inline-block rounded-2xl border border-gray-300 px-2 py-1 text-xs font-medium text-gray-500`,
+  card: `backface-hidden absolute h-full w-full space-y-4     bg-neutral-600 px-6 py-12 shadow-xl`,
+  date: `inline-block rounded-2xl border border-gray-100 px-2 py-1 text-xs font-medium text-gray-100`,
 };
 
 const backStyles = {
@@ -22,11 +22,11 @@ function Cards() {
         <div className={`${cardStyles} group-hover:rotate-y-180`}>
           {/* Front */}
           <div className={frontStyles.card}>
-            <p className={frontStyles.date}>22.03.22</p>
-            <h4 className="font-bold">Yoga For Everyone in 2022</h4>
+            <p className={frontStyles.date}>22.03.2024</p>
+            <h4 className="font-bold">Yoga Sessions</h4>
             <p className="text-sm font-medium text-gray-300">
-              Authoritatively disseminate multimedia based total linkage through
-              market-driven methodolContinually transform
+              We are starting a yoga class from (20th) Monday onwards.
+              Classes will be held on Mondays and Thursdays.
             </p>
             <Link to="/" className={linkStyles}>
               Read more &rarr;
@@ -36,11 +36,11 @@ function Cards() {
           <div
             className={`${backStyles.card} rotate-y-180 bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('./images/blog/img1.webp')]`}
           >
-            <p className={backStyles.date}>22.03.22</p>
-            <h4 className="font-bold text-white">Yoga For Everyone in 2022</h4>
+            <p className={backStyles.date}>22.03.2024</p>
+            <h4 className="font-bold text-white">Yoga Sessions</h4>
             <p className="text-sm font-medium text-white">
-              Authoritatively disseminate multimedia based total linkage through
-              market-driven methodolContinually transform
+            We are starting a yoga class from (20th) Monday onwards.
+            Classes will be held on Mondays and Thursdays.
             </p>
             <Link to="/" className={linkStyles}>
               Read more &rarr;
@@ -54,11 +54,10 @@ function Cards() {
         <div className={`${cardStyles} group-hover:rotate-x-180`}>
           {/* Front */}
           <div className={frontStyles.card}>
-            <p className={frontStyles.date}>22.03.22</p>
-            <h4 className="font-bold">Back Into CrossFit After Vacation</h4>
+            <p className={frontStyles.date}>17.05.2024</p>
+            <h4 className="font-bold">This Poyaday Opening Time</h4>
             <p className="text-sm font-medium text-gray-300">
-              Authoritatively disseminate multimedia based total linkage through
-              market-driven methodolContinually transform
+            This poya day (25th) gym is open from 8.00 am to 11.30 am.
             </p>
             <Link to="/" className={linkStyles}>
               Read more &rarr;
@@ -68,13 +67,12 @@ function Cards() {
           <div
             className={`${backStyles.card} rotate-x-180 bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('./images/blog/img2.webp')]`}
           >
-            <p className={backStyles.date}>22.03.22</p>
+            <p className={backStyles.date}>17.05.2024</p>
             <h4 className="font-bold text-white">
-              Back Into CrossFit After Vacation
+              This Poyaday Opening Time
             </h4>
             <p className="text-sm font-medium text-white">
-              Authoritatively disseminate multimedia based total linkage through
-              market-driven methodolContinually transform
+            This poya day (25th) gym is open from 8.00 am to 11.30 am.
             </p>
             <Link to="/" className={linkStyles}>
               Read more &rarr;
@@ -89,10 +87,10 @@ function Cards() {
           {/* Front */}
           <div className={frontStyles.card}>
             <p className={frontStyles.date}>22.03.22</p>
-            <h4 className="font-bold">Meet Fitness Ambassador Grace</h4>
+            <h4 className="font-bold">Maintenance Closing</h4>
             <p className="text-sm font-medium text-gray-300">
-              Authoritatively disseminate multimedia based total linkage through
-              market-driven methodolContinually transform
+            The Gym is closed on this Thursday (26th) due to some maintenance.
+            sorry for any inconvenience caused.
             </p>
             <Link to="/" className={linkStyles}>
               Read more &rarr;
@@ -104,11 +102,10 @@ function Cards() {
           >
             <p className={backStyles.date}>22.03.22</p>
             <h4 className="font-bold text-white">
-              Meet Fitness Ambassador Grace
+              Maintenance Closing
             </h4>
             <p className="text-sm font-medium text-white">
-              Authoritatively disseminate multimedia based total linkage through
-              market-driven methodolContinually transform
+            The Gym is closed on this Thursday (26th) due to some maintenance. sorry for any inconvenience caused.
             </p>
             <Link to="/" className={linkStyles}>
               Read more &rarr;

@@ -167,8 +167,10 @@ const Dashboard = () => {
             <li>
             <Link to="/dashboard/trainer" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-red-500 pr-6">
                 <span class="inline-flex justify-center items-center ml-4">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                </span>
+                <svg class="w-6 h-6 text-gray-00 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.121 1.879-.707-.707m5.656 5.656-.707-.707m-4.242 0-.707.707m5.656-5.656-.707.707M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+</svg>
+</span>
                 <span class="ml-2 font-semibold text-sm tracking-wide truncate font-sans">Trainers</span>
             </Link>
             </li>
@@ -176,9 +178,10 @@ const Dashboard = () => {
             <li>
             <Link to="/dashboard/schedule" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-red-500 pr-6">
                 <span class="inline-flex justify-center items-center ml-4">
-                <svg class="w-6 h-5" fill="none" stroke="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21.3333 4C22.0697 4 22.6667 4.59696 22.6667 5.33333V6.66667H25.3333C26.8061 6.66667 28 7.86057 28 9.33333V25.3333C28 26.8061 26.8061 28 25.3333 28H6.66667C5.19391 28 4 26.8061 4 25.3333V9.33333C4 7.86057 5.19391 6.66667 6.66667 6.66667H9.33333V5.33333C9.33333 4.59696 9.93028 4 10.6667 4C11.4031 4 12 4.59696 12 5.33333V6.66667H20V5.33333C20 4.59696 20.5969 4 21.3333 4ZM25.3333 9.33333H6.66667V25.3333H25.3333V9.33333ZM19.7655 12.505C20.2861 11.9843 21.1304 11.9843 21.6511 12.505C22.1719 13.0257 22.1719 13.8699 21.6511 14.3905L15.0609 20.9808C14.5349 21.5067 13.6823 21.5067 13.1564 20.9808L10.3374 18.1619C9.81671 17.6411 9.81671 16.7969 10.3374 16.2761C10.8581 15.7555 11.7023 15.7555 12.223 16.2761L14.1087 18.1619L19.7655 12.505Z" fill="currentColor"/>
-                </svg>
+                <svg class="w-6 h-6 text-gray-00 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-3 5h3m-6 0h.01M12 16h3m-6 0h.01M10 3v4h4V3h-4Z"/>
+</svg>
+
                 </span>
                 <span class="ml-2 font-semibold text-sm tracking-wide truncate font-sans">Schedules</span>
             </Link>
@@ -187,8 +190,10 @@ const Dashboard = () => {
             <li>
                 <Link to="/dashboard/announcement" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                     <span class="inline-flex justify-center items-center ml-4">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    </span>
+                    <svg class="w-6 h-6 text-gray-00 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2.429M7 8h3M8 8V4h4v2m4 0V5h-4m3 4v3a1 1 0 0 1-1 1h-3m9-3v9a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-6.397a1 1 0 0 1 .27-.683l2.434-2.603a1 1 0 0 1 .73-.317H19a1 1 0 0 1 1 1Z"/>
+</svg>
+</span>
                     <span class="ml-2 font-semibold text-sm tracking-wide truncate font-sans">Annoucements</span>
                 </Link>
             </li>
@@ -196,8 +201,10 @@ const Dashboard = () => {
             <li>
                 <Link to="/dashboard/report" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-gray-500 hover:text-gray-200 border-l-4 border-transparent hover:border-blue-500 pr-6">
                     <span class="inline-flex justify-center items-center ml-4">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    </span>
+                    <svg class="w-6 h-6 text-gray-00 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"/>
+</svg>
+</span>
                     <span class="ml-2 font-semibold text-sm tracking-wide truncate font-sans">Repotrs</span>
                 </Link>
             </li>

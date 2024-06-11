@@ -73,11 +73,23 @@ const adminPassword = () => {
                 onChange={(e) => setChangePasswordValues({ ...changePasswordValues, newPassword: e.target.value })}
                 className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
             />
+
+            <div>
+            <label className="block font-medium mt-4" htmlFor="newPassword">Confirm Password</label>
+            <input
+                type="password"
+                id="newPassword"
+                value={changePasswordValues.newPassword}
+                onChange={(e) => setChangePasswordValues({ ...changePasswordValues, newPassword: e.target.value })}
+                className="block w-full mt-1 border border-gray-300 rounded text-black px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+            />
+            </div>
+            
         </div>
         <div class='space-x-6 justify-end'>
         <button
             type="submit"
-            className="bg-blue-600 text-white font-medium rounded-lg px-4 py-2 hover:bg-blue-700"
+            className="bg-red-600 text-white font-medium rounded-lg px-4 py-2 hover:bg-red-700"
         >
             Change Password
         </button>

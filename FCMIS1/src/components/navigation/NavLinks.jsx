@@ -30,12 +30,12 @@ function NavLinks({ onToggleNav, styles }) {
       </li>
       <li>
         <Link to="/member/contact" className={linkStyles} onClick={onToggleNav}>
-          Contact
+          Attendance
         </Link>
       </li>
       <li>
         <Link to="/member/update" className={linkStyles} onClick={onToggleNav}>
-          Updates
+          Annoucments
         </Link>
       </li>
     </ul>

@@ -75,7 +75,14 @@ const membershipStatus = () => {
         <h3>Membership Status</h3>
       </div>
 
-      <div className="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-2 pt-6 pb-8 mb-4">
+      <div className="relative overflow-x-auto bg-neutral-600 shadow-md rounded px-6 pt-6 pb-8 mb-4">
+      <input
+          type="text"
+          placeholder="Search"
+         
+          
+          className="flex w-40 h-6 focus:outline-none text-black bg-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+        />
       <table className="w-full text-sm text-center rtl:text-right text-white dark:text-gray-400">
         <thead class="">
           <tr>

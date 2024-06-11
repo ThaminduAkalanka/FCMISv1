@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TrainersComponent from './trainerComp.jsx';
+import EquipmentComponent from './equipmentcomp.jsx';
+import ActiveMembersComponent from './activeMembercomp.jsx'
 
 const Dashboard = () => {
     const [data, setData] = useState({
-        totalMembers: 0,
-        activeMembers: 0,
-        trainers: 0,
-        equipments: 0,
-        presentMembers: 0,
-        earnings: 0,
+        totalMembers: 10,
+        activeMembers: 6,
+        trainers: 2,
+        equipments: 25,
+        presentMembers: 2,
+        earnings: 25000,
     });
     const [adminName, setAdminName] = useState('');
 
@@ -75,18 +77,17 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="bg-white p-6 rounded-lg shadow-md h-72">
                     <TrainersComponent />
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    {/* MembersComponent */}
+                <div className="bg-white p-6 rounded-lg shadow-md h-72">
+                    <EquipmentComponent/>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    {/* ActiveMembersComponent */}
+
+                <div className="bg-white p-6 rounded-lg shadow-md ">
+                    <ActiveMembersComponent />
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    {/* EquipmentComponent */}
-                </div>
+
             </div>
         </div>
     );

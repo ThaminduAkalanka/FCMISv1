@@ -5,11 +5,11 @@ import Map from "../components/contact-page/Map";
 function Contact() {
   return (
     <main>
-      <HeroPages page="Contact" />
+      <HeroPages page="Attendance" />
 
-      <ContactForm />
+      
 
-      <Map />
+      View Your attendance
     </main>
   );
 }

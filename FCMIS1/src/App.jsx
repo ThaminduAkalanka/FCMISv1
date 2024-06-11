@@ -30,8 +30,9 @@ import EditEquipment from './components/editEquipment';
 import AddAnnouncement from './components/addAnnouncement';
 import AddAdmin from './components/addAdmin';
 import AdminPassword from './components/adminPassword';
-
 import ScanQR from './components/scanQR';
+
+
 import Home1 from "./Pages/Home";
 import MemberProfile from "./Pages/memberProfile";
 import Schedule1 from "./Pages/Schedule";
