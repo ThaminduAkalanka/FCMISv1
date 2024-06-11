@@ -6,7 +6,7 @@ import img3 from "../../images/pricing/img3.webp";
 
 const imgStyles = `grayscale transition-all duration-500 group-hover:scale-110 group-hover:grayscale-0`;
 
-const headingStyles = `clip-path-left group-hover:clip-path-right absolute bottom-[-1px] right-1/2 w-3/4 translate-x-1/2 bg-white py-5 text-lg font-bold text-red transition-all duration-500 group-hover:bg-red group-hover:text-white`;
+const headingStyles = `clip-path-left group-hover:clip-path-right absolute bottom-[-1px] right-1/2 w-3/4 translate-x-1/2 bg-white py-5 text-lg font-bold text-gray-800 transition-all duration-500 group-hover:bg-red group-hover:text-white`;
 
 function Cards() {
   return (
@@ -15,20 +15,19 @@ function Cards() {
       <div className="flex flex-col shadow-2xl">
         <div className="group relative overflow-hidden">
           <img src={img1} alt="" className={imgStyles} />
-          <h4 className={headingStyles}>Beginners</h4>
+          <h4 className={headingStyles}>1 Month</h4>
         </div>
         <div className="relative z-[1] space-y-8 bg-white py-10">
           <h5 className="text-2xl text-gray-300">
-            $ <span className="text-6xl font-bold text-gray-600">39</span> p/m
+            <span className="text-6xl font-bold text-gray-600">5000</span>LKR
           </h5>
           <ul className="space-y-3 font-medium text-gray-300">
-            <li>Free Hand</li>
+            <li>1 month</li>
             <li>Gym Fitness</li>
             <li>Weight Loss</li>
-            <li>Personal Trainer</li>
-            <li>Cycling</li>
+
           </ul>
-          <TertiaryButton>Purchase now</TertiaryButton>
+          
         </div>
       </div>
 
@@ -36,14 +35,14 @@ function Cards() {
       <div className="flex flex-col shadow-2xl">
         <div className="group relative overflow-hidden">
           <img src={img2} alt="" className={imgStyles} />
-          <h4 className={headingStyles}>Basic</h4>
+          <h4 className={headingStyles}>3 Months</h4>
         </div>
         <div className="relative z-[1] space-y-8 bg-white py-10">
           <h5 className="text-2xl text-gray-300">
-            $ <span className="text-6xl font-bold text-gray-600">59</span> p/m
+            <span className="text-6xl font-bold text-gray-600">12000</span>LKR
           </h5>
           <ul className="space-y-3 font-medium text-gray-300">
-            <li>Free Hand</li>
+            <li>3 months</li>
             <li>Gym Fitness</li>
             <li>Weight Loss</li>
             <li>Personal Trainer</li>
@@ -57,14 +56,14 @@ function Cards() {
       <div className="flex flex-col shadow-2xl xl:col-span-2 xl:w-1/2 xl:justify-self-center 2xl:col-span-1 2xl:w-auto">
         <div className="group relative overflow-hidden">
           <img src={img3} alt="" className={imgStyles} />
-          <h4 className={headingStyles}>Advance</h4>
+          <h4 className={headingStyles}>Annual</h4>
         </div>
         <div className="relative z-[1] space-y-8 bg-white py-10">
           <h5 className="text-2xl text-gray-300">
-            $ <span className="text-6xl font-bold text-gray-600">69</span> p/m
+            <span className="text-6xl font-bold text-gray-600">35000</span>LKR
           </h5>
           <ul className="space-y-3 font-medium text-gray-300">
-            <li>Free Hand</li>
+            <li>12 months</li>
             <li>Gym Fitness</li>
             <li>Weight Loss</li>
             <li>Personal Trainer</li>

@@ -120,7 +120,7 @@ router.post('/add_schedule', (req, res) =>{
     if (err) return res.json({ Status: false, Error: "Query error", err })
     return res.json({Status: true})
   })
-})
+}) 
 
 router.get('/manageschedule',(req, res)=>{
   const sql = "SELECT * FROM schedule";

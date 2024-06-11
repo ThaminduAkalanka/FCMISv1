@@ -48,7 +48,7 @@ const assignSchedule = () => {
     
       <div class=''>
         <h2 className='flex justify-left font-bold text-lg pb-6'>Assign Schedule</h2>
-        <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded-lg p-6 space-y-6">
+        <div className="max-w-lg mx-auto bg-neutral-600 shadow-md rounded-lg p-6 space-y-3">
         <label className="flex justify-left" htmlFor="username1">
           Member ID
         </label>

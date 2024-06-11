@@ -15,10 +15,10 @@ export const blogs = [
     id: 1,
     image: img1,
     author: "Admin",
-    date: "March 22, 2023",
+    date: "March 22, 2024",
     category: "Yoga",
-    title: "Yoga For Everyone in 2023",
-    desc: "Authoritatively disseminate multimedia based total linkage through market-driven methodolContinually transform integrated results vis-a-vis multidisciplinary manufacture Appropriately foster fullresearched innovation rather than backend supply. when an unknown printer took a galley.",
+    title: "Yoga Sessions",
+    desc: "     We are starting a yoga class from (20th) Monday onwards. Classes will be held on Mondays and Thursdays.",
   },
   {
     id: 2,

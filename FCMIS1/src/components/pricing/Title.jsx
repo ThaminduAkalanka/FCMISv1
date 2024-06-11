@@ -4,11 +4,10 @@ import TertiaryHeading from "../headings/TertiaryHeading";
 function Title() {
   return (
     <div className="relative z-20">
-      <SecondaryHeading>Pricing chart</SecondaryHeading>
-      <TertiaryHeading>Exclusive pricing plan</TertiaryHeading>
-      <p className="mx-auto max-w-[50ch] font-medium text-gray-300">
-        Gymat an unknown printer took a galley of type and scrambled make a type
-        specimen book.
+      <SecondaryHeading>Latest offers</SecondaryHeading>
+      <TertiaryHeading>Exclusive Packages</TertiaryHeading>
+      <p className="mx-auto max-w-[50ch] font-medium text-gray-800">
+        Muscle Max Fitness Kingdom offers an Ultimate Bundle designed to enhance fitness goals.
       </p>
     </div>
   );
