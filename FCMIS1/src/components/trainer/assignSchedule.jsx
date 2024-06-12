@@ -60,13 +60,13 @@ const assignSchedule = () => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
         <label className="flex justify-left" htmlFor="username1">
-                  Trainer
+                  Trainer ID
                 </label>
                 <input
                   type="text"
                   value={trainerID}
                   onChange={(e) => setTrainerID(e.target.value)}
-                  placeholder="Amount"
+                  placeholder="Enter Trainer ID"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
 
