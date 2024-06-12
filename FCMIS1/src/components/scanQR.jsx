@@ -21,7 +21,7 @@ const scanQR = () => {
 
       setTimeout(() => {
         window.location.reload();
-      }, 100000);
+      }, 5000);
     }
   };
 

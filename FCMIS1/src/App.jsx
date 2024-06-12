@@ -31,6 +31,8 @@ import AddAnnouncement from './components/addAnnouncement';
 import AddAdmin from './components/addAdmin';
 import AdminPassword from './components/adminPassword';
 import ScanQR from './components/scanQR';
+import ReportAttendance from './components/reportattendance';
+import ReportIncome from './components/reportIncome';
 
 
 import Home1 from "./Pages/Home";
@@ -93,6 +95,8 @@ function App() {
           <Route path='/dashboard/edit_equipment/:equipmentID' element={<EditEquipment />} />
           <Route path='/dashboard/change_adminpassword' element={<AdminPassword />} />
           <Route path='/dashboard/scanqr' element={<ScanQR />} />
+          <Route path='/dashboard/attendancereport' element={<ReportAttendance />} />
+          <Route path='/dashboard/incomereport' element={<ReportIncome />} />
         </Route>
 
         <Route path='/member' element={<MemberLayout />}>

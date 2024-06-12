@@ -19,17 +19,6 @@ const equipmentcomp = () => {
 
   },[])
 
-  const handleDelete = (equipmentID) =>{
-    axios.delete('http://localhost:3000/auth/delete_equipment/'+equipmentID)
-    .then(result =>{
-      if (result.data.Status){
-        window.location.reload()
-      }else{
-        alert(result.data.Error)
-      }
-    }).catch(err => console.log(err))
-  }
-
   return (
     <div class="grid grid-flow-row auto-rows-max space-y-4">
 <h2 class='text-lg font-bold'>Equipments</h2>

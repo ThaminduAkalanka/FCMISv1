@@ -56,7 +56,7 @@ const membercomp = () => {
         </thead>
         <tbody>
           {
-            member.map((m, index) => (
+            member.slice(0, 4).map((m, index) => (
               <tr key={index} className="border-b border-gray-200">
                 <td class='py-4'><img src ={ `http://localhost:3000/images/`+ getImage(m.memberID)} class='bg-black w-10 h-auto rounded-full'/></td>
                 <td>{getName(m.memberID)}</td>

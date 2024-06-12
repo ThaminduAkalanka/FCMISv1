@@ -2,22 +2,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TrainersComponent from './trainerComp.jsx';
 import EquipmentComponent from './equipmentcomp.jsx';
-import ActiveMembersComponent from './activeMembercomp.jsx'
+import ActiveMembersComponent from './activeMembercomp.jsx';
+import GenderDistributionChart from './chartGender.jsx';
+import CategoryDistributionChart from './chartCategory.jsx'; // Import the new component
 
 const Dashboard = () => {
     const [data, setData] = useState({
-        totalMembers: 10,
-        activeMembers: 6,
-        trainers: 2,
-        equipments: 25,
-        presentMembers: 2,
-        earnings: 25000,
+        totalMembers: null,
+        activeMembers: null,
+        trainers: null,
+        equipments: null,
+        presentMembers: null,
+        earnings: null,
     });
     const [adminName, setAdminName] = useState('');
 
     useEffect(() => {
         // Fetch dashboard data from the backend
-        axios.get('http://localhost:3000/dashboard-data')
+        axios.get('http://localhost:3000/auth/dashboard-data')
             .then(response => {
                 setData(response.data);
             })
@@ -56,7 +58,7 @@ const Dashboard = () => {
                     <p className="mt-2 text-3xl font-bold">{data.totalMembers}</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-md text-center">
-                    <h3 className="text-xl font-semibold">Total Earnings</h3>
+                    <h3 className="text-xl font-semibold">Total Income</h3>
                     <p className="mt-2 text-3xl font-bold">{data.earnings} LKR</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-md text-center">
@@ -67,27 +69,34 @@ const Dashboard = () => {
                     <h3 className="text-xl font-semibold">Trainers</h3>
                     <p className="mt-2 text-3xl font-bold">{data.trainers}</p>
                 </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md text-center ">
+                    <GenderDistributionChart />
+                </div>
                 <div className="bg-white p-6 rounded-lg shadow-md text-center">
-                    <h3 className="text-xl font-semibold">Equipments</h3>
+                    <CategoryDistributionChart />
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md text-center self-start">
+                    <h3 className="text-xl font-semibold">Total Equipments</h3>
                     <p className="mt-2 text-3xl font-bold">{data.equipments}</p>
                 </div>
-                <div className="bg-yellow-100 p-6 rounded-lg shadow-md text-center">
+                <div className="bg-yellow-100 p-6 rounded-lg shadow-md text-center self-start">
                     <h3 className="text-xl font-semibold">Present Members</h3>
                     <p className="mt-2 text-3xl font-bold">{data.presentMembers}</p>
                 </div>
+
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                <div className="bg-white p-6 rounded-lg shadow-md h-72">
+                <div className="bg-white p-6 rounded-lg shadow-md self-start">
                     <TrainersComponent />
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-md h-72">
+                <div className="bg-white p-6 rounded-lg shadow-md self-start">
                     <EquipmentComponent/>
                 </div>
-
                 <div className="bg-white p-6 rounded-lg shadow-md ">
                     <ActiveMembersComponent />
                 </div>
-
             </div>
         </div>
     );

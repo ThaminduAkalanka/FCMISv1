@@ -175,31 +175,50 @@ router.delete('/delete_package/:packageID', (req,res) => {
 })
 
 //member
+// Check Username Availability API
+router.post('/check_username', async (req, res) => {
+  const { username } = req.body;
+  if (!username) {
+    return res.json({ available: false, message: "Username is required" });
+  }
+
+  const sql = "SELECT COUNT(*) as count FROM member WHERE username = ?";
+  con.query(sql, [username], (err, result) => {
+    if (err) {
+      return res.json({ available: false, message: "Query error" });
+    }
+    const count = result[0].count;
+    res.json({ available: count === 0 });
+  });
+});
 
 // Add Member API
 router.post('/add_member', upload.single('image'), async (req, res) => {
+  const { name, username, password, email, contact, medical, dob, gender, packageID, categoryID } = req.body;
   const registerDate = new Date();
-  const packageID = req.body.packageID;
-  const categoryID = req.body.categoryID;
-  const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `registerDate`, `packageID`, `categoryID`) VALUES (?)";
-  
+
+  // Server-side validation
+  if (!name || !username || !password || !email || !contact || !gender || !packageID || !categoryID) {
+    return res.json({ Status: false, Error: "All required fields must be filled" });
+  }
+
+  const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+  if (!emailRegex.test(email)) {
+    return res.json({ Status: false, Error: "Invalid email format" });
+  }
+
+  if (contact.length !== 10) {
+    return res.json({ Status: false, Error: "Contact must be 10 digits" });
+  }
+
   try {
-    const hash = await bcrypt.hash(req.body.password, 10);
+    const hash = await bcrypt.hash(password, 10);
     const values = [
-      req.body.name,
-      req.body.username,
-      hash,
-      req.body.email,
-      req.body.contact,
-      req.file.filename,
-      req.body.medical,
-      req.body.dob,
-      req.body.gender,
-      registerDate,
-      packageID,
-      categoryID
+      name, username, hash, email, contact, req.file ? req.file.filename : '', medical, dob, gender, registerDate, packageID, categoryID
     ];
 
+    const sql = "INSERT INTO `member` (`name`, `username`, `password`, `email`, `contact`, `image`, `medical`, `dob`, `gender`, `registerDate`, `packageID`, `categoryID`) VALUES (?)";
+    
     con.query(sql, [values], async (err, result) => {
       if (err) return res.json({ Status: false, Error: "Query error" });
 
@@ -217,21 +236,23 @@ router.post('/add_member', upload.single('image'), async (req, res) => {
         con.query(updateMemberSql, [qrCodeUrl, memberId], (err, updateResult) => {
           if (err) return res.json({ Status: false, Error: "Query error" });
 
-          //assign schedule
+          // Assign schedule
           const scheduleSql = `INSERT INTO assignschedule (memberID) VALUES (?)`;
           con.query(scheduleSql, [memberId], async (err, result) => {
             if (err) return res.json({ Status: false, Error: "Query error" });
 
-          return res.json({ Status: true, Result: updateResult });
+            return res.json({ Status: true, Result: updateResult });
+          });
         });
       });
     });
-    });
   } catch (error) {
     console.error('Error:', error);
-    return res.json({ Status: false, Error: "Query error" });
+    return res.json({ Status: false, Error: "Server error" });
   }
 });
+
+
 
 // Mark Attendance API
 router.post('/mark_attendance', async (req, res) => {
@@ -469,24 +490,50 @@ router.delete('/delete_equipment/:equipmentID', (req,res) => {
 })
  
 
-//payment
-// Record a payment,update membership status and update packageID
+/// Record a payment, update membership status and update packageID
 router.post('/payment', (req, res) => {
-  const { memberID, packageID, amount, date, startDate, endDate, } = req.body;
+  const { memberID, packageID, amount, startDate, endDate } = req.body;
+
+  // Server-side validation
+  if (!memberID || !packageID || !amount || !startDate || !endDate) {
+    return res.json({ Status: false, Error: "All fields are required" });
+  }
+
+  if (isNaN(amount) || amount <= 0) {
+    return res.json({ Status: false, Error: "Amount must be a positive number" });
+  }
+
+  if (new Date(startDate) >= new Date(endDate)) {
+    return res.json({ Status: false, Error: "End date must be after start date" });
+  }
+
   const paymentSql = `INSERT INTO payment (memberID, packageID, amount, paymentDate) VALUES (?, ?, ?, NOW())`;
-  con.query(paymentSql, [memberID, packageID, amount, date], (err, result) => {
-      if (err) throw err;
-      const membershipUpdateSql = `UPDATE membership SET packageID = ?, status = 'active', startDate = ?, endDate = ? WHERE memberID = ?`;
-      con.query(membershipUpdateSql, [packageID, startDate, endDate, memberID], (err, result) => {
-          if (err) throw err;
-          const updateMemberSql = `UPDATE member SET packageID = ? WHERE memberID = ?`;
-            con.query(updateMemberSql, [packageID, memberID], (err, result) => {
-              if (err) return res.json({ Status: false, Error: "Query error" })
-                return res.json({Status: true, Result: result})
+  con.query(paymentSql, [memberID, packageID, amount], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.json({ Status: false, Error: "Query error" });
+    }
+
+    const membershipUpdateSql = `UPDATE membership SET packageID = ?, status = 'active', startDate = ?, endDate = ? WHERE memberID = ?`;
+    con.query(membershipUpdateSql, [packageID, startDate, endDate, memberID], (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.json({ Status: false, Error: "Query error" });
+      }
+
+      const updateMemberSql = `UPDATE member SET packageID = ? WHERE memberID = ?`;
+      con.query(updateMemberSql, [packageID, memberID], (err, result) => {
+        if (err) {
+          console.error(err);
+          return res.json({ Status: false, Error: "Query error" });
+        }
+
+        return res.json({ Status: true, Result: result });
       });
+    });
   });
 });
-});
+
 
 router.get('/paymentdisplay',(req, res)=>{
   const sql = "SELECT * FROM payment";
@@ -568,5 +615,134 @@ router.delete('/delete_announce/:AnnounceID', (req,res) => {
   })
 })
  
+
+
+// Endpoint to get dashboard data
+router.get('/dashboard-data', (req, res) => {
+  const dashboardData = {};
+
+  // Fetch total members
+  const totalMembersQuery = 'SELECT COUNT(*) AS totalMembers FROM member';
+  con.query(totalMembersQuery, (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      dashboardData.totalMembers = result[0].totalMembers;
+
+      // Fetch active members
+      const activeMembersQuery = "SELECT COUNT(*) AS activeMembers FROM membership WHERE status='active'";
+      con.query(activeMembersQuery, (err, result) => {
+          if (err) return res.status(500).json({ error: err.message });
+          dashboardData.activeMembers = result[0].activeMembers;
+
+          // Fetch trainers
+          const trainersQuery = 'SELECT COUNT(*) AS trainers FROM trainer';
+          con.query(trainersQuery, (err, result) => {
+              if (err) return res.status(500).json({ error: err.message });
+              dashboardData.trainers = result[0].trainers;
+
+              // Fetch equipments
+              const equipmentsQuery = 'SELECT COUNT(*) AS equipments FROM equipment';
+              con.query(equipmentsQuery, (err, result) => {
+                  if (err) return res.status(500).json({ error: err.message });
+                  dashboardData.equipments = result[0].equipments;
+
+                  // Fetch present members (assuming you have a way to track present members)
+                  const presentMembersQuery = "SELECT COUNT(*) AS presentMembers FROM attendance WHERE checkoutTime IS NULL ";
+                  con.query(presentMembersQuery, (err, result) => {
+                      if (err) return res.status(500).json({ error: err.message });
+                      dashboardData.presentMembers = result[0].presentMembers;
+
+                      // Fetch earnings (assuming you have a payments table)
+                      const earningsQuery = 'SELECT SUM(amount) AS earnings FROM payment';
+                      con.query(earningsQuery, (err, result) => {
+                          if (err) return res.status(500).json({ error: err.message });
+                          dashboardData.earnings = result[0].earnings;
+
+                          res.json(dashboardData);
+                      });
+                  });
+              });
+          });
+      });
+  });
+});
+
+
+// reports
+router.get('/attendancereport', (req, res) => {
+  const { startDate, endDate } = req.query;
+  const sql = `
+SELECT 
+    m.memberID, 
+    m.name, 
+    COUNT(a.id) AS attendanceCount
+FROM 
+    attendance a
+JOIN 
+    member m ON a.memberID = m.memberID
+WHERE 
+    a.checkinTime BETWEEN ? AND ?
+GROUP BY 
+    a.memberID, m.memberID, m.name
+ORDER BY 
+    attendanceCount DESC;
+  `;
+  con.query(sql, [startDate, endDate], (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true, Result: result });
+  });
+});
+
+// reports
+router.get('/incomereport', (req, res) => {
+  const { startDate, endDate } = req.query;
+  const sql = `
+SELECT 
+    SUM(p.amount) AS totalIncome
+FROM 
+    payment p
+WHERE 
+    p.paymentDate BETWEEN ? AND ?;
+  `;
+  con.query(sql, [startDate, endDate], (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true, Result: result });
+  });
+});
+
+// gender chart
+router.get('/genderdistribution', (req, res) => {
+  const sql = `
+SELECT 
+  SUM(CASE WHEN gender = 'Male' THEN 1 ELSE 0 END) AS male,
+  SUM(CASE WHEN gender = 'Female' THEN 1 ELSE 0 END) AS female,
+  SUM(CASE WHEN gender = 'Other' THEN 1 ELSE 0 END) AS other
+FROM 
+  member;
+  `;
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true, Result: result[0] });
+  });
+});
+
+// category chart
+router.get('/categorydistribution', (req, res) => {
+  const sql = `
+SELECT 
+  SUM(CASE WHEN categoryID = 1 THEN 1 ELSE 0 END) AS muscleBuilding,
+  SUM(CASE WHEN categoryID = 2 THEN 1 ELSE 0 END) AS strength,
+  SUM(CASE WHEN categoryID = 3 THEN 1 ELSE 0 END) AS cardio,
+  SUM(CASE WHEN categoryID = 4 THEN 1 ELSE 0 END) AS crossfit,
+  SUM(CASE WHEN categoryID = 5 THEN 1 ELSE 0 END) AS flexibility
+FROM 
+  member;
+  `;
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true, Result: result[0] });
+  });
+});
+
+
 
 export { router as adminRouter };

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 const Member = () => {
   const [members, setMembers] = useState([]);
@@ -78,6 +79,7 @@ const Member = () => {
       <Link
         to="/dashboard/add_member"
         className="flex-1 w-40 focus:outline-none text-black bg-white hover:bg-neutral-400 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+        data-tooltip-id="addMemberTooltip"
       >
         Add Member
       </Link>
@@ -89,6 +91,7 @@ const Member = () => {
           value={searchQuery}
           onChange={handleSearch}
           className="flex w-40 h-6 focus:outline-none text-black bg-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+          data-tooltip-id="searchTooltip"
         />
         <table className="w-full text-sm text-center rtl:text-right text-white dark:text-gray-400">
           <thead className="">
@@ -120,12 +123,20 @@ const Member = () => {
                   {m.status}
                 </td>
                 <td className="space-x-2">
-                  <Link to={"/dashboard/edit_member/" + m.memberID} className="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-2 py-1 me-2 mb-2">
+                  <Link
+                    to={"/dashboard/edit_member/" + m.memberID}
+                    className="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-2 py-1 me-2 mb-2"
+                    data-tooltip-id="editMemberTooltip"
+                  >
                     Edit
                   </Link>
-                  {/* <button className="text-red-600 hover:underline" onClick={() => handleDelete(m.memberID)}>
+                  <button
+                    className="flex-1 w-14 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-2 py-1 me-2 mb-2"
+                    onClick={() => handleDelete(m.memberID)}
+                    data-tooltip-id="deleteMemberTooltip"
+                  >
                     Delete
-                  </button> */}
+                  </button>
                 </td>
               </tr>
             ))}
@@ -146,6 +157,19 @@ const Member = () => {
           </ul>
         )}
       </div>
+
+      <ReactTooltip id="addMemberTooltip" place="top" effect="solid">
+        Register a new member
+      </ReactTooltip>
+      <ReactTooltip id="searchTooltip" place="top" effect="solid">
+        Search for members
+      </ReactTooltip>
+      <ReactTooltip id="editMemberTooltip" place="top" effect="solid">
+        Edit this member
+      </ReactTooltip>
+      <ReactTooltip id="deleteMemberTooltip" place="top" effect="solid">
+        Delete this member
+      </ReactTooltip>
     </div>
   );
 };
