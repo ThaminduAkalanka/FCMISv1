@@ -39,7 +39,7 @@ import Home1 from "./Pages/Home";
 import MemberProfile from "./Pages/memberProfile";
 import Schedule1 from "./Pages/Schedule";
 import Update from "./Pages/update";
-import Contact from "./Pages/Contact";
+import MemberAttendance from "./Pages/attendance";
 import MemberPackage from "./Pages/memberPackage";
 import Classes from "./Pages/Classes";
 import AdminLayout from './components/layouts/AdminLayout';
@@ -104,7 +104,7 @@ function App() {
           <Route path='/member/about' element={<MemberProfile />} />
           <Route path='/member/schedule' element={<Schedule1 />} />
           <Route path='/member/update' element={<Update />} />
-          <Route path='/member/contact' element={<Contact />} />
+          <Route path='/member/memberattendance' element={<MemberAttendance />} />
           <Route path='/member/memberpackage' element={<MemberPackage />} />
           <Route path='/member/classes' element={<Classes />} />
           <Route path='/member/editprofile' element={<EditProfile />} />

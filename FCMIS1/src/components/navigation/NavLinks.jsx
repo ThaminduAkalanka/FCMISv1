@@ -29,7 +29,7 @@ function NavLinks({ onToggleNav, styles }) {
         </Link>
       </li>
       <li>
-        <Link to="/member/contact" className={linkStyles} onClick={onToggleNav}>
+        <Link to="/member/memberattendance" className={linkStyles} onClick={onToggleNav}>
           Attendance
         </Link>
       </li>

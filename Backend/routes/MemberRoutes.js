@@ -133,6 +133,66 @@ const authenticateToken = (req, res, next) => {
         });
       });
    
-      
+//attendance
+     // Endpoint to fetch attendance for a specific member with pagination and date filtering
+router.get("/attendance", authenticateToken, (req, res) => {
+  const memberID = req.user.memberID;
+  const { page = 1, limit = 10, date } = req.query;
+  const offset = (page - 1) * limit;
+
+  let sql = `
+    SELECT id, memberID, checkinTime, checkoutTime 
+    FROM attendance 
+    WHERE memberID = ?
+  `;
+  let countSql = `
+    SELECT COUNT(*) as count
+    FROM attendance 
+    WHERE memberID = ?
+  `;
+  let monthlyCountSql = `
+    SELECT COUNT(*) as count
+    FROM attendance 
+    WHERE memberID = ? 
+    AND MONTH(checkinTime) = MONTH(CURRENT_DATE)
+    AND YEAR(checkinTime) = YEAR(CURRENT_DATE)
+  `;
+
+  const params = [memberID];
+
+  if (date) {
+    sql += " AND DATE(checkinTime) = ?";
+    countSql += " AND DATE(checkinTime) = ?";
+    params.push(date);
+  }
+
+  sql += " ORDER BY checkinTime DESC LIMIT ? OFFSET ?";
+  params.push(parseInt(limit), parseInt(offset));
+
+  con.query(sql, params, (err, results) => {
+    if (err) return res.json({ status: false, error: "Query error" });
+
+    con.query(countSql, [memberID, ...(date ? [date] : [])], (countErr, countResults) => {
+      if (countErr) return res.json({ status: false, error: "Count query error" });
+
+      con.query(monthlyCountSql, [memberID], (monthlyCountErr, monthlyCountResults) => {
+        if (monthlyCountErr) return res.json({ status: false, error: "Monthly count query error" });
+
+        const total = countResults[0].count;
+        const pages = Math.ceil(total / limit);
+        const monthlyCount = monthlyCountResults[0].count;
+
+        return res.json({
+          status: true,
+          attendances: results,
+          total,
+          pages,
+          currentPage: parseInt(page),
+          monthlyCount,
+        });
+      });
+    });
+  });
+});
 
   export { router as MemberRouter }
