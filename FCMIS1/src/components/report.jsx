@@ -46,9 +46,9 @@ const Report = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Reports</h1>
-      <form onSubmit={handleAttendanceReportSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form onSubmit={handleAttendanceReportSubmit} className="bg-neutral-600 shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
-          <label htmlFor="startDate" className="block text-gray-700 text-sm font-bold mb-2">Start Date:</label>
+          <label htmlFor="startDate" className="block text-white text-sm font-bold mb-2">Start Date:</label>
           <input 
             type="date" 
             id="startDate" 
@@ -59,7 +59,7 @@ const Report = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="endDate" className="block text-gray-700 text-sm font-bold mb-2">End Date:</label>
+          <label htmlFor="endDate" className="block text-white text-sm font-bold mb-2">End Date:</label>
           <input 
             type="date" 
             id="endDate" 

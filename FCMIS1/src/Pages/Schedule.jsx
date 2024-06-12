@@ -118,7 +118,7 @@ function Schedule() {
       <h1 className="text-2xl font-bold text-neutral-800 mt-16 mb-4">
         Current Schedule
       </h1>
-      <div className="max-w-xl mx-auto mt-6 ">
+      <div className="max-w-2xl mx-auto mt-6 ">
         <div className="bg-neutral-800 shadow-lg rounded-lg p-8 text-left">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>

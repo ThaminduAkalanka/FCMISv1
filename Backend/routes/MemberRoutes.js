@@ -122,6 +122,17 @@ const authenticateToken = (req, res, next) => {
           return res.json({ Status: true });
         });
       });
+
+   //announcements
+   // Endpoint to fetch announcements
+      router.get("/announcements", (req, res) => {
+        const sql = "SELECT * FROM announcement ORDER BY AnnounceDate DESC";
+        con.query(sql, (err, results) => {
+          if (err) return res.json({ status: false, error: "Query error" });
+          return res.json({ status: true, announcements: results });
+        });
+      });
+   
       
 
   export { router as MemberRouter }

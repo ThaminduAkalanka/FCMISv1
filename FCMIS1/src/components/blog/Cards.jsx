@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const cardStyles = `preserve-3d relative h-full w-full duration-500`;
 
@@ -15,104 +17,69 @@ const backStyles = {
 const linkStyles = `inline-block bg-red px-4 py-2 text-xs font-bold uppercase text-white`;
 
 function Cards() {
+
+  const [announcements, setAnnouncements] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/mem/announcements')
+      .then(response => {
+        if (response.data.status) {
+          setAnnouncements(response.data.announcements);
+        } else {
+          console.error("Error fetching announcements");
+        }
+      })
+      .catch(error => {
+        console.error("There was an error fetching the announcements!", error);
+      });
+  }, []);
+
+  const formatDate = (dateString) => {
+    if (!dateString) {
+      return '-';
+    }
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('en-CA', options);
+  };
+
+
+
   return (
     <div className="grid gap-10 xl:grid-cols-2 3xl:grid-cols-3">
       {/* 01 */}
+      {announcements.slice(0, 3).map((announcement) => (
       <div className="perspective group h-72">
         <div className={`${cardStyles} group-hover:rotate-y-180`}>
           {/* Front */}
           <div className={frontStyles.card}>
-            <p className={frontStyles.date}>22.03.2024</p>
-            <h4 className="font-bold">Yoga Sessions</h4>
+            <p className={frontStyles.date}>{formatDate(announcement.AnnounceDate)}</p>
+            <h4 className="font-bold">{announcement.announcement}</h4>
+            <p class='text-xs'>on the date: {formatDate(announcement.applydate)}</p>
             <p className="text-sm font-medium text-gray-300">
-              We are starting a yoga class from (20th) Monday onwards.
-              Classes will be held on Mondays and Thursdays.
+            {announcement.AnnounceDescription}
             </p>
             <Link to="/" className={linkStyles}>
-              Read more &rarr;
+              See more &rarr;
             </Link>
           </div>
           {/* Back */}
           <div
-            className={`${backStyles.card} rotate-y-180 bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('./images/blog/img1.webp')]`}
+            className={`${backStyles.card} rotate-y-180 bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('./images/blog/img2.webp')]`}
           >
-            <p className={backStyles.date}>22.03.2024</p>
-            <h4 className="font-bold text-white">Yoga Sessions</h4>
+            <p className={backStyles.date}>{formatDate(announcement.AnnounceDate)}</p>
+            <h4 className="font-bold text-white">{announcement.announcement}</h4>
             <p className="text-sm font-medium text-white">
-            We are starting a yoga class from (20th) Monday onwards.
-            Classes will be held on Mondays and Thursdays.
+            {announcement.AnnounceDescription}
             </p>
-            <Link to="/" className={linkStyles}>
+            <Link to="/member/update" className={linkStyles}>
               Read more &rarr;
             </Link>
           </div>
         </div>
       </div>
+))}
 
-      {/* 02 */}
-      <div className="perspective group h-72">
-        <div className={`${cardStyles} group-hover:rotate-x-180`}>
-          {/* Front */}
-          <div className={frontStyles.card}>
-            <p className={frontStyles.date}>17.05.2024</p>
-            <h4 className="font-bold">This Poyaday Opening Time</h4>
-            <p className="text-sm font-medium text-gray-300">
-            This poya day (25th) gym is open from 8.00 am to 11.30 am.
-            </p>
-            <Link to="/" className={linkStyles}>
-              Read more &rarr;
-            </Link>
-          </div>
-          {/* Back */}
-          <div
-            className={`${backStyles.card} rotate-x-180 bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('./images/blog/img2.webp')]`}
-          >
-            <p className={backStyles.date}>17.05.2024</p>
-            <h4 className="font-bold text-white">
-              This Poyaday Opening Time
-            </h4>
-            <p className="text-sm font-medium text-white">
-            This poya day (25th) gym is open from 8.00 am to 11.30 am.
-            </p>
-            <Link to="/" className={linkStyles}>
-              Read more &rarr;
-            </Link>
-          </div>
-        </div>
-      </div>
 
-      {/* 03 */}
-      <div className="perspective group h-72 xl:col-span-2 xl:w-1/2 xl:justify-self-center 3xl:col-span-1 3xl:w-full">
-        <div className={`${cardStyles} group-hover:rotate-y-180`}>
-          {/* Front */}
-          <div className={frontStyles.card}>
-            <p className={frontStyles.date}>22.03.22</p>
-            <h4 className="font-bold">Maintenance Closing</h4>
-            <p className="text-sm font-medium text-gray-300">
-            The Gym is closed on this Thursday (26th) due to some maintenance.
-            sorry for any inconvenience caused.
-            </p>
-            <Link to="/" className={linkStyles}>
-              Read more &rarr;
-            </Link>
-          </div>
-          {/* Back */}
-          <div
-            className={`${backStyles.card} rotate-y-180 bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('./images/blog/img3.webp')]`}
-          >
-            <p className={backStyles.date}>22.03.22</p>
-            <h4 className="font-bold text-white">
-              Maintenance Closing
-            </h4>
-            <p className="text-sm font-medium text-white">
-            The Gym is closed on this Thursday (26th) due to some maintenance. sorry for any inconvenience caused.
-            </p>
-            <Link to="/" className={linkStyles}>
-              Read more &rarr;
-            </Link>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

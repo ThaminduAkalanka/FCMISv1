@@ -606,6 +606,14 @@ router.get('/announcement',(req, res)=>{
   })
 })
 
+router.post('/add_announcement', (req, res) =>{
+  const sql = " INSERT INTO announcement (`announcement`, `AnnounceDescription`,`AnnounceDate`, `applydate`) VALUES (?,?, NOW(), ?)";
+  con.query(sql, [req.body.announcement, req.body.AnnounceDescription, req.body.applydate], (err, result)=>{
+    if (err) return res.json({ Status: false, Error: "Query error" })
+    return res.json({Status: true})
+  })
+})
+
 router.delete('/delete_announce/:AnnounceID', (req,res) => {
   const AnnounceID = req.params.AnnounceID;
   const sql = `DELETE FROM announcement WHERE AnnounceID = ?`;
