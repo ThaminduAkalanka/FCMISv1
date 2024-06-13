@@ -82,12 +82,7 @@ const changePassword = () => {
         >
             Change Password
         </button>
-        <button
-            type="submit"
-            className="bg-white text-black font-medium rounded-lg px-4 py-2 hover:bg-blue-700"
-        >
-            Cancle
-        </button></div>
+   </div>
     </form>
 </div>
 </main>

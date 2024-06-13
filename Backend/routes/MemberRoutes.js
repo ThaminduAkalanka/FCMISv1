@@ -195,4 +195,63 @@ router.get("/attendance", authenticateToken, (req, res) => {
   });
 });
 
+// Exercise endpoint
+router.get('/exercise', (req, res) => {
+  const sql = "SELECT * FROM exercise";
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query error" });
+    return res.json({ Status: true, Result: result });
+  });
+});
+
+// Endpoint to add progress
+router.post('/addProgress', authenticateToken, (req, res) => {
+  const { exerciseID, entryValue } = req.body;
+  const entryDate = new Date().toISOString().slice(0, 10); // Current date in YYYY-MM-DD format
+
+  if (!exerciseID || !entryValue) {
+    return res.status(400).json({ Error: "exerciseID and entryValue are required" });
+  }
+
+  const sql = "INSERT INTO progress (memberID, exerciseID, entryDate, entryValue) VALUES (?, ?, ?, ?)";
+  con.query(sql, [req.user.memberID, exerciseID, entryDate, entryValue], (err, result) => {
+    if (err) return res.status(500).json({ Error: "Database error" });
+    return res.json({ Status: "Success", progressID: result.insertId });
+  });
+});
+
+// Endpoint to fetch progress report
+router.post('/progressReport', authenticateToken, (req, res) => {
+  const { exerciseID, startDate, endDate, period } = req.body;
+
+  // Determine date range based on the selected period
+  let start = startDate;
+  let end = endDate;
+
+  if (period === 'week') {
+    start = new Date();
+    start.setDate(start.getDate() - 7);
+    start = start.toISOString().slice(0, 10);
+    end = new Date().toISOString().slice(0, 10);
+  } else if (period === 'month') {
+    start = new Date();
+    start.setMonth(start.getMonth() - 1);
+    start = start.toISOString().slice(0, 10);
+    end = new Date().toISOString().slice(0, 10);
+  } else if (period === 'year') {
+    start = new Date();
+    start.setFullYear(start.getFullYear() - 1);
+    start = start.toISOString().slice(0, 10);
+    end = new Date().toISOString().slice(0, 10);
+  }
+
+  // Query to fetch progress data
+  const sql = "SELECT * FROM progress WHERE memberID = ? AND exerciseID = ? AND entryDate BETWEEN ? AND ?";
+  con.query(sql, [req.user.memberID, exerciseID, start, end], (err, result) => {
+    if (err) return res.status(500).json({ Error: "Database error" });
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+
+
   export { router as MemberRouter }

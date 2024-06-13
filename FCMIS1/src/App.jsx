@@ -41,7 +41,7 @@ import Schedule1 from "./Pages/Schedule";
 import Update from "./Pages/update";
 import MemberAttendance from "./Pages/attendance";
 import MemberPackage from "./Pages/memberPackage";
-import Classes from "./Pages/Classes";
+import MemberProgress from "./Pages/progress";
 import AdminLayout from './components/layouts/AdminLayout';
 import MemberLayout from './components/layouts/MemberLayout';
 import ScrollToTop from "./components/ScrollToTop";
@@ -106,7 +106,7 @@ function App() {
           <Route path='/member/update' element={<Update />} />
           <Route path='/member/memberattendance' element={<MemberAttendance />} />
           <Route path='/member/memberpackage' element={<MemberPackage />} />
-          <Route path='/member/classes' element={<Classes />} />
+          <Route path='/member/memberprogress' element={<MemberProgress />} />
           <Route path='/member/editprofile' element={<EditProfile />} />
           <Route path='/member/changepassword' element={<ChangePassword />} />
         </Route>

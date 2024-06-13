@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Line } from "react-chartjs-2";
-
+import HeroPages from "../components/hero-pages/HeroPages";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,14 +23,15 @@ ChartJS.register(
   Legend
 );
 
-const memberStat = () => {
+const Progress = () => {
   const [exercises, setExercises] = useState([]);
   const [exerciseID, setExerciseID] = useState("");
+  const [entryValue, setEntryValue] = useState("");
+  const [message, setMessage] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [period, setPeriod] = useState("");
   const [report, setReport] = useState([]);
-  const [memberID, setMemberID] = useState("");
 
   useEffect(() => {
     axios
@@ -47,14 +48,37 @@ const memberStat = () => {
       });
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    axios
+      .post(
+        "http://localhost:3000/mem/addProgress",
+        { exerciseID, entryValue },
+        {
+          headers: { Authorization: token },
+        }
+      )
+      .then((response) => {
+        setMessage("Progress added successfully!");
+        setExerciseID("");
+        setEntryValue("");
+      })
+      .catch((error) => {
+        setMessage("Error adding progress!");
+        console.error(error);
+      });
+  };
 
   const fetchReport = () => {
     const token = localStorage.getItem("token");
 
     axios
       .post(
-        "http://localhost:3000/train/progressReport",
-        { memberID, exerciseID, startDate, endDate, period },
+        "http://localhost:3000/mem/progressReport",
+        { exerciseID, startDate, endDate, period },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -93,27 +117,68 @@ const memberStat = () => {
   };
 
   return (
-    
-     
+    <main className="bg-white">
+      <HeroPages page="Progress" />
       <div className="container mx-auto p-4">
-        
+      <div className="bg-neutral-800 p-6 rounded-lg shadow-md mb-8 max-w-xl mx-auto">
+  <h2 className="text-2xl font-bold mb-4 text-white">Add Progress</h2>
+  {message && <div className="mb-4 text-green-600">{message}</div>}
+  <form onSubmit={handleSubmit}>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div className="flex-1">
+        <label className="block text-white text-sm font-bold mb-2">
+          Exercise
+        </label>
+        <select
+          value={exerciseID}
+          onChange={(e) => setExerciseID(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        >
+          <option value="">Select an exercise</option>
+          {Array.isArray(exercises) &&
+            exercises.map((exercise) => (
+              <option
+                key={exercise.exerciseID}
+                value={exercise.exerciseID}
+              >
+                {exercise.exerciseName}
+              </option>
+            ))}
+        </select>
+      </div>
+      <div className="flex-1">
+        <label className="block text-white text-sm font-bold mb-2">
+          Entry Value (kg/reps)
+        </label>
+        <input
+          type="number"
+          value={entryValue}
+          onChange={(e) => setEntryValue(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+    </div>
+    <button
+      type="submit"
+      className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    >
+      Submit
+    </button>
+  </form>
+</div>
+
 
         <div className="bg-neutral-800 p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold my-4 text-white">Member Progress Report</h2>
-          <p>Select the Exercise/Type and select a date range or a specific period</p>
-          <br />
+          <h2 className="text-2xl font-bold my-4 text-white">
+            Progress Report
+          </h2>
+          <p>Select the Excerise/Type and select a date range or a specifc period</p>
+          <br></br>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             <div className="flex-1">
-              <label className="block text-white text-sm font-bold mb-2">Member ID</label>
-              <input
-                type="text"
-                value={memberID}
-                onChange={(e) => setMemberID(e.target.value)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block text-white text-sm font-bold mb-2">Exercise</label>
+              <label className="block text-white text-sm font-bold mb-2">
+                Exercise
+              </label>
               <select
                 value={exerciseID}
                 onChange={(e) => setExerciseID(e.target.value)}
@@ -122,14 +187,19 @@ const memberStat = () => {
                 <option value="">Select an exercise</option>
                 {Array.isArray(exercises) &&
                   exercises.map((exercise) => (
-                    <option key={exercise.exerciseID} value={exercise.exerciseID}>
+                    <option
+                      key={exercise.exerciseID}
+                      value={exercise.exerciseID}
+                    >
                       {exercise.exerciseName}
                     </option>
                   ))}
               </select>
             </div>
             <div className="flex-1">
-              <label className="block text-white text-sm font-bold mb-2">Start Date</label>
+              <label className="block text-white text-sm font-bold mb-2">
+                Start Date
+              </label>
               <input
                 type="date"
                 value={startDate}
@@ -138,7 +208,9 @@ const memberStat = () => {
               />
             </div>
             <div className="flex-1">
-              <label className="block text-white text-sm font-bold mb-2">End Date</label>
+              <label className="block text-white text-sm font-bold mb-2">
+                End Date
+              </label>
               <input
                 type="date"
                 value={endDate}
@@ -146,8 +218,11 @@ const memberStat = () => {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
+            
             <div className="flex-1">
-              <label className="block text-white text-sm font-bold mb-2">Period</label>
+              <label className="block text-white text-sm font-bold mb-2">
+                Period
+              </label>
               <select
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
@@ -184,7 +259,9 @@ const memberStat = () => {
                   <tbody>
                     {report.map((entry) => (
                       <tr key={entry.progressID}>
-                        <td className="border px-4 py-2">{formatDate(entry.entryDate)}</td>
+                        <td className="border px-4 py-2">
+                          {formatDate(entry.entryDate)}
+                        </td>
                         <td className="border px-4 py-2">{entry.entryValue}</td>
                       </tr>
                     ))}
@@ -197,8 +274,8 @@ const memberStat = () => {
           </div>
         </div>
       </div>
-    
+    </main>
   );
 };
 
-export default memberStat;
+export default Progress;

@@ -24,7 +24,7 @@ function NavLinks({ onToggleNav, styles }) {
       </li>
 
       <li>
-        <Link to="/member/classes" className={linkStyles} onClick={onToggleNav}>
+        <Link to="/member/memberprogress" className={linkStyles} onClick={onToggleNav}>
           Progress
         </Link>
       </li>

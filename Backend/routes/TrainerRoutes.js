@@ -174,6 +174,43 @@ router.get('/category',(req, res)=>{
   })
 })
 
+//progress
+// Endpoint to fetch progress report
+router.post('/progressReport', authenticateToken, (req, res) => {
+  const { memberID, exerciseID, startDate, endDate, period } = req.body;
+
+  if (!memberID) {
+    return res.status(400).json({ Error: "MemberID is required" });
+  }
+
+  // Determine date range based on the selected period
+  let start = startDate;
+  let end = endDate;
+
+  if (period === 'week') {
+    start = new Date();
+    start.setDate(start.getDate() - 7);
+    start = start.toISOString().slice(0, 10);
+    end = new Date().toISOString().slice(0, 10);
+  } else if (period === 'month') {
+    start = new Date();
+    start.setMonth(start.getMonth() - 1);
+    start = start.toISOString().slice(0, 10);
+    end = new Date().toISOString().slice(0, 10);
+  } else if (period === 'year') {
+    start = new Date();
+    start.setFullYear(start.getFullYear() - 1);
+    start = start.toISOString().slice(0, 10);
+    end = new Date().toISOString().slice(0, 10);
+  }
+
+  // Query to fetch progress data
+  const sql = "SELECT * FROM progress WHERE memberID = ? AND exerciseID = ? AND entryDate BETWEEN ? AND ?";
+  con.query(sql, [memberID, exerciseID, start, end], (err, result) => {
+    if (err) return res.status(500).json({ Error: "Database error" });
+    return res.json({ Status: "Success", Result: result });
+  });
+});
 
 
 

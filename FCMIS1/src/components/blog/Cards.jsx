@@ -68,11 +68,12 @@ function Cards() {
           >
             <p className={backStyles.date}>{formatDate(announcement.AnnounceDate)}</p>
             <h4 className="font-bold text-white">{announcement.announcement}</h4>
+            <p class='text-xs'>on the date: {formatDate(announcement.applydate)}</p>
             <p className="text-sm font-medium text-white">
             {announcement.AnnounceDescription}
             </p>
             <Link to="/member/update" className={linkStyles}>
-              Read more &rarr;
+              see more &rarr;
             </Link>
           </div>
         </div>
