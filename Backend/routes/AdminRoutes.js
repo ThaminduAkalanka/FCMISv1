@@ -490,7 +490,9 @@ router.delete('/delete_equipment/:equipmentID', (req,res) => {
 })
  
 
-/// Record a payment, update membership status and update packageID
+
+
+// Record a payment, update membership status and update packageID
 router.post('/payment', (req, res) => {
   const { memberID, packageID, amount, startDate, endDate } = req.body;
 
@@ -528,7 +530,16 @@ router.post('/payment', (req, res) => {
           return res.json({ Status: false, Error: "Query error" });
         }
 
-        return res.json({ Status: true, Result: result });
+        // Delete notifications after payment
+        const deleteNotificationsSql = `DELETE FROM notifications WHERE memberID = ?`;
+        con.query(deleteNotificationsSql, [memberID], (err, result) => {
+          if (err) {
+            console.error(err);
+            return res.json({ Status: false, Error: "Query error" });
+          }
+
+          return res.json({ Status: true, Result: result });
+        });
       });
     });
   });

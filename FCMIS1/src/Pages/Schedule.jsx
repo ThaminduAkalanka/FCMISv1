@@ -135,7 +135,7 @@ function Schedule() {
                         ? "lime"
                         : member.scheduleStatus === "in progress"
                         ? "yellow"
-                        : "red",
+                        : "lime",
                   }}
                 >
                   {member.scheduleStatus}

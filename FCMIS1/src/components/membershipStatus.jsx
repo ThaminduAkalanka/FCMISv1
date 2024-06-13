@@ -118,7 +118,7 @@ const MembershipStatus = () => {
                     <Link to={`/dashboard/add_payment/${m.memberID}`} className="flex-1 w-10 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2">
                       Add Payment
                     </Link>
-                    <button className="flex-1 w-12 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2"
+                    <button className="flex-1 w-12 h-6 focus:outline-none text-white bg-red-600 hover:bg-red-700 font-sm rounded-lg text-xs px-1 py-1 me-2 mb-2"
                       onClick={() => {
                         const today = new Date();
                         const expireDate = new Date(m.endDate);
