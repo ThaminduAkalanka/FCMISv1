@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import HeroPages from "../components/hero-pages/HeroPages";
 
+
 const ViewAttendance = () => {
   const [attendances, setAttendances] = useState([]);
   const [monthlyCount, setMonthlyCount] = useState(0);
@@ -9,6 +10,15 @@ const ViewAttendance = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchDate, setSearchDate] = useState('');
+
+  const [data, setData] = useState({
+    totalMembers: null,
+    activeMembers: null,
+    trainers: null,
+    equipments: null,
+    presentMembers: null,
+    earnings: null,
+});
 
   const fetchAttendances = (page = 1, date = '') => {
     const token = localStorage.getItem('token');
@@ -39,6 +49,14 @@ const ViewAttendance = () => {
 
   useEffect(() => {
     fetchAttendances();
+
+    axios.get('http://localhost:3000/auth/dashboard-data')
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error fetching the data!', error);
+            });
   }, []);
 
   const handlePageChange = (newPage) => {
@@ -54,6 +72,7 @@ const ViewAttendance = () => {
       <HeroPages page="Attendance" />
       <div className="flex p-4 justify-center">
         <div className="w-full lg:w-3/4 mt-10">
+        <p className="mt-2 text-3xl font-bold text-green-500">Live Member count at the gym: {data.presentMembers}</p>
           <p className="mb-4 text-3xl font-bold mt-6 text-center">Number of attendance in this month: {monthlyCount}</p>
           
           <div className="overflow-x-auto mb-4 mt-10">
