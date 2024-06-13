@@ -58,7 +58,7 @@ const Progress = () => {
         "http://localhost:3000/mem/addProgress",
         { exerciseID, entryValue },
         {
-          headers: { Authorization: token },
+          headers: { Authorization: `Bearer ${token}` },
         }
       )
       .then((response) => {

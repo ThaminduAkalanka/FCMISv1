@@ -154,8 +154,8 @@ const trainerDashboard = () => {
     <img src={LogoSmall} alt='image1' className='w-10' />
     <div className="text-sm text-left basis-1/2 pl-2">MUSCLE MAX<br/>FITNESS KINGDOM</div>
     <div className="basis-1/2 text-right flex items-center justify-end space-x-4">
-      <Link to="/dashboard/feedback" className="text-sm">Feedback</Link>
-      <Link to="/dashboard/profile" className="text-sm"><img src={Noti} alt='image1' className='w-4' /></Link>
+      <Link to="/trainerDashboard/feedback" className="text-sm">Feedback</Link>
+      <Link to="/trainerDashboard/trainerprofile" className="text-sm"><img src={Noti} alt='image1' className='w-4' /></Link>
     </div>
   </div>
   <div className="flex-grow p-6 bg-#1E1E1E">

@@ -10,7 +10,7 @@ import QRCode from 'qrcode';
 const router = express.Router();
 
 // Cron job to check for expired memberships and update their status
-cron.schedule('0 0 * * *', () => {  // Runs every day at midnight
+cron.schedule('0 * * * *', () => {  // Runs every day at midnight
   const checkSql = `UPDATE membership SET status = "expired" WHERE endDate < NOW() AND status = "active"`;
   con.query(checkSql, (err, result) => {
       if (err) {
@@ -660,7 +660,7 @@ router.get('/dashboard-data', (req, res) => {
                       dashboardData.presentMembers = result[0].presentMembers;
 
                       // Fetch earnings (assuming you have a payments table)
-                      const earningsQuery = 'SELECT SUM(amount) AS earnings FROM payment';
+                      const earningsQuery = 'SELECT SUM(amount) AS earnings FROM payment WHERE MONTH(paymentDate) = MONTH(CURRENT_DATE) AND YEAR(paymentDate) = YEAR(CURRENT_DATE)';
                       con.query(earningsQuery, (err, result) => {
                           if (err) return res.status(500).json({ error: err.message });
                           dashboardData.earnings = result[0].earnings;
@@ -748,6 +748,18 @@ FROM
   con.query(sql, (err, result) => {
     if (err) return res.json({ Status: false, Error: err });
     return res.json({ Status: true, Result: result[0] });
+  });
+});
+
+//notification
+router.post('/sendNotification/:memberID', (req, res) => {
+  const { memberID } = req.params;
+  const { message } = req.body;
+  const sql = "INSERT INTO notifications (memberID, message, date) VALUES (?, ?, NOW())";
+  con.query(sql, [memberID, message], (err, result) => {
+    if (err) return res.status(500).json({ Error: "Database error" });
+
+    return res.json({ Status: "Success", Message: "Notification stored" });
   });
 });
 

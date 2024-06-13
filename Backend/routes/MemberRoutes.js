@@ -253,5 +253,15 @@ router.post('/progressReport', authenticateToken, (req, res) => {
   });
 });
 
+router.get('/notifications', authenticateToken, (req, res) => {
+  const memberID = req.user.memberID;
+  const sql = "SELECT * FROM notifications WHERE memberID = ?";
+  con.query(sql, [memberID], (err, results) => {
+    if (err) return res.status(500).json({ Error: "Database error" });
+
+    return res.json({ Status: "Success", Notifications: results });
+  });
+});
+
 
   export { router as MemberRouter }

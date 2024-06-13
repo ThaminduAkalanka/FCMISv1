@@ -45,6 +45,7 @@ import MemberProgress from "./Pages/progress";
 import AdminLayout from './components/layouts/AdminLayout';
 import MemberLayout from './components/layouts/MemberLayout';
 import ScrollToTop from "./components/ScrollToTop";
+import Notifications from './Pages/notification';
 
 import TrainerDashboard from './components/trainer/trainerDashboard';
 import TrainerHome from './components/trainer/trainerHome';
@@ -109,6 +110,7 @@ function App() {
           <Route path='/member/memberprogress' element={<MemberProgress />} />
           <Route path='/member/editprofile' element={<EditProfile />} />
           <Route path='/member/changepassword' element={<ChangePassword />} />
+          <Route path='/member/notification' element={<Notifications />} />
         </Route>
 
         <Route path='/trainerDashboard' element={<TrainerDashboard />}>
