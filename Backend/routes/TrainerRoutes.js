@@ -123,7 +123,7 @@ router.post('/add_schedule', (req, res) =>{
 }) 
 
 router.get('/manageschedule',(req, res)=>{
-  const sql = "SELECT * FROM schedule";
+  const sql = `SELECT * FROM schedule`;
   con.query(sql, (err, result)=>{
     if (err) return res.json({ Status: false, Error: "Query error" })
     return res.json({Status: true, Result: result})
