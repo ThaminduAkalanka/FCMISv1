@@ -111,7 +111,7 @@ const memberSchedule = () => {
             <th class="py-3">Name</th>
 
             <th class="py-3">Package</th>
-            {/*<th class="py-3">Personal<br></br> Training</th>*/}
+            <th class="py-3">Membership</th>
             <th class="py-3">Currnet Category</th>
             <th class="py-3">Current Schedule</th>
             <th class="py-3">Schedule Status</th>
@@ -124,8 +124,9 @@ const memberSchedule = () => {
               <tr key={index} className="border-b border-gray-200">
                 <td >{m.memberID}</td>
                 <td class="py-2">{m.name}</td>
-
+                
                 <td>{getPackageName(m.packageID)}</td>
+                <td class="py-2">{m.memberID}</td>
                 {/*<td>{m.personal}</td>
                 <td>{formatDate(m.startDate)}</td>
                 <td>{formatDate(m.endDate)}</td>*/}

@@ -3,7 +3,7 @@ import { Scanner } from '@yudiel/react-qr-scanner';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const scanQR = () => {
+const ScanQR = () => {
   const [memberID, setMemberID] = useState(null);
   const [message, setMessage] = useState("");
 
@@ -21,7 +21,7 @@ const scanQR = () => {
 
       setTimeout(() => {
         window.location.reload();
-      }, 5000);
+      }, 8000);
     }
   };
 
@@ -32,7 +32,10 @@ const scanQR = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div><Link to="/dashboard/attendance" class='flex flex-col w-44 focus:outline-none text-black bg-white hover:bg-neutral-400 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 mb-8'>View Attendance</Link>
+      <div>
+        <Link to="/dashboard/attendance" className='flex flex-col w-44 focus:outline-none text-black bg-white hover:bg-neutral-400 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 mb-8'>
+          View Attendance
+        </Link>
       </div>
       <h2 className="text-2xl font-bold mb-16">Scan QR Code to Mark Attendance</h2>
       <div className="w-80 mb-16">
@@ -44,13 +47,9 @@ const scanQR = () => {
         />
         {memberID && <p className="mt-4">Member ID: {memberID}</p>}
         {message && <p className="mt-2">{message}</p>}
-        </div>
-        
       </div>
-      
-    
-    
+    </div>
   );
 };
 
-export default scanQR;
+export default ScanQR;

@@ -260,37 +260,96 @@ router.post('/mark_attendance', async (req, res) => {
   console.log('Received memberID:', memberID); // Log received memberID
 
   try {
-    const checkAttendanceSql = `SELECT * FROM attendance WHERE memberID = ? AND checkoutTime IS NULL`;
-    con.query(checkAttendanceSql, [memberID], (err, result) => {
+    // Check membership status and expiration date
+    const checkMembershipSql = `SELECT status, endDate FROM membership WHERE memberID = ?`;
+    con.query(checkMembershipSql, [memberID], (err, membershipResult) => {
       if (err) {
-        console.error('Error querying attendance:', err);
+        console.error('Error querying membership:', err);
         return res.json({ Status: false, Error: "Query error" });
       }
 
-      if (result.length > 0) {
-        // Check-out process
-        const updateAttendanceSql = `UPDATE attendance SET checkoutTime = NOW() WHERE memberID = ? AND checkoutTime IS NULL`;
-        con.query(updateAttendanceSql, [memberID], (err, result) => {
+      if (membershipResult.length === 0) {
+        return res.json({ Status: false, message: "No membership found for this member." });
+      }
+
+      const membershipStatus = membershipResult[0].status;
+      const endDate = new Date(membershipResult[0].endDate);
+      const currentDate = new Date();
+      const oneWeekAfterEndDate = new Date(endDate);
+      oneWeekAfterEndDate.setDate(endDate.getDate() + 7);
+
+      if (membershipStatus !== 'active' && currentDate > oneWeekAfterEndDate) {
+        return res.json({ Status: false, message: "Membership expired. Please renew to access." });
+      }
+
+      if (membershipStatus !== 'active' && currentDate <= oneWeekAfterEndDate) {
+        // Allow attendance marking but show a warning message
+        const checkAttendanceSql = `SELECT * FROM attendance WHERE memberID = ? AND checkoutTime IS NULL`;
+        con.query(checkAttendanceSql, [memberID], (err, result) => {
           if (err) {
-            console.error('Error updating attendance:', err);
+            console.error('Error querying attendance:', err);
             return res.json({ Status: false, Error: "Query error" });
           }
 
-          return res.json({ Status: true, message: "Checkout successful", Result: result });
+          if (result.length > 0) {
+            // Check-out process
+            const updateAttendanceSql = `UPDATE attendance SET checkoutTime = NOW() WHERE memberID = ? AND checkoutTime IS NULL`;
+            con.query(updateAttendanceSql, [memberID], (err, result) => {
+              if (err) {
+                console.error('Error updating attendance:', err);
+                return res.json({ Status: false, Error: "Query error" });
+              }
+
+              return res.json({ Status: true, message: "Checkout successful. Note: Your membership has expired. Please renew within this week to continue accessing the gym.", Result: result });
+            });
+          } else {
+            // Check-in process
+            const insertAttendanceSql = `INSERT INTO attendance (memberID, checkinTime) VALUES (?, NOW())`;
+            con.query(insertAttendanceSql, [memberID], (err, result) => {
+              if (err) {
+                console.error('Error inserting attendance:', err);
+                return res.json({ Status: false, Error: "Query error" });
+              }
+
+              return res.json({ Status: true, message: "Check-in successful. Note: Your membership has expired. Please renew within this week to continue accessing the gym.", Result: result });
+            });
+          }
         });
       } else {
-        // Check-in process
-        const insertAttendanceSql = `INSERT INTO attendance (memberID, checkinTime) VALUES (?, NOW())`;
-        con.query(insertAttendanceSql, [memberID], (err, result) => {
+        // If membership is active, proceed with attendance marking
+        const checkAttendanceSql = `SELECT * FROM attendance WHERE memberID = ? AND checkoutTime IS NULL`;
+        con.query(checkAttendanceSql, [memberID], (err, result) => {
           if (err) {
-            console.error('Error inserting attendance:', err);
+            console.error('Error querying attendance:', err);
             return res.json({ Status: false, Error: "Query error" });
           }
 
-          return res.json({ Status: true, message: "Check-in successful.", Result: result });
+          if (result.length > 0) {
+            // Check-out process
+            const updateAttendanceSql = `UPDATE attendance SET checkoutTime = NOW() WHERE memberID = ? AND checkoutTime IS NULL`;
+            con.query(updateAttendanceSql, [memberID], (err, result) => {
+              if (err) {
+                console.error('Error updating attendance:', err);
+                return res.json({ Status: false, Error: "Query error" });
+              }
+
+              return res.json({ Status: true, message: "Checkout successful", Result: result });
+            });
+          } else {
+            // Check-in process
+            const insertAttendanceSql = `INSERT INTO attendance (memberID, checkinTime) VALUES (?, NOW())`;
+            con.query(insertAttendanceSql, [memberID], (err, result) => {
+              if (err) {
+                console.error('Error inserting attendance:', err);
+                return res.json({ Status: false, Error: "Query error" });
+              }
+
+              return res.json({ Status: true, message: "Check-in successful.", Result: result });
+            });
+          }
         });
       }
-    }); 
+    });
   } catch (error) {
     console.error('Error:', error);
     return res.json({ Status: false, Error: "Query error" });
@@ -298,6 +357,9 @@ router.post('/mark_attendance', async (req, res) => {
 });
 
 
+
+
+//members
 router.get('/member',(req, res)=>{
   const sql = "SELECT * FROM member";
   con.query(sql, (err, result)=>{
@@ -585,19 +647,46 @@ router.delete('/delete_payment/:paymentID', (req,res) => {
   })
 })
 
-//attendance
-// Get attendance with member name 
+// Get attendance with member name and pagination
 router.get('/attendance', (req, res) => {
+  const page = parseInt(req.query.page) || 1;  // Current page number, default is 1
+  const limit = parseInt(req.query.limit) || 8;  // Number of records per page, default is 8
+  const offset = (page - 1) * limit;
+
   const sql = `
     SELECT a.*, m.name
     FROM attendance a
     LEFT JOIN member m ON a.memberID = m.memberID
+    ORDER BY a.checkinTime DESC
+    LIMIT ?, ?
   `;
-  con.query(sql, (err, result) => {
+
+  con.query(sql, [offset, limit], (err, result) => {
     if (err) return res.json({ Status: false, Error: "Query error" });
-    return res.json({ Status: true, Result: result });
+
+    // Count total records
+    const countSql = `
+      SELECT COUNT(*) AS total
+      FROM attendance
+    `;
+
+    con.query(countSql, (countErr, countResult) => {
+      if (countErr) return res.json({ Status: false, Error: "Count query error" });
+
+      const totalRecords = countResult[0].total;
+      const totalPages = Math.ceil(totalRecords / limit);
+
+      return res.json({
+        Status: true,
+        Result: result,
+        TotalPages: totalPages,
+        CurrentPage: page
+      });
+    });
   });
 });
+
+
 
 router.delete('/delete_attendance/:id', (req,res) => {
   const id = req.params.id;
