@@ -131,7 +131,7 @@ const memberSchedule = () => {
                 <td>{formatDate(m.endDate)}</td>*/}
                 <td>{getcatName(m.categoryID)}</td>
                 <td>{getscheduleName(m.scheduleID)}</td>
-                <td style={{ color: m.scheduleStatus === 'active' ? 'lime' : m.scheduleStatus === 'in progress' ? 'yellow' : 'red' }}>
+                <td style={{ color: m.scheduleStatus === 'completed' ? 'lime' : m.scheduleStatus === 'in progress' ? 'yellow' : 'red' }}>
                   {m.scheduleStatus}
                 </td>
                 <td>

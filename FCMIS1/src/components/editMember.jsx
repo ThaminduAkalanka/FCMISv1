@@ -12,17 +12,17 @@ const editMember = () => {
         image: '',
         medical: '',
         packageID: '',
-        personal:'',
+        categoryID:'',
         
     })  
 
-    const [Package, setPackage] = useState([])
+    const [category, setCategory] = useState([])
 
     useEffect(() =>{
-        axios.get('http://localhost:3000/auth/package')
+        axios.get('http://localhost:3000/train/category')
         .then(result =>{
           if (result.data.Status){
-            setPackage(result.data.Result);
+            setCategory(result.data.Result);
           }else{
             alert(result.data.Error)
           }
@@ -37,6 +37,7 @@ const editMember = () => {
                 email: result.data.Result[0].email,
                 contact: result.data.Result[0].contact,
                 medical: result.data.Result[0].medical,
+                categoryID: result.data.Result[0].medical,
 
             })
         }).catch(err => console.log(err))
@@ -123,21 +124,21 @@ const editMember = () => {
                 className="shadow appearance-none border rounded w-full h-28 py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
 
-             {/* <label className="flex justify-left" htmlFor="package">
-                Package
+             <label className="flex justify-left" htmlFor="package">
+                Category
               </label>
               <select
-                name="package" id ='package'
-                onChange={(e) => setvalues({ ...values, packageID: e.target.value })}
+                name="category" id ='category'
+                onChange={(e) => setvalues({ ...values, categoryID: e.target.value })}
                 class="block w-full px-3 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none"
               >
-                    <option>Select Package</option>
-                {Package.map(p =>{
-                    return <option value={p.packageID}>{p.packageName}</option>
+                    <option>Select Category</option>
+                {category.map(p =>{
+                    return <option value={p.categoryID}>{p.categoryName}</option>
                 })}
               </select>
 
-              <label className="flex justify-left" htmlFor="personal">
+              {/*<label className="flex justify-left" htmlFor="personal">
                 Personal Training
               </label>
               <select

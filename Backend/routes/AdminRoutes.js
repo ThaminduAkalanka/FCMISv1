@@ -770,7 +770,7 @@ router.post('/sendNotification/:memberID', (req, res) => {
   con.query(sql, [memberID, message], (err, result) => {
     if (err) return res.status(500).json({ Error: "Database error" });
 
-    return res.json({ Status: "Success", Message: "Notification stored" });
+    return res.json({ Status: "Success", Message: "Notification sent" });
   });
 });
 

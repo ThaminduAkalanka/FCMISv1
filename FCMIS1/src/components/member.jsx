@@ -10,6 +10,7 @@ const Member = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [membersPerPage] = useState(15);
   const navigate = useNavigate();
+  const [category, setCategory] = useState([])
 
   useEffect(() => {
     fetchMembers();
@@ -21,6 +22,15 @@ const Member = () => {
           alert(result.data.Error);
         }
       }).catch(err => console.log(err));
+
+      axios.get('http://localhost:3000/train/category')
+      .then(result =>{
+        if (result.data.Status){
+          setCategory(result.data.Result);
+        }else{
+          alert(result.data.Error)
+        }
+      }).catch(err => console.log(err))
   }, []);
 
   const fetchMembers = (query = '') => {
@@ -38,6 +48,11 @@ const Member = () => {
   const getPackageName = (packageID) => {
     const pkg = packages.find(p => p.packageID === packageID);
     return pkg ? pkg.packageName : 'Unknown';
+  };
+
+  const getCategory = (categoryID) => {
+    const cat = category.find(c => c.categoryID === categoryID);
+    return cat ? cat.categoryName : 'Unknown';
   };
 
   const formatDate = (dateString) => {
@@ -99,10 +114,10 @@ const Member = () => {
               <th className="py-3">ID</th>
               <th className="py-3">Name</th>
               <th className="py-3">Username</th>
-              <th className="py-3">Email</th>
               <th className="py-3">Contact</th>
               <th className="py-3">Gender</th>
               <th className="py-3">DOB</th>
+              <th className="py-3">Category</th>
               <th className="py-3">Package</th>
               <th className="py-3">Status</th>
               <th className="py-3">Actions</th>
@@ -114,10 +129,10 @@ const Member = () => {
                 <td className="py-2">{m.memberID}</td>
                 <td>{m.name}</td>
                 <td>{m.username}</td>
-                <td>{m.email}</td>
                 <td>{m.contact}</td>
                 <td>{m.gender}</td>
                 <td>{formatDate(m.dob)}</td>
+                <td>{getCategory(m.categoryID)}</td>
                 <td>{getPackageName(m.packageID)}</td>
                 <td style={{ color: m.status === 'active' ? 'lime' : m.status === 'pending' ? 'yellow' : 'red' }}>
                   {m.status}
@@ -130,13 +145,13 @@ const Member = () => {
                   >
                     Edit
                   </Link>
-                  <button
+                 {/* <button
                     className="flex-1 w-14 h-6 focus:outline-none text-black bg-white hover:bg-neutral-400 font-sm rounded-lg text-xs px-2 py-1 me-2 mb-2"
                     onClick={() => handleDelete(m.memberID)}
                     data-tooltip-id="deleteMemberTooltip"
                   >
                     Delete
-                  </button>
+                  </button>*/}
                 </td>
               </tr>
             ))}

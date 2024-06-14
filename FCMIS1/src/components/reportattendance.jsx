@@ -1,14 +1,16 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 const AttendanceReport = () => {
   const location = useLocation();
-  const report = location.state?.report;
+  const { report, startDate, endDate } = location.state || {};
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Attendance Report</h1>
+      {startDate && endDate && (
+        <p className="text-gray-500 mb-4">Date Range: {startDate} to {endDate}</p>
+      )}
       {report ? (
         <table className="min-w-full bg-white text-black border border-gray-200 shadow-md rounded">
           <thead className="bg-gray-50">
